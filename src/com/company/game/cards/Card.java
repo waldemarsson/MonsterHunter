@@ -6,6 +6,7 @@ abstract public class Card {
     private final String name;
 
     public Card(int id, String name) {
+        if (id < 0) throw new IllegalArgumentException("Id cannot be lower than 0");
         this.id = id;
         this.name = name;
     }

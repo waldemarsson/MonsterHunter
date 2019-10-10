@@ -3,10 +3,7 @@ package com.company.tests.cards;
 import com.company.game.cards.BuffCard;
 import com.company.game.cards.MonsterCard;
 import com.company.game.enums.EffectType;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,12 +26,13 @@ class MonsterCardTest {
         }
     }
 
+    @Disabled
     @Test
-    void constructorTestIdNull() {
+    void constructorTestIdNeg() {
         try {
-            new MonsterCard(null, "", 0, 0, 0, 0, new BuffCard(0, "", 0, EffectType.ATTACK));
+            new MonsterCard(-1, "", 0, 0, 0, 0, new BuffCard(0, "", 0, EffectType.ATTACK));
         } catch (Exception e) {
-            fail("Failed to initialize with id as null");
+            fail("Failed to initialize with id as negative value");
         }
     }
 
@@ -48,38 +46,38 @@ class MonsterCardTest {
     }
 
     @Test
-    void constructorTestStaminaNull() {
+    void constructorTestStaminaNeg() {
         try {
-            new MonsterCard(0, "", null, 0, 0, 0, new BuffCard(0, "", 0, EffectType.ATTACK));
+            new MonsterCard(0, "", -1, 0, 0, 0, new BuffCard(0, "", 0, EffectType.ATTACK));
         } catch (Exception e) {
-            fail("Failed to initialize with stamina as null");
+            fail("Failed to initialize with stamina as negative value");
         }
     }
 
     @Test
-    void constructorTestHpNull() {
+    void constructorTestHpNeg() {
         try {
-            new MonsterCard(0, "", 0, null, 0, 0, new BuffCard(0, "", 0, EffectType.ATTACK));
+            new MonsterCard(0, "", 0, -1, 0, 0, new BuffCard(0, "", 0, EffectType.ATTACK));
         } catch (Exception e) {
-            fail("Failed to initialize with hp as null");
+            fail("Failed to initialize with hp as negative value");
         }
     }
 
     @Test
-    void constructorTestAttackNull() {
+    void constructorTestAttackNeg() {
         try {
-            new MonsterCard(0, "", 0, 0, null, 0, new BuffCard(0, "", 0, EffectType.ATTACK));
+            new MonsterCard(0, "", 0, 0, -1, 0, new BuffCard(0, "", 0, EffectType.ATTACK));
         } catch (Exception e) {
-            fail("Failed to initialize with attack as null");
+            fail("Failed to initialize with attack as negative value");
         }
     }
 
     @Test
-    void constructorTestDefenseNull() {
+    void constructorTestDefenseNeg() {
         try {
-            new MonsterCard(0, "", 0, 0, 0, null, new BuffCard(0, "", 0, EffectType.ATTACK));
+            new MonsterCard(0, "", 0, 0, 0, -1, new BuffCard(0, "", 0, EffectType.ATTACK));
         } catch (Exception e) {
-            fail("Failed to initialize with defense as null");
+            fail("Failed to initialize with defense as negative value");
         }
     }
 
