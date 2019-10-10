@@ -21,19 +21,74 @@ class MonsterCardTest {
     }
 
     @Test
+    void constructorTest() {
+        try {
+            new MonsterCard(0, "", 0, 0, 0, 0, new BuffCard(0, "", 0, EffectType.ATTACK));
+        } catch (Exception e) {
+            fail("Failed to initialize MonsterCard");
+        }
+    }
+
+    @Test
+    void constructorTestIdNull() {
+        try {
+            new MonsterCard(null, "", 0, 0, 0, 0, new BuffCard(0, "", 0, EffectType.ATTACK));
+        } catch (Exception e) {
+            fail("Failed to initialize with id as null");
+        }
+    }
+
+    @Test
+    void constructorTestNameNull() {
+        try {
+            new MonsterCard(0, null, 0, 0, 0, 0, new BuffCard(0, "", 0, EffectType.ATTACK));
+        } catch (Exception e) {
+            fail("Failed to initialize with name as null");
+        }
+    }
+
+    @Test
+    void constructorTestStaminaNull() {
+        try {
+            new MonsterCard(0, "", null, 0, 0, 0, new BuffCard(0, "", 0, EffectType.ATTACK));
+        } catch (Exception e) {
+            fail("Failed to initialize with stamina as null");
+        }
+    }
+
+    @Test
+    void constructorTestHpNull() {
+        try {
+            new MonsterCard(0, "", 0, null, 0, 0, new BuffCard(0, "", 0, EffectType.ATTACK));
+        } catch (Exception e) {
+            fail("Failed to initialize with hp as null");
+        }
+    }
+
+    @Test
+    void constructorTestAttackNull() {
+        try {
+            new MonsterCard(0, "", 0, 0, null, 0, new BuffCard(0, "", 0, EffectType.ATTACK));
+        } catch (Exception e) {
+            fail("Failed to initialize with attack as null");
+        }
+    }
+
+    @Test
+    void constructorTestDefenseNull() {
+        try {
+            new MonsterCard(0, "", 0, 0, 0, null, new BuffCard(0, "", 0, EffectType.ATTACK));
+        } catch (Exception e) {
+            fail("Failed to initialize with defense as null");
+        }
+    }
+
+    @Test
     void constructorTestBonusNull() {
         try {
             new MonsterCard(0, "", 0, 0, 0, 0, null);
         } catch (Exception e) {
             fail("Failed to initialize with bonus as null");
-        }
-    }
-    @Test
-    void constructorTestBonusNotNull() {
-        try {
-            new MonsterCard(0, "", 0, 0, 0, 0, new BuffCard(0, "", 0, EffectType.ATTACK));
-        } catch (Exception e) {
-            fail("Failed to initialize with BuffCard as bonus");
         }
     }
 
