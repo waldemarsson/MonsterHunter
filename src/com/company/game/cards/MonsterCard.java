@@ -14,9 +14,13 @@ public class MonsterCard extends Card {
 
     public MonsterCard(int id, String name, int stamina, int hp, int attack, int defense, BuffCard bonus) {
         super(id, name);
+        if(stamina <= 0) throw new IllegalArgumentException("Stamina must be bigger than 0");
         this.stamina = stamina;
+        if(hp <= 0) throw new IllegalArgumentException("Hp must be bigger than 0");
         this.hp = hp;
+        if(attack <= 0) throw new IllegalArgumentException("Attack must be bigger than 0");
         this.attack = attack;
+        if(defense <= 0) throw new IllegalArgumentException("Defence must be bigger than 0");
         this.defense = defense;
         this.bonus = bonus;
 
