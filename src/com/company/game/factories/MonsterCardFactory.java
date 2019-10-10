@@ -12,7 +12,7 @@ public class MonsterCardFactory {
     private List<String> monsterCardNames;
 
     public MonsterCardFactory() {
-        monsterCardNames = new ArrayList<>(Arrays.asList("Hunter", "Frog", "Donkey", "Knight", "Car", "Ninja", "Dennis", "Ant", "Dragon"));
+        monsterCardNames = new ArrayList<>(Arrays.asList("Hunter", "Frog", "Donkey", "Knight", "Corvette", "Ninja", "Helicopter", "Ant", "Dragon", "Warthog", "Tank", "Wizard", "Troll", "Gorilla", "Zorg", "General", "Stormtrooper", "Yoda", "Wookie"));
     }
 
     public MonsterCard buildCard(int id) {
