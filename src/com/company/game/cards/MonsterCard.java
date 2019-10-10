@@ -35,7 +35,7 @@ public class MonsterCard extends Card {
     }
 
     public int getHp() {
-        return hp;
+        return hp - damage;
     }
 
     public int getDamage() {
@@ -63,7 +63,7 @@ public class MonsterCard extends Card {
     }
 
     public void addDamage(int damageTaken) {
-
+        damage += damageTaken;
     }
 
     public void addOneToFatigue() {

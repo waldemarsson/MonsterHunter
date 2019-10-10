@@ -144,9 +144,28 @@ class MonsterCardTest {
         void getHp() {
             assertEquals(2, monsterCardWithBonusStatsAs2AndBonusSet.getHp(), "Hp was not equal");
             assertEquals(4, monsterCardWithBonusStatsAs4AndBonusAsNull.getHp(), "Hp was not equal");
+        }
 
+        @Test
+        void getHpAfterAddedDamage1() {
             monsterCardWithBonusStatsAs2AndBonusSet.addDamage(1);
-            assertEquals(1, monsterCardWithBonusStatsAs2AndBonusSet.getHp(), "Hp after addDamage");
+            assertEquals(1, monsterCardWithBonusStatsAs2AndBonusSet.getHp(), "Hp after addDamage(1)");
+        }
+
+        @Test
+        void getHpAfterAddedDamage10() {
+            monsterCardWithBonusStatsAs2AndBonusSet.addDamage(10);
+            assertEquals(-8, monsterCardWithBonusStatsAs2AndBonusSet.getHp(), "Hp after addDamage(1)");
+        }
+
+        @Test
+        void getHpAfter5AddedDamage1() {
+            monsterCardWithBonusStatsAs2AndBonusSet.addDamage(1);
+            monsterCardWithBonusStatsAs2AndBonusSet.addDamage(1);
+            monsterCardWithBonusStatsAs2AndBonusSet.addDamage(1);
+            monsterCardWithBonusStatsAs2AndBonusSet.addDamage(1);
+            monsterCardWithBonusStatsAs2AndBonusSet.addDamage(1);
+            assertEquals(-3, monsterCardWithBonusStatsAs2AndBonusSet.getHp(), "Hp after 5 addDamage(1)");
         }
 
         @Test
