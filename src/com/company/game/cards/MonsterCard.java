@@ -31,7 +31,7 @@ public class MonsterCard extends Card {
     }
 
     public int getStamina() {
-        return stamina;
+        return stamina - fatigue;
     }
 
     public int getHp() {
