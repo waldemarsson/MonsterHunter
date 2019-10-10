@@ -142,9 +142,11 @@ class MonsterCardTest {
 
         @Test
         void getHp() {
-            
             assertEquals(2, monsterCardWithBonusStatsAs2AndBonusSet.getHp(), "Hp was not equal");
             assertEquals(4, monsterCardWithBonusStatsAs4AndBonusAsNull.getHp(), "Hp was not equal");
+
+            monsterCardWithBonusStatsAs2AndBonusSet.addDamage(1);
+            assertEquals(1, monsterCardWithBonusStatsAs2AndBonusSet.getHp(), "Hp after addDamage");
         }
 
         @Test
