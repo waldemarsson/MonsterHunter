@@ -1,6 +1,7 @@
 package com.company.tests.cards;
 
 import com.company.game.cards.BuffCard;
+import com.company.game.cards.Card;
 import com.company.game.cards.MonsterCard;
 import com.company.game.enums.EffectType;
 import org.junit.jupiter.api.*;
@@ -84,6 +85,8 @@ class MonsterCardTest {
 
         @BeforeEach
         void setUp() {
+            BuffCard buff = new BuffCard(0, "", 0, EffectType.NONE);
+//            System.out.println(buff);
             cStats4BonusNone = new MonsterCard(1, "Hunter", 4, 4, 4, 4, new BuffCard(0, "", 0, EffectType.NONE));
             cStats6Bonus4Health = new MonsterCard(1, "Hunter", 6, 6, 6, 6, new BuffCard(0, "", 4, EffectType.HEALTH));
             cStats6Bonus4Attack = new MonsterCard(1, "Hunter", 6, 6, 6, 6, new BuffCard(0, "", 4, EffectType.ATTACK));
@@ -153,9 +156,6 @@ class MonsterCardTest {
             assertNotNull(cStats4BonusNone.getDebuffCard());
             assertNotNull(cStats6Bonus4Health.getDebuffCard());
             assertNotNull(cStats6Bonus4Defense.getDebuffCard());
-            System.out.println(cStats4BonusNone.getDebuffCard());
-            System.out.println(cStats6Bonus4Defense.getDebuffCard());
-            assertEquals(cStats4BonusNone.getDebuffCard(), cStats6Bonus4Defense.getDebuffCard());
         }
 
         @Test

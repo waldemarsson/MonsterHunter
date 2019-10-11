@@ -86,6 +86,6 @@ public class MonsterCard extends Card {
 
     @Override
     public String toString() {
-        return null;
+        return "STRING";
     }
 }

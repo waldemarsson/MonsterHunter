@@ -43,6 +43,6 @@ public class DebuffCard extends EffectCard {
 
     @Override
     public String toString() {
-        return null;
+        return "DEBUFFCARD";
     }
 }

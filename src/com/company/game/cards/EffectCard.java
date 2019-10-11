@@ -35,7 +35,7 @@ abstract public class EffectCard extends Card {
 
     @Override
     public String toString() {
-        return null;
+        return "EFFECTCARD";
     }
 
 }
