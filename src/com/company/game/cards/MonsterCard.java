@@ -76,6 +76,10 @@ public class MonsterCard extends Card {
 
     }
 
+    public int getFatigue() {
+        return fatigue;
+    }
+
     public void setDebuffCard(DebuffCard debuffCard) {
         this.debuffCard = debuffCard;
     }
