@@ -175,6 +175,12 @@ class MonsterCardTest {
         void addOneToFatigue() {
             cStats4BonusNone.addOneToFatigue();
             assertEquals(1, cStats4BonusNone.getFatigue());
+            cStats4BonusNone.addOneToFatigue();
+            assertEquals(2, cStats4BonusNone.getFatigue());
+            cStats4BonusNone.addOneToFatigue();
+            assertEquals(3, cStats4BonusNone.getFatigue());
+            cStats4BonusNone.addOneToFatigue();
+            assertEquals(4, cStats4BonusNone.getFatigue());
         }
 
         @Test

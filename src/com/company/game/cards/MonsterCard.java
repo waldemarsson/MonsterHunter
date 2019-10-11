@@ -73,7 +73,7 @@ public class MonsterCard extends Card {
     }
 
     public void addOneToFatigue() {
-
+        fatigue++;
     }
 
     public int getFatigue() {
