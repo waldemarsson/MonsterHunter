@@ -190,13 +190,18 @@ class MonsterCardTest {
             cStats4BonusNone.setDebuffCard(new DebuffCard(1, "", 2, EffectType.ATTACK));
             assertNotSame(initDebuffCard, cStats4BonusNone.getDebuffCard());
 
-            DebuffCard initDebuffCard2 = cStats4BonusNone.getDebuffCard();
             cStats4BonusNone.setDebuffCard(null);
             assertNotNull(cStats4BonusNone.getDebuffCard());
         }
 
         @Test
         void setBuffCard() {
+            BuffCard initBuffCard = cStats4BonusNone.getBuffCard();
+            cStats4BonusNone.setBuffCard(new BuffCard(1, "", 2, EffectType.ATTACK));
+            assertNotSame(initBuffCard, cStats4BonusNone.getBuffCard());
+
+            cStats4BonusNone.setBuffCard(null);
+            assertNotNull(cStats4BonusNone.getBuffCard());
         }
 
         @Test
