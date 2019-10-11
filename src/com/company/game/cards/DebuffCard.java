@@ -14,7 +14,7 @@ public class DebuffCard extends EffectCard {
      */
     @Override
     public int getStaminaEffect() {
-        return super.getStaminaEffect();
+        return super.getStaminaEffect() * -1;
     }
 
     /**
@@ -22,7 +22,7 @@ public class DebuffCard extends EffectCard {
      */
     @Override
     public int getAttackEffect() {
-        return super.getAttackEffect();
+        return super.getAttackEffect() * -1;
     }
 
     /**
@@ -30,11 +30,16 @@ public class DebuffCard extends EffectCard {
      */
     @Override
     public int getDefenseEffect() {
-        return super.getDefenseEffect();
+        return super.getDefenseEffect() * -1;
     }
 
     @Override
     public String toString() {
-        return "DEBUFFCARD";
+        return super.toString().concat(Integer.toString(getValue()));
+    }
+
+    @Override
+    public int getValue() {
+        return super.getValue() * -1;
     }
 }

@@ -8,5 +8,8 @@ public class BuffCard extends EffectCard {
         super(id, value, effectType);
     }
 
-
+    @Override
+    public String toString() {
+        return super.toString().concat("+").concat(Integer.toString(getValue()));
+    }
 }
