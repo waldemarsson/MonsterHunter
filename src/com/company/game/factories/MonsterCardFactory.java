@@ -22,7 +22,7 @@ public class MonsterCardFactory {
     }
 
     public MonsterCard buildCard(int id, BuffCard bonus) {
-        return null;
+        return new MonsterCard(id, getRandomMonsterName(), getRandomValue(1, 2), getRandomValue(3, 8), getRandomValue(2, 7), getRandomValue(2, 7), bonus);
     }
 
     private int getRandomValue(int min, int max) {

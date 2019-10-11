@@ -1,6 +1,8 @@
 package com.company.tests.factories;
 
+import com.company.game.cards.BuffCard;
 import com.company.game.cards.MonsterCard;
+import com.company.game.enums.EffectType;
 import com.company.game.factories.MonsterCardFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,11 +26,6 @@ class MonsterCardFactoryTest {
     void setUp() {
     }
 
-    @AfterEach
-    void addId() {
-        id++;
-    }
-
     @Test
     void buildCard() {
         for (int i = 0; i < 20; i++) {
@@ -42,7 +39,7 @@ class MonsterCardFactoryTest {
     @Test
     void buildCardWithBonus() {
         for (int i = 0; i < 20; i++) {
-            MonsterCard mc = new MonsterCardFactory().buildCard(id);
+            MonsterCard mc = new MonsterCardFactory().buildCard(id, new BuffCard(0, 200, EffectType.DEFENSE));
             assertNotNull(mc.getBonus());
             assertEquals(id, mc.getId());
             id++;
