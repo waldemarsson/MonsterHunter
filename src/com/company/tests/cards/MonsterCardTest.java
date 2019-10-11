@@ -26,17 +26,16 @@ class MonsterCardTest {
         }
     }
 
-    @Disabled
     @Test
     void constructorTestIdNeg() {
         try {
-            new MonsterCard(-1, "", 1, 1, 1, 1, new BuffCard(0, "", 0, EffectType.ATTACK));
+            monsterCard = new MonsterCard(-1, "", 1, 1, 1, 1, new BuffCard(0, "", 0, EffectType.ATTACK));
         } catch (Exception e) {
             fail("Failed to initialize with id as negative value");
         }
+        assertEquals(0, monsterCard.getId(), "Id not ");
     }
 
-    @Disabled
     @Test
     void constructorTestNameNull() {
         try {
@@ -46,7 +45,6 @@ class MonsterCardTest {
         }
     }
 
-    @Disabled
     @Test
     void constructorTestStaminaNeg() {
         try {
@@ -56,7 +54,6 @@ class MonsterCardTest {
         }
     }
 
-    @Disabled
     @Test
     void constructorTestHpNeg() {
         try {
@@ -66,7 +63,6 @@ class MonsterCardTest {
         }
     }
 
-    @Disabled
     @Test
     void constructorTestAttackNeg() {
         try {
@@ -76,7 +72,6 @@ class MonsterCardTest {
         }
     }
 
-    @Disabled
     @Test
     void constructorTestDefenseNeg() {
         try {
