@@ -18,13 +18,23 @@ class CardTest {
     }
 
     @Test
-    void constructorFailureTest(){
+    void constructorNullFailureTest(){
         try{
-            new CardSuperTest(0 , "name");
+            new CardSuperTest(0 , null);
         } catch(Exception e){
             fail("Constructor threw unhandled Exception");
         }
     }
+
+    @Test
+    void constructorStandardFailureTest(){
+        try{
+            new CardSuperTest(0 , "NamE");
+        } catch(Exception e){
+            fail("Constructor threw unhandled Exception");
+        }
+    }
+
 
     @Test
     void belowZeroIdTest(){
