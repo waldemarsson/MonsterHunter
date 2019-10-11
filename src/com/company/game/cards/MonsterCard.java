@@ -95,14 +95,16 @@ public class MonsterCard extends Card {
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder(super.toString());
-        str.append("HP " + getCalculatedHealth() + "/" + hp + " ");
-        str.append("STA " + getCalculatedStamina() + " ");
-        str.append("ATT" + getCalculatedAttack() + " ");
+        str.append("HP " + getCalculatedHealth() + "/" + hp);
+        str.append(" STA " + getCalculatedStamina());
+        if (buffCard.getStaminaEffect() > 0) str.append("(+" + buffCard.getStaminaEffect() + ")");
+        if (debuffCard.getStaminaEffect() < 0) str.append("(" + debuffCard.getStaminaEffect() + ")");
+        str.append(" ATT " + getCalculatedAttack());
         if (buffCard.getAttackEffect() > 0) str.append("(+" + buffCard.getAttackEffect() + ")");
-        if (debuffCard.getAttackEffect() > 0) str.append("(-" + debuffCard.getAttackEffect() + ")");
-        str.append(" DEF" + getCalculatedDefense());
+        if (debuffCard.getAttackEffect() < 0) str.append("(" + debuffCard.getAttackEffect() + ")");
+        str.append(" DEF " + getCalculatedDefense());
         if (buffCard.getDefenseEffect() > 0) str.append("(+" + buffCard.getDefenseEffect() + ")");
-        if (debuffCard.getDefenseEffect() > 0) str.append("(-" + debuffCard.getDefenseEffect() + ")");
+        if (debuffCard.getDefenseEffect() < 0) str.append("(" + debuffCard.getDefenseEffect() + ")");
 
         return str.toString();
     }
