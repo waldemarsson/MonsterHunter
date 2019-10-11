@@ -31,10 +31,12 @@ class MonsterCardFactoryTest {
 
     @Test
     void buildCard() {
-        MonsterCard m = new MonsterCardFactory().buildCard(id);
-        assertNotNull(m);
-        assertEquals(id, m.getId());
-        id++;
+        for (int i = 0; i < 20; i++) {
+            MonsterCard mc = new MonsterCardFactory().buildCard(id);
+            assertNotNull(mc);
+            assertEquals(id, mc.getId());
+            id++;
+        }
     }
 
     @Test

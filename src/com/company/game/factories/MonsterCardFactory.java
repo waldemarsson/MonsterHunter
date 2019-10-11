@@ -2,6 +2,7 @@ package com.company.game.factories;
 
 import com.company.game.cards.BuffCard;
 import com.company.game.cards.MonsterCard;
+import com.company.game.enums.EffectType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,7 +18,7 @@ public class MonsterCardFactory {
     }
 
     public MonsterCard buildCard(int id) {
-        return null;
+        return new MonsterCard(id, getRandomMonsterName(), getRandomValue(1, 2), getRandomValue(3, 8), getRandomValue(2, 7), getRandomValue(2, 7), new BuffCard(0, 0, EffectType.NONE));
     }
 
     public MonsterCard buildCard(int id, BuffCard bonus) {
