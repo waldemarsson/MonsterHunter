@@ -153,6 +153,9 @@ class MonsterCardTest {
             assertNotNull(cStats4BonusNone.getDebuffCard());
             assertNotNull(cStats6Bonus4Health.getDebuffCard());
             assertNotNull(cStats6Bonus4Defense.getDebuffCard());
+            System.out.println(cStats4BonusNone.getDebuffCard());
+            System.out.println(cStats6Bonus4Defense.getDebuffCard());
+            assertEquals(cStats4BonusNone.getDebuffCard(), cStats6Bonus4Defense.getDebuffCard());
         }
 
         @Test
