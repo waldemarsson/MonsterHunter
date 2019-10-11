@@ -4,8 +4,8 @@ import com.company.game.enums.EffectType;
 
 public class DebuffCard extends EffectCard {
 
-    public DebuffCard(int id, String name, int value, EffectType effectType) {
-        super(id, name, value, effectType);
+    public DebuffCard(int id, int value, EffectType effectType) {
+        super(id, value, effectType);
     }
 
 
