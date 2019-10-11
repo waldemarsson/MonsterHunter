@@ -81,7 +81,9 @@ public class MonsterCard extends Card {
     }
 
     public void setDebuffCard(DebuffCard debuffCard) {
-        this.debuffCard = debuffCard;
+        if (debuffCard != null) {
+            this.debuffCard = debuffCard;
+        }
     }
 
     public void setBuffCard(BuffCard buffCard) {
