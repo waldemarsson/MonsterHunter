@@ -18,10 +18,6 @@ abstract public class EffectCard extends Card {
         return 0;
     }
 
-    public int getHealthEffect() {
-
-        return 0;
-    }
 
     public int getAttackEffect() {
 
