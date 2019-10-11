@@ -6,8 +6,8 @@ abstract public class Card {
     private final String name;
 
     public Card(int id, String name) {
-        this.id = (id < 0) ? 0 : id;
-        this.name = name;
+        this.id = Math.max(0, id);
+        this.name = name != null ? name.replaceAll("(?i)[^a-z]", "").toUpperCase() : "";
     }
 
     public int getId() {
@@ -20,7 +20,7 @@ abstract public class Card {
 
     @Override
     public String toString() {
-        return null;
+        return getName().concat("_" + getId() + ": ");
     }
 
 }
