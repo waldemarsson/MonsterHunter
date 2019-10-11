@@ -33,7 +33,8 @@ class MonsterCardFactoryTest {
     void buildCard() {
         MonsterCard m = new MonsterCardFactory().buildCard(id);
         assertNotNull(m);
-        
+        assertEquals(id, m.getId());
+        id++;
     }
 
     @Test
