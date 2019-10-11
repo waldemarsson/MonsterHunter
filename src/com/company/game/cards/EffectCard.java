@@ -7,30 +7,22 @@ abstract public class EffectCard extends Card {
     private final int value;
     private final EffectType effectType;
 
-    public EffectCard(int id, String name, int value, EffectType effectType) {
-        super(id, name);
-        this.value = value;
+    public EffectCard(int id, int value, EffectType effectType) {
+        super(effectType == EffectType.NONE ? 0 : id, "");
+        this.value = Math.max(0, value);
         this.effectType = effectType;
     }
 
     public int getStaminaEffect() {
-
-        return 0;
-    }
-
-    public int getHealthEffect() {
-
-        return 0;
+        return effectType == EffectType.STAMINA ? value : 0;
     }
 
     public int getAttackEffect() {
-
-        return 0;
+        return effectType == EffectType.ATTACK ? value : 0;
     }
 
     public int getDefenseEffect() {
-
-        return 0;
+        return effectType == EffectType.DEFENSE ? value : 0;
     }
 
     @Override
@@ -38,6 +30,9 @@ abstract public class EffectCard extends Card {
         return "EFFECTCARD";
     }
 
+    public int getValue() {
+        return value;
+    }
 }
 
 
