@@ -1,5 +1,8 @@
 package com.company.game.cards;
 
+import com.company.game.collections.Deck;
+import com.company.game.enums.EffectType;
+
 public class MonsterCard extends Card {
 
     private final int stamina;
@@ -17,32 +20,39 @@ public class MonsterCard extends Card {
         this.stamina = (stamina <= 0 || stamina > 2) ? 1 : stamina;
         this.hp = (hp < 3 || hp > 8) ? 5 : hp;
         this.attack = (attack < 2 || attack > 7) ? 4 : attack;
-        this.defense = (defense < 2 || defense > 7) ? 4 : defense;;
+        this.defense = (defense < 2 || defense > 7) ? 4 : defense;
         this.bonus = bonus;
-
         this.fatigue = 0;
         this.damage = 0;
-        this.buffCard = null;
-        this.debuffCard = null;
+        this.buffCard = new BuffCard(0, "", 0, EffectType.NONE);
+        this.debuffCard = new DebuffCard(0, "", 0, EffectType.NONE);
     }
 
-    public int getStamina() {
-        return stamina - fatigue;
+    public int getCalculatedStamina() {
+        return stamina - fatigue + bonus.getStaminaEffect() + buffCard.getStaminaEffect() + debuffCard.getStaminaEffect();
     }
 
     public int getHp() {
-        return hp - damage;
+        return hp;
+    }
+
+    public int getCalculatedHealth() {
+        return hp - damage + bonus.getHealthEffect() + buffCard.getHealthEffect() + debuffCard.getHealthEffect();
+    }
+
+    public boolean isAlive() {
+        return getCalculatedHealth() > 0;
     }
 
     public int getDamage() {
         return damage;
     }
 
-    public int getAttack() {
+    public int getCalculatedAttack() {
         return attack;
     }
 
-    public int getDefense() {
+    public int getCalculatedDefense() {
         return defense;
     }
 

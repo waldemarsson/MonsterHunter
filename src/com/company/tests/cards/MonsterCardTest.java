@@ -27,25 +27,6 @@ class MonsterCardTest {
     }
 
     @Test
-    void constructorTestIdNeg() {
-        try {
-            monsterCard = new MonsterCard(-1, "", 1, 1, 1, 1, new BuffCard(0, "", 0, EffectType.ATTACK));
-        } catch (Exception e) {
-            fail("Failed to initialize with id as negative value");
-        }
-        assertEquals(0, monsterCard.getId(), "Id not ");
-    }
-
-    @Test
-    void constructorTestNameNull() {
-        try {
-            new MonsterCard(0, null, 1, 1, 1, 1, new BuffCard(0, "", 0, EffectType.ATTACK));
-        } catch (Exception e) {
-            fail("Failed to initialize with name as null");
-        }
-    }
-
-    @Test
     void constructorTestStaminaNeg() {
         try {
             new MonsterCard(0, "", -1, 1, 1, 1, new BuffCard(0, "", 0, EffectType.ATTACK));
@@ -90,85 +71,69 @@ class MonsterCardTest {
         }
     }
 
-    @Test
-    void constructorTestNameSomeString1() {
-        new MonsterCard(0, "oadsuasdq", 1, 1, 1, 1, null);
-    }
-
-    @Test
-    void constructorTestNameSomeString2() {
-        new MonsterCard(0, "HUNTER_AS", 1, 1, 1, 1, null);
-    }
-
-    @Test
-    void constructorTestNameSomeString3() {
-        new MonsterCard(0, "812e0d", 1, 1, 1, 1, null);
-    }
-
-    @Test
-    void constructorTestNameSomeString4() {
-        new MonsterCard(0, "d1womi19j87y1v7e78141b41bnjiqsdjknDSJAHBSDB", 1, 1, 1, 1, null);
-    }
-
-    @Test
-    void constructorTestNameSomeString5() {
-        new MonsterCard(0, "ÖÄ*ÅÅ^^ÖÅ´å1+01+20´¨ö'ö", 1, 1, 1, 1, null);
-    }
-
 
     @Nested
     @DisplayName("Tests with MonsterCard created")
     class MonsterCardCreated {
 
-        MonsterCard monsterCardWithBonusStatsAs2AndBonusSet;
-        MonsterCard monsterCardWithBonusStatsAs4AndBonusAsNull;
+        MonsterCard monsterCardWithBonusStatsAs4AndBonusAsNone;
+        MonsterCard monsterCardWithBonusStatsAs8AndBonusSet;
 
         @BeforeEach
         void setUp() {
-            monsterCardWithBonusStatsAs2AndBonusSet = new MonsterCard(1, "Hunter", 2, 2, 2, 2, new BuffCard(0, "", 0, EffectType.ATTACK));
-            monsterCardWithBonusStatsAs4AndBonusAsNull = new MonsterCard(1, "Hunter", 4, 4, 4, 4, null);
+            monsterCardWithBonusStatsAs4AndBonusAsNone = new MonsterCard(1, "Hunter", 4, 4, 4, 4, new BuffCard(0, "", 0, EffectType.NONE));
+            monsterCardWithBonusStatsAs8AndBonusSet = new MonsterCard(1, "Hunter", 8, 8, 8, 8, new BuffCard(0, "", 0, EffectType.HEALTH));
         }
 
         @Test
-        void getStamina() {
-            assertEquals(2, monsterCardWithBonusStatsAs2AndBonusSet.getStamina(), "Stamina was not equal");
-            assertEquals(4, monsterCardWithBonusStatsAs4AndBonusAsNull.getStamina(), "Stamina was not equal");
+        void getCalculatedStamina() {
+            assertEquals(1, monsterCardWithBonusStatsAs4AndBonusAsNone.getCalculatedStamina(), "Stamina was not equal");
+            assertEquals(1, monsterCardWithBonusStatsAs8AndBonusSet.getCalculatedStamina(), "Stamina was not equal");
         }
 
         @Test
         void getHp() {
-            assertEquals(2, monsterCardWithBonusStatsAs2AndBonusSet.getHp(), "Hp was not equal");
-            assertEquals(4, monsterCardWithBonusStatsAs4AndBonusAsNull.getHp(), "Hp was not equal");
+            assertEquals(4, monsterCardWithBonusStatsAs4AndBonusAsNone.getHp(), "Hp was not equal");
+            assertEquals(8, monsterCardWithBonusStatsAs8AndBonusSet.getHp(), "Hp was not equal");
         }
 
         @Test
-        void getHpAfterAddedDamage1() {
-            monsterCardWithBonusStatsAs2AndBonusSet.addDamage(1);
-            assertEquals(1, monsterCardWithBonusStatsAs2AndBonusSet.getHp(), "Hp after addDamage(1)");
+        void getCalculatedHealthAfterAddedDamage1() {
+            monsterCardWithBonusStatsAs8AndBonusSet.addDamage(1);
+            assertEquals(7, monsterCardWithBonusStatsAs8AndBonusSet.getCalculatedHealth(), "Hp after addDamage(1)");
         }
 
         @Test
-        void getHpAfterAddedDamage10() {
-            monsterCardWithBonusStatsAs2AndBonusSet.addDamage(10);
-            assertEquals(-8, monsterCardWithBonusStatsAs2AndBonusSet.getHp(), "Hp after addDamage(1)");
+        void getCalculatedHealthAfterAddedDamage10() {
+            monsterCardWithBonusStatsAs8AndBonusSet.addDamage(10);
+            assertEquals(-2, monsterCardWithBonusStatsAs8AndBonusSet.getCalculatedHealth(), "Hp after addDamage(1)");
         }
 
         @Test
-        void getHpAfter5AddedDamage1() {
-            monsterCardWithBonusStatsAs2AndBonusSet.addDamage(1);
-            monsterCardWithBonusStatsAs2AndBonusSet.addDamage(1);
-            monsterCardWithBonusStatsAs2AndBonusSet.addDamage(1);
-            monsterCardWithBonusStatsAs2AndBonusSet.addDamage(1);
-            monsterCardWithBonusStatsAs2AndBonusSet.addDamage(1);
-            assertEquals(-3, monsterCardWithBonusStatsAs2AndBonusSet.getHp(), "Hp after 5 addDamage(1)");
+        void getCalculatedHealthAfter5AddedDamage1() {
+            monsterCardWithBonusStatsAs8AndBonusSet.addDamage(1);
+            assertEquals(7, monsterCardWithBonusStatsAs8AndBonusSet.getCalculatedHealth(), "Hp after 5 addDamage(1)");
+            monsterCardWithBonusStatsAs8AndBonusSet.addDamage(1);
+            assertEquals(6, monsterCardWithBonusStatsAs8AndBonusSet.getCalculatedHealth(), "Hp after 5 addDamage(1)");
+            monsterCardWithBonusStatsAs8AndBonusSet.addDamage(1);
+            assertEquals(5, monsterCardWithBonusStatsAs8AndBonusSet.getCalculatedHealth(), "Hp after 5 addDamage(1)");
+            monsterCardWithBonusStatsAs8AndBonusSet.addDamage(1);
+            assertEquals(4, monsterCardWithBonusStatsAs8AndBonusSet.getCalculatedHealth(), "Hp after 5 addDamage(1)");
+            monsterCardWithBonusStatsAs8AndBonusSet.addDamage(1);
+            assertEquals(3, monsterCardWithBonusStatsAs8AndBonusSet.getCalculatedHealth(), "Hp after 5 addDamage(1)");
         }
 
-        @Test
-        void getDamage() {
-        }
 
         @Test
-        void getAttack() {
+        void isAlive(){
+            assertEquals(true, monsterCardWithBonusStatsAs4AndBonusAsNone.isAlive(), "Should be dead");
+        }
+
+
+        @Test
+        void getCalculatedAttack() {
+            assertEquals(4, monsterCardWithBonusStatsAs4AndBonusAsNone.getCalculatedAttack(), "Failed");
+
         }
 
         @Test
