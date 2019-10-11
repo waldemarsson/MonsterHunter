@@ -27,7 +27,8 @@ abstract public class EffectCard extends Card {
 
     @Override
     public String toString() {
-        return "EFFECTCARD";
+        return effectType == EffectType.NONE ? effectType.toString() :
+                effectType.toString().concat("_").concat(Integer.toString(getId())).concat(": ");
     }
 
     public int getValue() {
