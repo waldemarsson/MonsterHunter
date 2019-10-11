@@ -31,8 +31,9 @@ class MonsterCardFactoryTest {
 
     @Test
     void buildCard() {
-//        MonsterCard m = new MonsterCardFactory().buildCard(id);
-//        assertNotNull(m);
+        MonsterCard m = new MonsterCardFactory().buildCard(id);
+        assertNotNull(m);
+        
     }
 
     @Test
