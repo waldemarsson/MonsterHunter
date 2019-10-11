@@ -40,7 +40,13 @@ class MonsterCardFactoryTest {
     }
 
     @Test
-    void testBuildCard() {
+    void buildCardWithBonus() {
+        for (int i = 0; i < 20; i++) {
+            MonsterCard mc = new MonsterCardFactory().buildCard(id);
+            assertNotNull(mc.getBonus());
+            assertEquals(id, mc.getId());
+            id++;
+        }
     }
 
     @Test
