@@ -49,7 +49,7 @@ public class MonsterCard extends Card {
     }
 
     public int getCalculatedAttack() {
-        return attack;
+        return attack + bonus.getAttackEffect() + buffCard.getAttackEffect() + debuffCard.getAttackEffect();
     }
 
     public int getCalculatedDefense() {

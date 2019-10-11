@@ -76,64 +76,70 @@ class MonsterCardTest {
     @DisplayName("Tests with MonsterCard created")
     class MonsterCardCreated {
 
-        MonsterCard monsterCardWithBonusStatsAs4AndBonusAsNone;
-        MonsterCard monsterCardWithBonusStatsAs8AndBonusSet;
+        MonsterCard cStats4BonusNone;
+        MonsterCard cStats6Bonus4Health;
+        MonsterCard cStats6Bonus4Attack;
+        MonsterCard cStats6Bonus4Defense;
+        MonsterCard cStats1Bonus2Stamina;
 
         @BeforeEach
         void setUp() {
-            monsterCardWithBonusStatsAs4AndBonusAsNone = new MonsterCard(1, "Hunter", 4, 4, 4, 4, new BuffCard(0, "", 0, EffectType.NONE));
-            monsterCardWithBonusStatsAs8AndBonusSet = new MonsterCard(1, "Hunter", 8, 8, 8, 8, new BuffCard(0, "", 0, EffectType.HEALTH));
+            cStats4BonusNone = new MonsterCard(1, "Hunter", 4, 4, 4, 4, new BuffCard(0, "", 0, EffectType.NONE));
+            cStats6Bonus4Health = new MonsterCard(1, "Hunter", 6, 6, 6, 6, new BuffCard(0, "", 4, EffectType.HEALTH));
+            cStats6Bonus4Attack = new MonsterCard(1, "Hunter", 6, 6, 6, 6, new BuffCard(0, "", 4, EffectType.ATTACK));
+            cStats6Bonus4Defense = new MonsterCard(1, "Hunter", 6, 6, 6, 6, new BuffCard(0, "", 4, EffectType.DEFENSE));
+            cStats1Bonus2Stamina = new MonsterCard(1, "Hunter", 1, 1, 1, 1, new BuffCard(0, "", 2, EffectType.STAMINA));
         }
 
         @Test
         void getCalculatedStamina() {
-            assertEquals(1, monsterCardWithBonusStatsAs4AndBonusAsNone.getCalculatedStamina(), "Stamina was not equal");
-            assertEquals(1, monsterCardWithBonusStatsAs8AndBonusSet.getCalculatedStamina(), "Stamina was not equal");
+            assertEquals(1, cStats4BonusNone.getCalculatedStamina(), "Stamina was not equal");
+            assertEquals(1, cStats6Bonus4Health.getCalculatedStamina(), "Stamina was not equal");
         }
 
         @Test
         void getHp() {
-            assertEquals(4, monsterCardWithBonusStatsAs4AndBonusAsNone.getHp(), "Hp was not equal");
-            assertEquals(8, monsterCardWithBonusStatsAs8AndBonusSet.getHp(), "Hp was not equal");
+            assertEquals(4, cStats4BonusNone.getHp(), "Hp was not equal");
+            assertEquals(6, cStats6Bonus4Health.getHp(), "Hp was not equal");
         }
 
         @Test
         void getCalculatedHealthAfterAddedDamage1() {
-            monsterCardWithBonusStatsAs8AndBonusSet.addDamage(1);
-            assertEquals(7, monsterCardWithBonusStatsAs8AndBonusSet.getCalculatedHealth(), "Hp after addDamage(1)");
+            cStats6Bonus4Health.addDamage(1);
+            assertEquals(5, cStats6Bonus4Health.getCalculatedHealth(), "Hp after addDamage(1)");
         }
 
         @Test
         void getCalculatedHealthAfterAddedDamage10() {
-            monsterCardWithBonusStatsAs8AndBonusSet.addDamage(10);
-            assertEquals(-2, monsterCardWithBonusStatsAs8AndBonusSet.getCalculatedHealth(), "Hp after addDamage(1)");
+            cStats6Bonus4Health.addDamage(10);
+            assertEquals(-4, cStats6Bonus4Health.getCalculatedHealth(), "Hp after addDamage(1)");
         }
 
         @Test
         void getCalculatedHealthAfter5AddedDamage1() {
-            monsterCardWithBonusStatsAs8AndBonusSet.addDamage(1);
-            assertEquals(7, monsterCardWithBonusStatsAs8AndBonusSet.getCalculatedHealth(), "Hp after 5 addDamage(1)");
-            monsterCardWithBonusStatsAs8AndBonusSet.addDamage(1);
-            assertEquals(6, monsterCardWithBonusStatsAs8AndBonusSet.getCalculatedHealth(), "Hp after 5 addDamage(1)");
-            monsterCardWithBonusStatsAs8AndBonusSet.addDamage(1);
-            assertEquals(5, monsterCardWithBonusStatsAs8AndBonusSet.getCalculatedHealth(), "Hp after 5 addDamage(1)");
-            monsterCardWithBonusStatsAs8AndBonusSet.addDamage(1);
-            assertEquals(4, monsterCardWithBonusStatsAs8AndBonusSet.getCalculatedHealth(), "Hp after 5 addDamage(1)");
-            monsterCardWithBonusStatsAs8AndBonusSet.addDamage(1);
-            assertEquals(3, monsterCardWithBonusStatsAs8AndBonusSet.getCalculatedHealth(), "Hp after 5 addDamage(1)");
+            cStats6Bonus4Health.addDamage(1);
+            assertEquals(5, cStats6Bonus4Health.getCalculatedHealth(), "Hp after 5 addDamage(1)");
+            cStats6Bonus4Health.addDamage(1);
+            assertEquals(4, cStats6Bonus4Health.getCalculatedHealth(), "Hp after 5 addDamage(1)");
+            cStats6Bonus4Health.addDamage(1);
+            assertEquals(3, cStats6Bonus4Health.getCalculatedHealth(), "Hp after 5 addDamage(1)");
+            cStats6Bonus4Health.addDamage(1);
+            assertEquals(2, cStats6Bonus4Health.getCalculatedHealth(), "Hp after 5 addDamage(1)");
+            cStats6Bonus4Health.addDamage(1);
+            assertEquals(1, cStats6Bonus4Health.getCalculatedHealth(), "Hp after 5 addDamage(1)");
         }
 
 
         @Test
         void isAlive(){
-            assertEquals(true, monsterCardWithBonusStatsAs4AndBonusAsNone.isAlive(), "Should be dead");
+            assertEquals(true, cStats4BonusNone.isAlive(), "Should be dead");
         }
 
 
         @Test
         void getCalculatedAttack() {
-            assertEquals(4, monsterCardWithBonusStatsAs4AndBonusAsNone.getCalculatedAttack(), "Failed");
-
+            assertEquals(4, cStats4BonusNone.getCalculatedAttack(), "Failed");
+            assertEquals(6, cStats6Bonus4Attack.getCalculatedAttack());
         }
 
         @Test
