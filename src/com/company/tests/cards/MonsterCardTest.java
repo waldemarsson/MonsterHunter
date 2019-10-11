@@ -22,7 +22,7 @@ class MonsterCardTest {
     @Test
     void constructorTest() {
         try {
-            new MonsterCard(0, "", 1, 1, 1, 1, new BuffCard(0, "", 0, EffectType.ATTACK));
+            new MonsterCard(0, "", 1, 1, 1, 1, new BuffCard(0, 0, EffectType.ATTACK));
         } catch (Exception e) {
             fail("Failed to initialize MonsterCard");
         }
@@ -31,7 +31,7 @@ class MonsterCardTest {
     @Test
     void constructorTestStaminaNeg() {
         try {
-            new MonsterCard(0, "", -1, 1, 1, 1, new BuffCard(0, "", 0, EffectType.ATTACK));
+            new MonsterCard(0, "", -1, 1, 1, 1, new BuffCard(0, 0, EffectType.ATTACK));
         } catch (Exception e) {
             fail("Failed to initialize with stamina as negative value");
         }
@@ -40,7 +40,7 @@ class MonsterCardTest {
     @Test
     void constructorTestHpNeg() {
         try {
-            new MonsterCard(0, "", 1, -1, 1, 1, new BuffCard(0, "", 0, EffectType.ATTACK));
+            new MonsterCard(0, "", 1, -1, 1, 1, new BuffCard(0, 0, EffectType.ATTACK));
         } catch (Exception e) {
             fail("Failed to initialize with hp as negative value");
         }
@@ -49,7 +49,7 @@ class MonsterCardTest {
     @Test
     void constructorTestAttackNeg() {
         try {
-            new MonsterCard(0, "", 1, 1, -1, 1, new BuffCard(0, "", 0, EffectType.ATTACK));
+            new MonsterCard(0, "", 1, 1, -1, 1, new BuffCard(0, 0, EffectType.ATTACK));
         } catch (Exception e) {
             fail("Failed to initialize with attack as negative value");
         }
@@ -58,7 +58,7 @@ class MonsterCardTest {
     @Test
     void constructorTestDefenseNeg() {
         try {
-            new MonsterCard(0, "", 1, 1, 1, -1, new BuffCard(0, "", 0, EffectType.ATTACK));
+            new MonsterCard(0, "", 1, 1, 1, -1, new BuffCard(0, 0, EffectType.ATTACK));
         } catch (Exception e) {
             fail("Failed to initialize with defense as negative value");
         }
@@ -79,19 +79,18 @@ class MonsterCardTest {
     class MonsterCardCreated {
 
         MonsterCard cStats4BonusNone;
-        MonsterCard cStats6Bonus4Health;
         MonsterCard cStats6Bonus4Attack;
         MonsterCard cStats6Bonus4Defense;
         MonsterCard cStats1Bonus2Stamina;
 
         @BeforeEach
         void setUp() {
-            BuffCard buff = new BuffCard(0, "", 0, EffectType.NONE);
+            BuffCard buff = new BuffCard(0, 0, EffectType.NONE);
 //            System.out.println(buff);
-            cStats4BonusNone = new MonsterCard(1, "Hunter", 4, 4, 4, 4, new BuffCard(0, "", 0, EffectType.NONE));
-            cStats6Bonus4Attack = new MonsterCard(1, "Hunter", 6, 6, 6, 6, new BuffCard(0, "", 4, EffectType.ATTACK));
-            cStats6Bonus4Defense = new MonsterCard(1, "Hunter", 6, 6, 6, 6, new BuffCard(0, "", 4, EffectType.DEFENSE));
-            cStats1Bonus2Stamina = new MonsterCard(1, "Hunter", 1, 1, 1, 1, new BuffCard(0, "", 2, EffectType.STAMINA));
+            cStats4BonusNone = new MonsterCard(1, "Hunter", 4, 4, 4, 4, new BuffCard(0, 0, EffectType.NONE));
+            cStats6Bonus4Attack = new MonsterCard(1, "Hunter", 6, 6, 6, 6, new BuffCard(0, 0, EffectType.ATTACK));
+            cStats6Bonus4Defense = new MonsterCard(1, "Hunter", 6, 6, 6, 6, new BuffCard(0, 0, EffectType.DEFENSE));
+            cStats1Bonus2Stamina = new MonsterCard(1, "Hunter", 1, 1, 1, 1, new BuffCard(0, 0, EffectType.STAMINA));
         }
 
         @Test
@@ -186,7 +185,7 @@ class MonsterCardTest {
         @Test
         void setDebuffCard() {
             DebuffCard initDebuffCard = cStats4BonusNone.getDebuffCard();
-            cStats4BonusNone.setDebuffCard(new DebuffCard(1, "", 2, EffectType.ATTACK));
+            cStats4BonusNone.setDebuffCard(new DebuffCard(1, 2, EffectType.ATTACK));
             assertNotSame(initDebuffCard, cStats4BonusNone.getDebuffCard());
 
             cStats4BonusNone.setDebuffCard(null);
@@ -196,7 +195,7 @@ class MonsterCardTest {
         @Test
         void setBuffCard() {
             BuffCard initBuffCard = cStats4BonusNone.getBuffCard();
-            cStats4BonusNone.setBuffCard(new BuffCard(1, "", 2, EffectType.ATTACK));
+            cStats4BonusNone.setBuffCard(new BuffCard(1, 2, EffectType.ATTACK));
             assertNotSame(initBuffCard, cStats4BonusNone.getBuffCard());
 
             cStats4BonusNone.setBuffCard(null);
@@ -212,7 +211,7 @@ class MonsterCardTest {
 
             @BeforeEach
             void setUp() {
-                card = new MonsterCard(4, "RAT", 1, 4, 4, 4, new BuffCard(0, "", 0, EffectType.NONE));
+                card = new MonsterCard(4, "RAT", 1, 4, 4, 4, new BuffCard(0, 0, EffectType.NONE));
                 testString = null;
             }
 
@@ -224,7 +223,7 @@ class MonsterCardTest {
 
             @Test
             void test2() {
-                card = new MonsterCard(4, "RAT", 1, 4, 2, 4, new BuffCard(0, "", 0, EffectType.NONE));
+                card = new MonsterCard(4, "RAT", 1, 4, 2, 4, new BuffCard(0, 0, EffectType.NONE));
                 testString = "RAT_4: HP 4/4 STA 1 ATT 2 DEF 4";
                 assertEquals(testString, card.toString());
             }
@@ -232,7 +231,7 @@ class MonsterCardTest {
             @Test
             void test4() {
                 testString = "RAT_4: HP 4/4 STA 1 ATT 6 (+2) DEF 4";
-                card.setBuffCard(new BuffCard(5, "", 2, EffectType.ATTACK));
+                card.setBuffCard(new BuffCard(5, 2, EffectType.ATTACK));
                 assertEquals(testString, card.toString());
 
             }
@@ -240,7 +239,7 @@ class MonsterCardTest {
             @Test
             void test5() {
                 testString = "RAT_4: HP 4/4 STA 1 ATT 6 DEF 4 (+3)";
-                card.setBuffCard(new BuffCard(5, "", 3, EffectType.DEFENSE));
+                card.setBuffCard(new BuffCard(5, 3, EffectType.DEFENSE));
                 assertEquals(testString, card.toString());
 
             }
@@ -248,7 +247,7 @@ class MonsterCardTest {
             @Test
             void test6() {
                 testString = "RAT_4: HP 4/4 STA 1 ATT 6 DEF 4 (+3)";
-                card.setBuffCard(new BuffCard(5, "", 1, EffectType.STAMINA));
+                card.setBuffCard(new BuffCard(5, 1, EffectType.STAMINA));
                 assertEquals(testString, card.toString());
 
             }
@@ -256,7 +255,7 @@ class MonsterCardTest {
             @Test
             void test7() {
                 testString = "RAT_4: HP 4/4 STA 1 ATT 6 (-2) DEF 4";
-                card.setBuffCard(new BuffCard(5, "", 2, EffectType.ATTACK));
+                card.setBuffCard(new BuffCard(5, 2, EffectType.ATTACK));
                 assertEquals(testString, card.toString());
 
             }
@@ -264,7 +263,7 @@ class MonsterCardTest {
             @Test
             void test8() {
                 testString = "RAT_4: HP 4/4 STA 1 ATT 6 DEF 4 (-3)";
-                card.setBuffCard(new BuffCard(5, "", 3, EffectType.DEFENSE));
+                card.setBuffCard(new BuffCard(5, 3, EffectType.DEFENSE));
                 assertEquals(testString, card.toString());
 
             }
@@ -272,15 +271,15 @@ class MonsterCardTest {
             @Test
             void test9() {
                 testString = "RAT_4: HP 4/4 STA 1 ATT 6 DEF 4 (-3)";
-                card.setBuffCard(new BuffCard(5, "", 1, EffectType.STAMINA));
+                card.setBuffCard(new BuffCard(5, 1, EffectType.STAMINA));
                 assertEquals(testString, card.toString());
             }
 
             @Test
             void test10() {
                 testString = "RAT_4: HP 4/4 STA 1 ATT 6 (+2) DEF 4 (-3)";
-                card.setBuffCard(new BuffCard(5, "", 2, EffectType.ATTACK));
-                card.setDebuffCard(new DebuffCard(6, "", 3, EffectType.DEFENSE));
+                card.setBuffCard(new BuffCard(5, 2, EffectType.ATTACK));
+                card.setDebuffCard(new DebuffCard(6, 3, EffectType.DEFENSE));
                 assertEquals(testString, card.toString());
 
             }
@@ -288,8 +287,8 @@ class MonsterCardTest {
             @Test
             void test11() {
                 testString = "RAT_4: HP 4/4 STA 1 ATT 6 (+3)(-1) DEF 4";
-                card.setBuffCard(new BuffCard(5, "", 3, EffectType.ATTACK));
-                card.setDebuffCard(new DebuffCard(9, "", 1, EffectType.ATTACK));
+                card.setBuffCard(new BuffCard(5, 3, EffectType.ATTACK));
+                card.setDebuffCard(new DebuffCard(9, 1, EffectType.ATTACK));
                 assertEquals(testString, card.toString());
 
             }
@@ -297,8 +296,8 @@ class MonsterCardTest {
             @Test
             void test12() {
                 testString = "RAT_4: HP 4/4 STA 1 ATT 6 DEF 4 (+3)(-1)";
-                card.setBuffCard(new BuffCard(5, "", 3, EffectType.DEFENSE));
-                card.setDebuffCard(new DebuffCard(9, "", 1, EffectType.DEFENSE));
+                card.setBuffCard(new BuffCard(5, 3, EffectType.DEFENSE));
+                card.setDebuffCard(new DebuffCard(9, 1, EffectType.DEFENSE));
                 assertEquals(testString, card.toString());
             }
 
