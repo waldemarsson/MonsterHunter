@@ -25,11 +25,11 @@ public class MonsterCardFactory {
     }
 
     private int getRandomValue(int min, int max) {
-        return ThreadLocalRandom.current().nextInt(Math.max(min, 1), Math.max(max, 1) + 1);
+        return ThreadLocalRandom.current().nextInt(Math.max(min, 0), Math.max(max, 1) + 1);
     }
 
     private String getRandomMonsterName() {
-        return null;
+        return monsterCardNames.get(getRandomValue(0, monsterCardNames.size() - 1));
     }
 
 }

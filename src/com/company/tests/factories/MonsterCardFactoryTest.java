@@ -62,9 +62,8 @@ class MonsterCardFactoryTest {
         Method method = monsterCardFactory.getClass().getDeclaredMethod("getRandomMonsterName");
         method.setAccessible(true);
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 30; i++) {
             String test = (String) method.invoke(monsterCardFactory);
-            System.out.println(test);
             assertTrue(listOfNames.contains(test));
         }
 
