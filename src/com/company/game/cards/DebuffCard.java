@@ -21,14 +21,6 @@ public class DebuffCard extends EffectCard {
      * @return inverted value
      */
     @Override
-    public int getHealthEffect() {
-        return super.getHealthEffect();
-    }
-
-    /**
-     * @return inverted value
-     */
-    @Override
     public int getAttackEffect() {
         return super.getAttackEffect();
     }
