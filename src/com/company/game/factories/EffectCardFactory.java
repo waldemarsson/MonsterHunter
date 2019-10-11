@@ -9,7 +9,7 @@ public class EffectCardFactory {
     EffectType[] effects;
 
     public EffectCardFactory() {
-        effects = new EffectType[]{EffectType.ATTACK, EffectType.DEFENSE, EffectType.HEALTH, EffectType.STAMINA};
+        effects = new EffectType[]{EffectType.ATTACK, EffectType.DEFENSE, EffectType.STAMINA};
     }
 
 
