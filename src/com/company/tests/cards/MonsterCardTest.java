@@ -150,6 +150,9 @@ class MonsterCardTest {
 
         @Test
         void getDebuffCard() {
+            assertNotNull(cStats4BonusNone.getDebuffCard());
+            assertNotNull(cStats6Bonus4Health.getDebuffCard());
+            assertNotNull(cStats6Bonus4Defense.getDebuffCard());
         }
 
         @Test
