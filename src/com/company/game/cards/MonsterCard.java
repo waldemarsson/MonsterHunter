@@ -69,7 +69,7 @@ public class MonsterCard extends Card {
     }
 
     public void addDamage(int damageTaken) {
-        damage += damageTaken;
+        damage += Math.max(0, damageTaken);
     }
 
     public void addOneToFatigue() {

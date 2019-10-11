@@ -169,8 +169,6 @@ class MonsterCardTest {
 
             cStats4BonusNone.addDamage(-5);
             assertEquals(4, cStats4BonusNone.getDamage());
-
-
         }
 
         @Test
