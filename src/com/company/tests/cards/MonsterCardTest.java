@@ -89,7 +89,6 @@ class MonsterCardTest {
             BuffCard buff = new BuffCard(0, "", 0, EffectType.NONE);
 //            System.out.println(buff);
             cStats4BonusNone = new MonsterCard(1, "Hunter", 4, 4, 4, 4, new BuffCard(0, "", 0, EffectType.NONE));
-            cStats6Bonus4Health = new MonsterCard(1, "Hunter", 6, 6, 6, 6, new BuffCard(0, "", 4, EffectType.HEALTH));
             cStats6Bonus4Attack = new MonsterCard(1, "Hunter", 6, 6, 6, 6, new BuffCard(0, "", 4, EffectType.ATTACK));
             cStats6Bonus4Defense = new MonsterCard(1, "Hunter", 6, 6, 6, 6, new BuffCard(0, "", 4, EffectType.DEFENSE));
             cStats1Bonus2Stamina = new MonsterCard(1, "Hunter", 1, 1, 1, 1, new BuffCard(0, "", 2, EffectType.STAMINA));
@@ -98,44 +97,44 @@ class MonsterCardTest {
         @Test
         void getCalculatedStamina() {
             assertEquals(1, cStats4BonusNone.getCalculatedStamina(), "Stamina was not equal");
-            assertEquals(1, cStats6Bonus4Health.getCalculatedStamina(), "Stamina was not equal");
+            assertEquals(1, cStats6Bonus4Attack.getCalculatedStamina(), "Stamina was not equal");
         }
 
         @Test
         void getHp() {
             assertEquals(4, cStats4BonusNone.getHp(), "Hp was not equal");
-            assertEquals(6, cStats6Bonus4Health.getHp(), "Hp was not equal");
+            assertEquals(6, cStats6Bonus4Attack.getHp(), "Hp was not equal");
         }
 
         @Test
         void getCalculatedHealthAfterAddedDamage1() {
-            cStats6Bonus4Health.addDamage(1);
-            assertEquals(5, cStats6Bonus4Health.getCalculatedHealth(), "Hp after addDamage(1)");
+            cStats6Bonus4Attack.addDamage(1);
+            assertEquals(5, cStats6Bonus4Attack.getCalculatedHealth(), "Hp after addDamage(1)");
         }
 
         @Test
         void getCalculatedHealthAfterAddedDamage10() {
-            cStats6Bonus4Health.addDamage(10);
-            assertEquals(-4, cStats6Bonus4Health.getCalculatedHealth(), "Hp after addDamage(1)");
+            cStats6Bonus4Attack.addDamage(10);
+            assertEquals(-4, cStats6Bonus4Attack.getCalculatedHealth(), "Hp after addDamage(1)");
         }
 
         @Test
         void getCalculatedHealthAfter5AddedDamage1() {
-            cStats6Bonus4Health.addDamage(1);
-            assertEquals(5, cStats6Bonus4Health.getCalculatedHealth(), "Hp after 5 addDamage(1)");
-            cStats6Bonus4Health.addDamage(1);
-            assertEquals(4, cStats6Bonus4Health.getCalculatedHealth(), "Hp after 5 addDamage(1)");
-            cStats6Bonus4Health.addDamage(1);
-            assertEquals(3, cStats6Bonus4Health.getCalculatedHealth(), "Hp after 5 addDamage(1)");
-            cStats6Bonus4Health.addDamage(1);
-            assertEquals(2, cStats6Bonus4Health.getCalculatedHealth(), "Hp after 5 addDamage(1)");
-            cStats6Bonus4Health.addDamage(1);
-            assertEquals(1, cStats6Bonus4Health.getCalculatedHealth(), "Hp after 5 addDamage(1)");
+            cStats6Bonus4Attack.addDamage(1);
+            assertEquals(5, cStats6Bonus4Attack.getCalculatedHealth(), "Hp after 5 addDamage(1)");
+            cStats6Bonus4Attack.addDamage(1);
+            assertEquals(4, cStats6Bonus4Attack.getCalculatedHealth(), "Hp after 5 addDamage(1)");
+            cStats6Bonus4Attack.addDamage(1);
+            assertEquals(3, cStats6Bonus4Attack.getCalculatedHealth(), "Hp after 5 addDamage(1)");
+            cStats6Bonus4Attack.addDamage(1);
+            assertEquals(2, cStats6Bonus4Attack.getCalculatedHealth(), "Hp after 5 addDamage(1)");
+            cStats6Bonus4Attack.addDamage(1);
+            assertEquals(1, cStats6Bonus4Attack.getCalculatedHealth(), "Hp after 5 addDamage(1)");
         }
 
 
         @Test
-        void isAlive(){
+        void isAlive() {
             assertEquals(true, cStats4BonusNone.isAlive(), "Should be dead");
         }
 
@@ -155,7 +154,7 @@ class MonsterCardTest {
         @Test
         void getDebuffCard() {
             assertNotNull(cStats4BonusNone.getDebuffCard());
-            assertNotNull(cStats6Bonus4Health.getDebuffCard());
+            assertNotNull(cStats6Bonus4Attack.getDebuffCard());
             assertNotNull(cStats6Bonus4Defense.getDebuffCard());
         }
 
@@ -204,8 +203,105 @@ class MonsterCardTest {
             assertNotNull(cStats4BonusNone.getBuffCard());
         }
 
-        @Test
-        void testToString() {
+        @Nested
+        @DisplayName("TOSTRING TESTS")
+        class toStringTests {
+
+            MonsterCard card;
+            String testString;
+
+            @BeforeEach
+            void setUp() {
+                card = new MonsterCard(4, "RAT", 1, 4, 4, 4, new BuffCard(0, "", 0, EffectType.NONE));
+                testString = null;
+            }
+
+            @Test
+            void test1() {
+                testString = "HUNTER_1: HP 4/4 STA 1 ATT 4 DEF 4";
+                assertEquals(testString, card.toString());
+            }
+
+            @Test
+            void test2() {
+                testString = "HUNTER_1: HP 4/4 STA 1 ATT 6 DEF 6";
+                assertEquals(testString, card.toString());
+            }
+
+            @Test
+            void test4() {
+                testString = "RAT_4: HP 4/4 STA 1 ATT 6 (+2) DEF 4";
+                card.setBuffCard(new BuffCard(5, "", 2, EffectType.ATTACK));
+                assertEquals(testString, card.toString());
+
+            }
+
+            @Test
+            void test5() {
+                testString = "RAT_4: HP 4/4 STA 1 ATT 6 DEF 4 (+3)";
+                card.setBuffCard(new BuffCard(5, "", 3, EffectType.DEFENSE));
+                assertEquals(testString, card.toString());
+
+            }
+
+            @Test
+            void test6() {
+                testString = "RAT_4: HP 4/4 STA 1 ATT 6 DEF 4 (+3)";
+                card.setBuffCard(new BuffCard(5, "", 1, EffectType.STAMINA));
+                assertEquals(testString, card.toString());
+
+            }
+
+            @Test
+            void test7() {
+                testString = "RAT_4: HP 4/4 STA 1 ATT 6 (-2) DEF 4";
+                card.setBuffCard(new BuffCard(5, "", 2, EffectType.ATTACK));
+                assertEquals(testString, card.toString());
+
+            }
+
+            @Test
+            void test8() {
+                testString = "RAT_4: HP 4/4 STA 1 ATT 6 DEF 4 (-3)";
+                card.setBuffCard(new BuffCard(5, "", 3, EffectType.DEFENSE));
+                assertEquals(testString, card.toString());
+
+            }
+
+            @Test
+            void test9() {
+                testString = "RAT_4: HP 4/4 STA 1 ATT 6 DEF 4 (-3)";
+                card.setBuffCard(new BuffCard(5, "", 1, EffectType.STAMINA));
+                assertEquals(testString, card.toString());
+            }
+
+            @Test
+            void test10() {
+                testString = "RAT_4: HP 4/4 STA 1 ATT 6 (+2) DEF 4 (-3)";
+                card.setBuffCard(new BuffCard(5, "", 2, EffectType.ATTACK));
+                card.setDebuffCard(new DebuffCard(6, "", 3, EffectType.DEFENSE));
+                assertEquals(testString, card.toString());
+
+            }
+
+            @Test
+            void test11() {
+                testString = "RAT_4: HP 4/4 STA 1 ATT 6 (+3)(-1) DEF 4";
+                card.setBuffCard(new BuffCard(5, "", 3, EffectType.ATTACK));
+                card.setDebuffCard(new DebuffCard(9, "", 1, EffectType.ATTACK));
+                assertEquals(testString, card.toString());
+
+            }
+
+            @Test
+            void test12() {
+                testString = "RAT_4: HP 4/4 STA 1 ATT 6 DEF 4 (+3)(-1)";
+                card.setBuffCard(new BuffCard(5, "", 3, EffectType.DEFENSE));
+                card.setDebuffCard(new DebuffCard(9, "", 1, EffectType.DEFENSE));
+                assertEquals(testString, card.toString());
+            }
+
+
         }
     }
 }
