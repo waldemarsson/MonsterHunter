@@ -10,21 +10,23 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class MagicCardFactory {
-    // STUN, HEAL_CARD, HEAL_PLAYER, ATTACK_CARD, ATTACK_PLAYER, REMOVE_BUFF, REMOVE_DEBUFF
 
     public MagicCardFactory() {
     }
 
     public MagicCard buildCard(int id) {
-        return null;
+        return new MagicCard(id, getRandomMagicType(), isTargeted(), getRandomValue());
     }
-
 
     /**
      * @return 3 - 5
      */
     private int getRandomValue() {
         return ThreadLocalRandom.current().nextInt(3, 6);
+    }
+
+    private boolean isTargeted() {
+        return getRandomValue() == 3 ? true : false;
     }
 
 
