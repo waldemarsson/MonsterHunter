@@ -77,5 +77,11 @@ class EffectCardTest {
 
     @Test
     void testToString() {
+        assertEquals("STAMINA_2: ", new EffectCardSuperTest(2, 3, EffectType.STAMINA).toString());
+    }
+
+    @Test
+    void testToStringNoneEffect(){
+        assertEquals("NONE", new EffectCardSuperTest(2, 3, EffectType.NONE).toString());
     }
 }
