@@ -2,6 +2,7 @@ package com.company.tests.cards;
 
 import com.company.game.cards.BuffCard;
 import com.company.game.cards.Card;
+import com.company.game.cards.DebuffCard;
 import com.company.game.cards.MonsterCard;
 import com.company.game.enums.EffectType;
 import org.junit.jupiter.api.*;
@@ -185,6 +186,13 @@ class MonsterCardTest {
 
         @Test
         void setDebuffCard() {
+            DebuffCard initDebuffCard = cStats4BonusNone.getDebuffCard();
+            cStats4BonusNone.setDebuffCard(new DebuffCard(1, "", 2, EffectType.ATTACK));
+            assertNotSame(initDebuffCard, cStats4BonusNone.getDebuffCard());
+
+            DebuffCard initDebuffCard2 = cStats4BonusNone.getDebuffCard();
+            cStats4BonusNone.setDebuffCard(null);
+            assertNotNull(cStats4BonusNone.getDebuffCard());
         }
 
         @Test
