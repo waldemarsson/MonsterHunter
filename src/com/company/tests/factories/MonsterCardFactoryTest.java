@@ -45,8 +45,12 @@ class MonsterCardFactoryTest {
         Method method = monsterCardFactory.getClass().getDeclaredMethod("getRandomValue", int.class, int.class);
         method.setAccessible(true);
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 50; i++) {
             int test = (int) method.invoke(monsterCardFactory, 1, 4);
+            assertTrue(test >= 1 && test <= 4);
+        }
+        for (int i = 0; i < 50; i++) {
+            int test = (int) method.invoke(monsterCardFactory, -1, 4);
             assertTrue(test >= 1 && test <= 4);
         }
 

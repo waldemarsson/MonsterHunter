@@ -6,6 +6,7 @@ import com.company.game.cards.MonsterCard;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class MonsterCardFactory {
 
@@ -24,7 +25,7 @@ public class MonsterCardFactory {
     }
 
     private int getRandomValue(int min, int max) {
-        return 0;
+        return ThreadLocalRandom.current().nextInt(min, max + 1);
     }
 
     private String getRandomMonsterName() {
