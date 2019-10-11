@@ -23,11 +23,11 @@ public class MonsterCardFactory {
         return null;
     }
 
-    public int getRandomValue(int min, int max) {
+    private int getRandomValue(int min, int max) {
         return 0;
     }
 
-    public String getRandomMonsterName() {
+    private String getRandomMonsterName() {
         return null;
     }
 
