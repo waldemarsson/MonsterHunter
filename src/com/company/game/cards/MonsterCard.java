@@ -24,8 +24,8 @@ public class MonsterCard extends Card {
         this.bonus = bonus;
         this.fatigue = 0;
         this.damage = 0;
-        this.buffCard = new BuffCard(0, "", 0, EffectType.NONE);
-        this.debuffCard = new DebuffCard(0, "", 0, EffectType.NONE);
+        this.buffCard = new BuffCard(0, 0, EffectType.NONE);
+        this.debuffCard = new DebuffCard(0, 0, EffectType.NONE);
     }
 
     public int getCalculatedStamina() {
@@ -37,7 +37,7 @@ public class MonsterCard extends Card {
     }
 
     public int getCalculatedHealth() {
-        return hp - damage + bonus.getHealthEffect() + buffCard.getHealthEffect() + debuffCard.getHealthEffect();
+        return hp - damage;
     }
 
     public boolean isAlive() {
