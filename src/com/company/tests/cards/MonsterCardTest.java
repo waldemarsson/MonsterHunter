@@ -143,7 +143,9 @@ class MonsterCardTest {
         }
 
         @Test
-        void getDefense() {
+        void getCalculatedDefense() {
+            assertEquals(4, cStats4BonusNone.getCalculatedDefense(), "Failed");
+            assertEquals(6, cStats6Bonus4Defense.getCalculatedDefense());
         }
 
         @Test
