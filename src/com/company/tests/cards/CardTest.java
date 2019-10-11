@@ -28,7 +28,7 @@ class CardTest {
 
     @Test
     void belowZeroIdTest(){
-        assertEquals(0, new CardSuperTest(-1, "name"), "Failed to set id to zero if negative param");
+        assertEquals(0, new CardSuperTest(-1, "name").getId(), "Failed to set id to zero if negative param");
     }
 
 
@@ -39,7 +39,7 @@ class CardTest {
 
     @Test
     void emptyNameTest(){
-        assertEquals("", new CardSuperTest(1, ""), "Failed to set empty name");
+        assertEquals("", new CardSuperTest(1, "").getName(), "Failed to set empty name");
     }
 
     @Test
@@ -56,7 +56,7 @@ class CardTest {
 
     @Test
     void testToString() {
-        assertEquals("HELLO_1", new CardSuperTest(1, "hello").toString(),
+        assertEquals("HELLO_1: ", new CardSuperTest(1, "hello").toString(),
                 "Failed to get proper toString for card");
     }
 }
