@@ -218,13 +218,14 @@ class MonsterCardTest {
 
             @Test
             void test1() {
-                testString = "HUNTER_1: HP 4/4 STA 1 ATT 4 DEF 4";
+                testString = "RAT_4: HP 4/4 STA 1 ATT 4 DEF 4";
                 assertEquals(testString, card.toString());
             }
 
             @Test
             void test2() {
-                testString = "HUNTER_1: HP 4/4 STA 1 ATT 6 DEF 6";
+                card = new MonsterCard(4, "RAT", 1, 4, 2, 4, new BuffCard(0, "", 0, EffectType.NONE));
+                testString = "RAT_4: HP 4/4 STA 1 ATT 2 DEF 4";
                 assertEquals(testString, card.toString());
             }
 
