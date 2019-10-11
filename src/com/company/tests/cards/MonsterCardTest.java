@@ -159,15 +159,18 @@ class MonsterCardTest {
         }
 
         @Test
-        void getBuffCard() {
-        }
-
-        @Test
-        void getBonus() {
-        }
-
-        @Test
         void addDamage() {
+            cStats4BonusNone.addDamage(1);
+            assertEquals(1, cStats4BonusNone.getDamage());
+            cStats4BonusNone.addDamage(2);
+            assertEquals(3, cStats4BonusNone.getDamage());
+            cStats4BonusNone.addDamage(1);
+            assertEquals(4, cStats4BonusNone.getDamage());
+
+            cStats4BonusNone.addDamage(-5);
+            assertEquals(4, cStats4BonusNone.getDamage());
+
+
         }
 
         @Test
