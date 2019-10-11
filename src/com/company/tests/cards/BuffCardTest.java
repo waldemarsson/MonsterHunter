@@ -10,6 +10,6 @@ class BuffCardTest {
 
     @Test
     void testToString() {
-        assertEquals("DEFENSE_10: +3", new BuffCard(10, 3, EffectType.DEFENSE));
+        assertEquals("DEFENSE_10: +3", new BuffCard(10, 3, EffectType.DEFENSE).toString());
     }
 }
