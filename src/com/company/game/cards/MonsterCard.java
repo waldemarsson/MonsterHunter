@@ -87,7 +87,9 @@ public class MonsterCard extends Card {
     }
 
     public void setBuffCard(BuffCard buffCard) {
-        this.buffCard = buffCard;
+        if (buffCard != null) {
+            this.buffCard = buffCard;
+        }
     }
 
     @Override
