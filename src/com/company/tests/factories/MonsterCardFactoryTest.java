@@ -41,7 +41,6 @@ class MonsterCardFactoryTest {
 
     @Test
     void getRandomValue() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-//        monsterCardFactory.getClass().getDeclaredMethod("getRandomValue", 1, 3);
         Method method = monsterCardFactory.getClass().getDeclaredMethod("getRandomValue", int.class, int.class);
         method.setAccessible(true);
 
@@ -50,10 +49,9 @@ class MonsterCardFactoryTest {
             assertTrue(test >= 1 && test <= 4);
         }
         for (int i = 0; i < 50; i++) {
-            int test = (int) method.invoke(monsterCardFactory, -1, 4);
-            assertTrue(test >= 1 && test <= 4);
+            int test = (int) method.invoke(monsterCardFactory, -1, -2111);
+            assertTrue(test >= 0 && test <= 4);
         }
-
     }
 
     @Test
