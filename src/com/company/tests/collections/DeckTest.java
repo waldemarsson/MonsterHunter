@@ -81,15 +81,14 @@ class DeckTest {
 
     @Test
     void drawCard() {
-        int initCardsInDeck = deck.getCards().size();
-        for (int i = 0; i < 100; i++) {
-            assertEquals(initCardsInDeck - i, deck.getCards().size());
-
+        int sizeOfDeck = deck.getCards().size();
+        for (int i = 0; i <= sizeOfDeck; i++) {
             Card card = deck.drawCard();
             assertNotNull(card);
             assertTrue(card.getId() >= 0);
             assertTrue(card.toString().length() > 0);
         }
+        assertNotNull(deck.drawCard());
     }
 
     @Test

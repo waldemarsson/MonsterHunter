@@ -1,6 +1,9 @@
 package com.company.game.collections;
 
+import com.company.game.cards.BuffCard;
 import com.company.game.cards.Card;
+import com.company.game.cards.EffectCard;
+import com.company.game.enums.EffectType;
 
 import java.util.List;
 
@@ -26,7 +29,9 @@ public class Deck {
      * @return a Card at index 0 from cards, removes Card at the same time
      */
     public Card drawCard() {
-        return cards.remove(0);
+        // TODO: Visste inte riktigt hur jag skulle göra här, skapa my klass och returnera den eller returnera null?
+        return hasCards() ? cards.remove(0) : new BuffCard(0, 0, EffectType.NONE);
+//        return cards.remove(0);
     }
 
     /**
