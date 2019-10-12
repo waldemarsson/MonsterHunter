@@ -7,7 +7,10 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class MagicCardFactory {
 
+    private final MagicType[] magicTypes;
+
     public MagicCardFactory() {
+        magicTypes = MagicType.values();
     }
 
     public MagicCard buildCard(int id) {
@@ -33,7 +36,7 @@ public class MagicCardFactory {
 
 
     private MagicType getRandomMagicType() {
-        return MagicType.values()[(ThreadLocalRandom.current().nextInt(0, MagicType.values().length))];
+        return magicTypes[(ThreadLocalRandom.current().nextInt(0, MagicType.values().length))];
     }
 
 }
