@@ -81,7 +81,12 @@ class DeckTest {
 
     @Test
     void drawCard() {
-        
+        for (int i = 0; i < 100; i++) {
+            Card card = deck.drawCard();
+            assertNotNull(card);
+            assertTrue(card.getId() >= 0);
+            assertTrue(card.getName().matches("^[A-Z]+[_][0-9]+$"));
+        }
     }
 
     @Test
