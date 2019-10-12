@@ -2,7 +2,7 @@ package com.company.game.cards;
 
 import com.company.game.enums.MagicType;
 
-public class MagicCard extends Card{
+public class MagicCard extends Card {
 
     private final MagicType magicType;
     private final boolean targeted;
@@ -29,6 +29,10 @@ public class MagicCard extends Card{
 
     @Override
     public String toString() {
-        return null;
+        String str = super.getName();
+        if (!targeted) str = str.concat("_BOMB");
+        str = str.concat("_" + super.getId());
+        if (value > 0) str = str.concat(": VAL " + value);
+        return str;
     }
 }
