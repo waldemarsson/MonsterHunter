@@ -7,7 +7,7 @@ abstract public class Card {
 
     public Card(int id, String name) {
         this.id = Math.max(0, id);
-        this.name = name != null ? name.replaceAll("(?i)[^a-z]", "").toUpperCase() : "";
+        this.name = name != null ? name.replaceAll("(?i)[^a-z__]", "").toUpperCase() : "";
     }
 
     public int getId() {
