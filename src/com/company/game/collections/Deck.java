@@ -26,7 +26,7 @@ public class Deck {
      * @return a Card at index 0 from cards, removes Card at the same time
      */
     public Card drawCard() {
-        return null;
+        return cards.remove(0);
     }
 
     /**
