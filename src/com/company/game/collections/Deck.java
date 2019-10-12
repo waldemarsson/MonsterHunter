@@ -38,7 +38,7 @@ public class Deck {
      * @return size of cards
      */
     public int cardsLeft() {
-        return 0;
+        return cards.size();
     }
 
     public List<Card> getCards() {
