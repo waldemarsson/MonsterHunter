@@ -31,8 +31,9 @@ public class MagicCardFactory {
 
 
     private MagicType getRandomMagicType() {
-        List<MagicType> types = Arrays.asList(MagicType.ATTACK_CARD, MagicType.ATTACK_PLAYER, MagicType.HEAL_CARD, MagicType.HEAL_PLAYER, MagicType.REMOVE_BUFF, MagicType.REMOVE_DEBUFF, MagicType.STUN);
-        return types.get(ThreadLocalRandom.current().nextInt(0, types.size()));
+//        List<MagicType> types = Arrays.asList(MagicType.ATTACK_CARD, MagicType.ATTACK_PLAYER, MagicType.HEAL_CARD, MagicType.HEAL_PLAYER, MagicType.REMOVE_BUFF, MagicType.REMOVE_DEBUFF, MagicType.STUN);
+
+        return MagicType.values()[(ThreadLocalRandom.current().nextInt(0, MagicType.values().length))];
     }
 
 }
