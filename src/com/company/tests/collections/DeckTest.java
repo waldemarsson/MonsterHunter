@@ -93,5 +93,12 @@ class DeckTest {
 
     @Test
     void cardsLeft() {
+        int sizeOfDeck = deck.getCards().size();
+        for (int i = 0; i <= sizeOfDeck; i++) {
+            assertEquals(sizeOfDeck - i, deck.cardsLeft());
+            deck.drawCard();
+
+        }
+        assertEquals(0 , deck.cardsLeft());
     }
 }
