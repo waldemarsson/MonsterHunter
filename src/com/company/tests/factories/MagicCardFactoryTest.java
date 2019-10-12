@@ -1,8 +1,6 @@
 package com.company.tests.factories;
 
-import com.company.game.cards.EffectCard;
 import com.company.game.cards.MagicCard;
-import com.company.game.enums.EffectType;
 import com.company.game.enums.MagicType;
 import com.company.game.factories.MagicCardFactory;
 import org.junit.jupiter.api.Test;
@@ -21,8 +19,8 @@ class MagicCardFactoryTest {
             MagicCard c = magicCardFactory.buildCard(id);
             assertEquals(id, c.getId());
             assertNotNull(c.getMagicType());
+            assertSame(MagicType.class, c.getMagicType().getClass());
             assertTrue(c.getValue() >= 3 || c.getValue() <= 5);
-
             id++;
         }
     }
