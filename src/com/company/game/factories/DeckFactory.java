@@ -18,10 +18,14 @@ public class DeckFactory {
 
 
     /**
-     * @implNote 20 monster, 10 magic, 5 buff, 5 debuff
-     * @return Deck with 40 Cards
+     * @param monsters num of normal monsters
+     * @param epics num of epic monsters
+     * @param magics num of magic
+     * @param buffs num of buffs
+     * @param debuffs num of debuffs
+     * @return
      */
-    public Deck buildDeck() {
+    public Deck buildDeck(int monsters, int epics, int magics, int buffs, int debuffs) {
         return null;
     }
 
