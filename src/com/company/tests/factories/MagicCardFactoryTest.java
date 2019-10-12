@@ -19,13 +19,11 @@ class MagicCardFactoryTest {
         magicCardFactory = new MagicCardFactory();
         for (int i = 0; i < 40; i++) {
             MagicCard c = magicCardFactory.buildCard(id);
-            id++;
-            MagicCard c2 = magicCardFactory.buildCard(id);
-            id++;
+            assertEquals(id, c.getId());
+            assertNotNull(c.getMagicType());
+            assertTrue(c.getValue() >= 3 || c.getValue() <= 5);
 
-            assertNotNull(c);
-            assertNotNull(c2);
-            assertNotEquals(c.getId(), c2.getId());
+            id++;
         }
     }
 }
