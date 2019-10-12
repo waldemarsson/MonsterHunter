@@ -18,7 +18,7 @@ public class Deck {
      * @return true if cards != empty
      */
     public boolean hasCards() {
-        return false;
+        return cards.size() > 0;
     }
 
 

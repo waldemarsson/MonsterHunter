@@ -8,10 +8,7 @@ import com.company.game.collections.Deck;
 import com.company.game.factories.EffectCardFactory;
 import com.company.game.factories.MagicCardFactory;
 import com.company.game.factories.MonsterCardFactory;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +59,7 @@ class DeckTest {
         void create() {
             try {
                 deck = new Deck(list);
+                deck = new Deck(new ArrayList<>());
             } catch (Exception e) {
                 fail();
             }
@@ -77,13 +75,13 @@ class DeckTest {
 
     @Test
     void hasCards() {
-        Deck deckNoCards = new Deck(list);
-        assertNotNull(deckNoCards.getCards());
-        assertTrue(deckNoCards.hasCards());
+        assertNotNull(deck.getCards());
+        assertTrue(deck.hasCards());
     }
 
     @Test
     void drawCard() {
+        
     }
 
     @Test
