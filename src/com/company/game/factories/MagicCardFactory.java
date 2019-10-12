@@ -11,7 +11,13 @@ public class MagicCardFactory {
     }
 
     public MagicCard buildCard(int id) {
-        return new MagicCard(id, getRandomMagicType(), isTargeted(), getRandomValue());
+        MagicType magicType = getRandomMagicType();
+        boolean targetsPlayer = magicType.name().contains("PLAYER");
+        boolean isBuff = magicType.name().contains("BUFF");
+        boolean targeted = targetsPlayer ? true : isTargeted();
+        int value = isBuff ? 0 : getRandomValue();
+
+        return new MagicCard(id, magicType, targeted, value);
     }
 
     /**

@@ -17,7 +17,7 @@ class MagicCardTest {
 
     @Test
     void testToString2() {
-        String str = "STUN_1: VAL 2 AFFECTS ALL";
+        String str = "STUN_BOMB_1: VAL 2";
         MagicCard m = new MagicCard(1, MagicType.STUN, false, 2);
         assertEquals(str, m.toString());
     }
@@ -31,15 +31,15 @@ class MagicCardTest {
 
     @Test
     void testToString4() {
-        String str = "SPA_TREATMENT_23: VAL 3";
-        MagicCard m = new MagicCard(23, MagicType.HEAL_PLAYER, true, 3);
+        String str = "SPA_TREATMENT_23";
+        MagicCard m = new MagicCard(23, MagicType.HEAL_PLAYER, true, 0);
         assertEquals(str, m.toString());
     }
 
     @Test
     void testToString5() {
-        String str = "SPA_TREATMENT_23: VAL 10 AFFECTS ALL";
-        MagicCard m = new MagicCard(23, MagicType.HEAL_PLAYER, false, 10);
+        String str = "CRITIQUE_BOMB_23";
+        MagicCard m = new MagicCard(23, MagicType.REMOVE_BUFF, false, 0);
         assertEquals(str, m.toString());
     }
 
@@ -52,8 +52,8 @@ class MagicCardTest {
 
     @Test
     void testToString7() {
-        String str = "CRITIQUE_1: VAL 3";
-        MagicCard m = new MagicCard(1, MagicType.REMOVE_BUFF, true, 3);
+        String str = "CRITIQUE_1";
+        MagicCard m = new MagicCard(1, MagicType.REMOVE_BUFF, true, 0);
         assertEquals(str, m.toString());
     }
 

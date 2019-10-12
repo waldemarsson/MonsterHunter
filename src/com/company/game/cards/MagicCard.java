@@ -29,8 +29,10 @@ public class MagicCard extends Card {
 
     @Override
     public String toString() {
-        String str = super.toString().concat("VAL " + value);
-        if(!targeted) str = str.concat(" AFFECTS ALL");
+        String str = super.getName();
+        if (!targeted) str = str.concat("_BOMB");
+        str = str.concat("_" + super.getId());
+        if (value > 0) str = str.concat(": VAL " + value);
         return str;
     }
 }
