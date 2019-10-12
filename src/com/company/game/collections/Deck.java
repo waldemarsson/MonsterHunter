@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Deck {
 
+
     private List<Card> cards;
 
     public Deck(List<Card> cards) {
@@ -24,7 +25,7 @@ public class Deck {
     /**
      * @return a Card at index 0 from cards, removes Card at the same time
      */
-    public Card drawCard(){
+    public Card drawCard() {
         return null;
     }
 
@@ -35,5 +36,8 @@ public class Deck {
         return 0;
     }
 
+    public List<Card> getCards() {
+        return cards;
+    }
 
 }
