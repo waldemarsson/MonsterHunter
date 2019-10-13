@@ -83,22 +83,26 @@ class DeckTest {
     void drawCard() {
         int sizeOfDeck = deck.getCards().size();
         for (int i = 0; i <= sizeOfDeck; i++) {
-            Card card = deck.drawCard();
-            assertNotNull(card);
-            assertTrue(card.getId() >= 0);
-            assertTrue(card.toString().length() > 0);
+            if (deck.hasCards()) {
+                Card card = deck.drawCard();
+                assertNotNull(card);
+                assertTrue(card.getId() >= 0);
+                assertTrue(card.toString().length() > 0);
+            }
         }
-        assertNotNull(deck.drawCard());
+        assertNull(deck.drawCard());
     }
 
     @Test
     void cardsLeft() {
         int sizeOfDeck = deck.getCards().size();
         for (int i = 0; i <= sizeOfDeck; i++) {
-            assertEquals(sizeOfDeck - i, deck.cardsLeft());
-            deck.drawCard();
+            if (deck.hasCards()) {
+                assertEquals(sizeOfDeck - i, deck.cardsLeft());
+                deck.drawCard();
+            }
 
         }
-        assertEquals(0 , deck.cardsLeft());
+        assertEquals(0, deck.cardsLeft());
     }
 }

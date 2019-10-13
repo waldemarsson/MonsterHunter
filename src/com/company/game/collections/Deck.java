@@ -21,7 +21,7 @@ public class Deck {
      * @return true if cards != empty
      */
     public boolean hasCards() {
-        return cards.size() > 0;
+        return !cards.isEmpty();
     }
 
 
@@ -29,9 +29,9 @@ public class Deck {
      * @return a Card at index 0 from cards, removes Card at the same time
      */
     public Card drawCard() {
-        // TODO: Visste inte riktigt hur jag skulle göra här, skapa my klass och returnera den eller returnera null?
-        return hasCards() ? cards.remove(0) : new BuffCard(0, 0, EffectType.NONE);
-//        return cards.remove(0);
+        if (!hasCards()) return null;
+
+        return cards.remove(0);
     }
 
     /**
