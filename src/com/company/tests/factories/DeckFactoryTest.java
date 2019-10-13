@@ -8,8 +8,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -120,11 +122,17 @@ class DeckFactoryTest {
 
             Deck deck = deckFactory.buildDeck(10, 10, 10, 10, 10);
             assertEquals(50, deck.cardsLeft());
-            List<Card> monsters = deck.getCards().subList(0,9);
-            List<Card> epics = deck.getCards().subList(10,19);
-            List<Card> magics = deck.getCards().subList(20,29);
-            List<Card> buffs = deck.getCards().subList(30,39);
-            List<Card> debuffs = deck.getCards().subList(40,49);
+            List<Card> monsters = deck.getCards().subList(0, 10);
+            List<Card> epics = deck.getCards().subList(10, 20);
+            List<Card> magics = deck.getCards().subList(20, 30);
+            List<Card> buffs = deck.getCards().subList(30, 40);
+            List<Card> debuffs = deck.getCards().subList(40, 50);
+
+            List<Card> allCards = Stream.of(monsters, epics, magics, buffs, debuffs)
+                    .flatMap(Collection::stream)
+                    .collect(Collectors.toList());
+            assertEquals(50, allCards.size());
+            assertTrue(deck.getCards().containsAll(allCards));
 
             assertTrue(monsters.stream().filter(card -> card.getClass() == MonsterCard.class).filter(card -> ((MonsterCard) card).getBonus().getValue() == 0).count() < 10);
             assertTrue(epics.stream().filter(card -> card.getClass() == MonsterCard.class).filter(card -> ((MonsterCard) card).getBonus().getValue() > 0).count() < 10);
