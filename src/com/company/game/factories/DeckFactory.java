@@ -38,7 +38,7 @@ public class DeckFactory {
         cards.addAll(buildBuffCards(buffs));
         cards.addAll(buildDebuffCards(debuffs));
 
-        return new Deck(cards);
+        return shuffle(new Deck(cards));
     }
 
     private void increaseCreatedCards() {
@@ -95,7 +95,7 @@ public class DeckFactory {
      * @param deck
      * @return new shuffled Deck
      */
-    public Deck shuffle(Deck deck) {
+    private Deck shuffle(Deck deck) {
         return null;
     }
 }
