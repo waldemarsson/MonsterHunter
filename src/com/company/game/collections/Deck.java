@@ -1,9 +1,6 @@
 package com.company.game.collections;
 
-import com.company.game.cards.BuffCard;
 import com.company.game.cards.Card;
-import com.company.game.cards.EffectCard;
-import com.company.game.enums.EffectType;
 
 import java.util.List;
 
@@ -30,7 +27,6 @@ public class Deck {
      */
     public Card drawCard() {
         if (!hasCards()) return null;
-
         return cards.remove(0);
     }
 
