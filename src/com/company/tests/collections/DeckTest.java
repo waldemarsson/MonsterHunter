@@ -68,17 +68,13 @@ class DeckTest {
 
     @Test
     void hasCardsNoCards() {
-        Deck deckNoCards = new Deck(new ArrayList<>());
-        assertNotNull(deckNoCards.getCards());
-        assertFalse(deckNoCards.hasCards());
+        assertFalse(new Deck(new ArrayList<>()).hasCards());
     }
 
     @Test
     void hasCards() {
         assertNotNull(deck.getCards());
         assertTrue(deck.hasCards());
-        
-        assertFalse(new Deck(new ArrayList<>()).hasCards());
     }
 
     @Test
