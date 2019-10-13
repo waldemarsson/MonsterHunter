@@ -5,6 +5,7 @@ import com.company.game.cards.Card;
 import com.company.game.collections.Deck;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class DeckFactory {
@@ -96,6 +97,7 @@ public class DeckFactory {
      * @return new shuffled Deck
      */
     private Deck shuffle(Deck deck) {
-        return null;
+        Collections.shuffle(deck.getCards());
+        return new Deck(deck.getCards());
     }
 }
