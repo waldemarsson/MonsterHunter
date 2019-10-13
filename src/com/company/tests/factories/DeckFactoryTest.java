@@ -63,18 +63,11 @@ class DeckFactoryTest {
 
     @Test
     void deckIsRightAmountOfMonsters() {
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 100; i++) {
             int numMonster = ThreadLocalRandom.current().nextInt(5, 50);
-
-            Deck deck = deckFactory.buildDeck(numMonster, 10, 10 ,10 ,10);
-            deck.getCards().stream().forEach(card -> {
-                System.out.println(card.getClass());
-                System.out.println(MonsterCard.class);
-            });
-            assertEquals(numMonster, deck.getCards().stream().filter(card -> card.getClass() == MonsterCard.class));
+            Deck deck = deckFactory.buildDeck(numMonster, 10, 10, 10, 10);
+            assertEquals(numMonster, deck.getCards().stream().filter(card -> card.getClass() == MonsterCard.class).filter(card -> ((MonsterCard) card).getBonus().getValue() == 0).count());
         }
-
-
     }
 
     @Test
