@@ -38,7 +38,6 @@ public class DeckFactory {
         cards.addAll(buildMagicCards(magics));
         cards.addAll(buildBuffCards(buffs));
         cards.addAll(buildDebuffCards(debuffs));
-//        return new Deck(cards);
         return shuffle(new Deck(cards));
     }
 
