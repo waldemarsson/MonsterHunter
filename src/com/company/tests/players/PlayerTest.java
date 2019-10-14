@@ -11,7 +11,11 @@ class PlayerTest {
 
     @Test
     void constructorTest(){
-
+        try{
+            new Player("Player1", new DeckFactory().buildDeck(10, 10, 10, 10, 10));
+        } catch (Exception e){
+            fail(); 
+        }
     }
 
     @Test
