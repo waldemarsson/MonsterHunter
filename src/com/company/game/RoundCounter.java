@@ -14,14 +14,14 @@ public class RoundCounter {
      *
      */
     public int getTurn() {
-        return 0;
+        return currentRound % 2;
     }
 
 
     /**
      * increase currentRound
      */
-    public void nextPlayer() {
-
+    public void nextTurn() {
+        currentRound++;
     }
 }
