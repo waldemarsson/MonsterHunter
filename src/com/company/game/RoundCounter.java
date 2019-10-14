@@ -14,7 +14,7 @@ public class RoundCounter {
      *
      */
     public int getTurn() {
-        return 0;
+        return currentRound % 2;
     }
 
 
@@ -22,6 +22,6 @@ public class RoundCounter {
      * increase currentRound
      */
     public void nextTurn() {
-
+        currentRound++;
     }
 }
