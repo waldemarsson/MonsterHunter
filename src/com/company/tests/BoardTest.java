@@ -12,8 +12,7 @@ import com.company.game.factories.EffectCardFactory;
 import com.company.game.factories.MagicCardFactory;
 import com.company.game.factories.MonsterCardFactory;
 import com.company.game.players.Player;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
@@ -78,115 +77,230 @@ class BoardTest {
         assertEquals(1, monsterPiles[roundCounter.getTurn()].size());
     }
 
-    @Test
-    void placeBuffOwnCard() {
-        board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
-        BuffCard buff = (BuffCard) new EffectCardFactory().buildEffectCard(2, true);
-        MonsterCard target = (MonsterCard) monsterPiles[roundCounter.getTurn()].get(0);
+    @Nested
+    @DisplayName("TESTS placeEffectOnMonsterWithId")
+    class placeEffectOnMonsterWithId {
+        @Test
+        void placeBuffOwnCard() {
+            board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
+            BuffCard buff = (BuffCard) new EffectCardFactory().buildEffectCard(2, true);
+            MonsterCard target = (MonsterCard) monsterPiles[roundCounter.getTurn()].get(0);
 
-        assertEquals(0, target.getBuffCard().getValue());
-        assertTrue(board.placeEffectOnMonsterWithId(buff, 1));
-        assertTrue(target.getBuffCard().getValue() > 0);
+            assertEquals(0, target.getBuffCard().getValue());
+            assertTrue(board.placeEffectOnMonsterWithId(buff, 1));
+            assertTrue(target.getBuffCard().getValue() > 0);
+        }
+
+        @Test
+        void placeDebuffOwnCard() {
+            board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
+            DebuffCard debuff = (DebuffCard) new EffectCardFactory().buildEffectCard(2, false);
+            MonsterCard target = (MonsterCard) monsterPiles[roundCounter.getTurn()].get(0);
+
+            assertEquals(0, target.getDebuffCard().getValue());
+            assertFalse(board.placeEffectOnMonsterWithId(debuff, 1));
+            assertTrue(target.getDebuffCard().getValue() == 0);
+        }
+
+        @Test
+        void placeDebuffOpponentCard() {
+            board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
+            MonsterCard target = (MonsterCard) monsterPiles[roundCounter.getTurn()].get(0);
+            roundCounter.nextTurn();
+
+            DebuffCard debuff = (DebuffCard) new EffectCardFactory().buildEffectCard(2, false);
+
+            assertEquals(0, target.getDebuffCard().getValue());
+            assertTrue(board.placeEffectOnMonsterWithId(debuff, 1));
+            assertTrue(target.getDebuffCard().getValue() < 0);
+        }
+
+        @Test
+        void placeBuffOpponentCard() {
+            board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
+            MonsterCard target = (MonsterCard) monsterPiles[roundCounter.getTurn()].get(0);
+            roundCounter.nextTurn();
+
+            BuffCard buff = (BuffCard) new EffectCardFactory().buildEffectCard(2, true);
+
+            assertEquals(0, target.getBuffCard().getValue());
+            assertFalse(board.placeEffectOnMonsterWithId(buff, 1));
+            assertTrue(target.getBuffCard().getValue() == 0);
+        }
+    }
+
+    @Nested
+    @DisplayName("TESTS useMagicOnMonster")
+    class useMagicOnMonster {
+
+        @Test
+        void attackMonsterWithMonster() {
+            //Player 1 turn: places card
+            board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
+            roundCounter.nextTurn();
+
+
+            //Player 2 turn: places card
+            board.placeMonsterOnBoard(monsterCardFactory.buildCard(2));
+            roundCounter.nextTurn();
+
+            //Player 1 attacks Player 2
+            assertTrue(board.attackMonsterWithMonster(2, 1));
+            assertFalse(board.attackMonsterWithMonster(11, 1));
+            assertFalse(board.attackMonsterWithMonster(10, 2));
+
+            //Switch turn to Player 2
+            roundCounter.nextTurn();
+
+            //Player 2 attacks Player 1
+            assertTrue(board.attackMonsterWithMonster(1, 2));
+            assertFalse(board.attackMonsterWithMonster(1, 10));
+            assertFalse(board.attackMonsterWithMonster(10, 2));
+        }
+
+        @Test
+        void useMagicOnMonsterOwnMonster() {
+            board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
+            MagicCard magicCard = new MagicCard(2, MagicType.HEAL_CARD, true, 2);
+
+            assertTrue(board.useMagicOnMonster(magicCard, 1));
+            assertFalse(board.useMagicOnMonster(magicCard, 10));
+        }
+
+        @Test
+        void useMagicOnMonsterOpponentMonster() {
+            board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
+            roundCounter.nextTurn();
+            MagicCard magicCard = new MagicCard(2, MagicType.ATTACK_CARD, true, 2);
+
+            assertTrue(board.useMagicOnMonster(magicCard, 1));
+            assertFalse(board.useMagicOnMonster(magicCard, 10));
+        }
+
+        @Test
+        void useMagicOnMonsterNullValues() {
+            board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
+
+            assertFalse(board.useMagicOnMonster(null, 1));
+            assertFalse(board.useMagicOnMonster(null, 10));
+            assertFalse(board.useMagicOnMonster(null, 1));
+            assertFalse(board.useMagicOnMonster(null, 10));
+        }
+
+        @Test
+        void useNonTargetedOnOwnMonster() {
+            board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
+            MagicCard magicCard = new MagicCard(2, MagicType.HEAL_CARD, false, 2);
+
+            assertFalse(board.useMagicOnMonster(magicCard, 1));
+            assertFalse(board.useMagicOnMonster(magicCard, 10));
+        }
+
+        @Test
+        void useNonTargetedOnOpponentMonster() {
+            board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
+            MagicCard magicCard = new MagicCard(2, MagicType.ATTACK_CARD, false, 2);
+            roundCounter.nextTurn();
+
+            assertFalse(board.useMagicOnMonster(magicCard, 1));
+            assertFalse(board.useMagicOnMonster(magicCard, 10));
+        }
+
+
+        @Test
+        void useMagicTypePlayerOnMonster() {
+            board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
+
+            assertFalse(board.useMagicOnMonster(new MagicCard(2, MagicType.ATTACK_PLAYER, true, 2), 1));
+            assertFalse(board.useMagicOnMonster(new MagicCard(2, MagicType.HEAL_PLAYER, true, 2), 1));
+        }
+
+        @Test
+        void useNegativeMagicTypesOnSelf() {
+            board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
+
+            assertFalse(board.useMagicOnMonster(new MagicCard(2, MagicType.ATTACK_CARD, true, 2), 1));
+            assertFalse(board.useMagicOnMonster(new MagicCard(2, MagicType.STUN, true, 2), 1));
+            assertFalse(board.useMagicOnMonster(new MagicCard(2, MagicType.REMOVE_BUFF, true, 2), 1));
+        }
+
+        @Test
+        void usePositiveMagicTypesOnOpponent() {
+            board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
+            roundCounter.nextTurn();
+
+            assertFalse(board.useMagicOnMonster(new MagicCard(2, MagicType.HEAL_CARD, true, 2), 1));
+            assertFalse(board.useMagicOnMonster(new MagicCard(2, MagicType.REMOVE_DEBUFF, true, 2), 1));
+        }
+    }
+
+
+    @Nested
+    @DisplayName("TESTS useMagic")
+    class useMagic {
+
+
+
+        @BeforeEach
+        void setup() {
+            board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
+            board.placeMonsterOnBoard(monsterCardFactory.buildCard(2));
+            board.placeMonsterOnBoard(monsterCardFactory.buildCard(3));
+            roundCounter.nextTurn();
+            board.placeMonsterOnBoard(monsterCardFactory.buildCard(4));
+            board.placeMonsterOnBoard(monsterCardFactory.buildCard(5));
+            board.placeMonsterOnBoard(monsterCardFactory.buildCard(6));
+        }
+
+        @Test
+        void magicNull() {
+            assertFalse(board.useMagic(null));
+        }
+
+        @Test
+        void usePositiveMagic() {
+            assertFalse(board.useMagic(new MagicCard(10, MagicType.HEAL_CARD, true, 1)));
+            assertFalse(board.useMagic(new MagicCard(10, MagicType.HEAL_CARD, false,1 )));
+            assertFalse(board.useMagic(new MagicCard(10, MagicType.REMOVE_DEBUFF, false,1 )));
+            assertFalse(board.useMagic(new MagicCard(10, MagicType.REMOVE_DEBUFF, true,1 )));
+            assertTrue(board.useMagic(new MagicCard(10, MagicType.HEAL_PLAYER, true,1 )));
+            assertTrue(board.useMagic(new MagicCard(10, MagicType.HEAL_PLAYER, false,1 )));
+
+        }
+
+        @Test
+        void useNegativeMagicOnSelf() {
+            assertFalse(board.useMagic(new MagicCard(10, MagicType.STUN, true, 1)));
+            assertFalse(board.useMagic(new MagicCard(10, MagicType.STUN, false,1 )));
+            assertFalse(board.useMagic(new MagicCard(10, MagicType.ATTACK_CARD, true, 1)));
+            assertFalse(board.useMagic(new MagicCard(10, MagicType.ATTACK_CARD, false,1 )));
+            assertFalse(board.useMagic(new MagicCard(10, MagicType.REMOVE_BUFF, false,1 )));
+            assertFalse(board.useMagic(new MagicCard(10, MagicType.REMOVE_BUFF, true,1 )));
+            assertTrue(board.useMagic(new MagicCard(10, MagicType.ATTACK_PLAYER, true,1 )));
+            assertTrue(board.useMagic(new MagicCard(10, MagicType.ATTACK_PLAYER, false,1 )));
+        }
+
+
+
+        @Test
+        void useMagicOnOpponent() {
+
+        }
+
+        @Test
+        void useTargetedOnSelf() {
+
+        }
+
+        @Test
+        void useTargetedOnOpponent() {
+
+        }
+
     }
 
     @Test
-    void placeDebuffOwnCard() {
-        board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
-        DebuffCard debuff = (DebuffCard) new EffectCardFactory().buildEffectCard(2, false);
-        MonsterCard target = (MonsterCard) monsterPiles[roundCounter.getTurn()].get(0);
-
-        assertEquals(0, target.getDebuffCard().getValue());
-        assertFalse(board.placeEffectOnMonsterWithId(debuff, 1));
-        assertTrue(target.getDebuffCard().getValue() == 0);
-    }
-
-    @Test
-    void placeDebuffOpponentCard() {
-        board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
-        MonsterCard target = (MonsterCard) monsterPiles[roundCounter.getTurn()].get(0);
-        roundCounter.nextTurn();
-
-        DebuffCard debuff = (DebuffCard) new EffectCardFactory().buildEffectCard(2, false);
-
-        assertEquals(0, target.getDebuffCard().getValue());
-        assertTrue(board.placeEffectOnMonsterWithId(debuff, 1));
-        assertTrue(target.getDebuffCard().getValue() < 0);
-    }
-
-    @Test
-    void placeBuffOpponentCard() {
-        board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
-        MonsterCard target = (MonsterCard) monsterPiles[roundCounter.getTurn()].get(0);
-        roundCounter.nextTurn();
-
-        BuffCard buff = (BuffCard) new EffectCardFactory().buildEffectCard(2, true);
-        assertEquals(0, target.getBuffCard().getValue());
-        assertFalse(board.placeEffectOnMonsterWithId(buff, 1));
-        assertTrue(target.getBuffCard().getValue() == 0);
-    }
-
-
-    @Test
-    void attackMonsterWithMonster() {
-        //Player 1 turn: places card
-        board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
-        roundCounter.nextTurn();
-
-
-        //Player 2 turn: places card
-        board.placeMonsterOnBoard(monsterCardFactory.buildCard(2));
-        roundCounter.nextTurn();
-
-        //Player 1 attacks Player 2
-        assertTrue(board.attackMonsterWithMonster(2, 1));
-        assertFalse(board.attackMonsterWithMonster(11, 1));
-        assertFalse(board.attackMonsterWithMonster(10, 2));
-
-        //Switch turn to Player 2
-        roundCounter.nextTurn();
-
-        //Player 2 attacks Player 1
-        assertTrue(board.attackMonsterWithMonster(1, 2));
-        assertFalse(board.attackMonsterWithMonster(1, 10));
-        assertFalse(board.attackMonsterWithMonster(10, 2));
-    }
-
-    @Test
-    void useMagicOnMonsterOwnMonster() {
-        board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
-        MagicCard magicCard = new MagicCard(2, MagicType.HEAL_CARD, true, 2);
-
-        assertTrue(board.useMagicOnMonster(magicCard, 1));
-        assertFalse(board.useMagicOnMonster(magicCard, 10));
-        assertFalse(board.useMagicOnMonster(null, 1));
-        assertFalse(board.useMagicOnMonster(null, 10));
-    }
-
-    @Test
-    void useMagicOnMonsterOpponentMonster() {
-        board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
-        roundCounter.nextTurn();
-        MagicCard magicCard = new MagicCard(2, MagicType.ATTACK_CARD, true, 2);
-
-        assertTrue(board.useMagicOnMonster(magicCard, 1));
-        assertFalse(board.useMagicOnMonster(magicCard, 10));
-        assertFalse(board.useMagicOnMonster(null, 1));
-        assertFalse(board.useMagicOnMonster(null, 10));
-    }
-
-    @Test
-    void useMagicTypePlayerOnMonster() {
-
-    }
-
-
-
-    @Test
-    void useMagic() {
-    }
-
-    @Test
-    void nextRound(){
+    void nextRound() {
         // roundcounter++
         // nolla fatigue
         // nytt kort player.drawfromdecktohand
