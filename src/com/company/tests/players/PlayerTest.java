@@ -73,8 +73,12 @@ class PlayerTest {
 
     @Test
     void addDamage() {
-
+        Player player = new Player("Player_1", deck);
+        player.addDamage(10);
+        assertEquals(10, player.getDamage());
     }
+
+    
 
 
     @Test
