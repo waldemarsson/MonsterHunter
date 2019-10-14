@@ -4,6 +4,7 @@ import com.company.game.cards.Card;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Hand {
     private final List<Card> cardsOnHand;
@@ -18,7 +19,13 @@ public class Hand {
      * @return Card with that id, remove from cardsOnHand
      */
     public Card playCard(int id) {
-        return null;
+        Optional optional = cardsOnHand.stream().filter(c -> c.getId() == id).findFirst();
+        Card card = null;
+        if(optional.isPresent()){
+            card = (Card) optional.get();
+            cardsOnHand.remove(card);
+        }
+        return card;
     }
 
 
@@ -27,7 +34,9 @@ public class Hand {
      * @implNote Add Card to cardsOnHand
      */
     public void putCard(Card card) {
-
+        if(card != null){
+            cardsOnHand.add(card);
+        }
     }
 
 
@@ -36,7 +45,7 @@ public class Hand {
      * @return boolean if cardsOnHand contains Card with id
      */
     public boolean hasCard(int id) {
-        return false;
+        return cardsOnHand.stream().filter(card -> card.getId() == id).count() == 1;
     }
 
 
@@ -44,6 +53,6 @@ public class Hand {
      * @return boolean if cardsOnHand != empty
      */
     public boolean hasCards() {
-        return false;
+        return !cardsOnHand.isEmpty();
     }
 }
