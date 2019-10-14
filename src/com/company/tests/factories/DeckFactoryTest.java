@@ -40,12 +40,14 @@ class DeckFactoryTest {
     @Test
     void buildDeck() {
         Deck deck = deckFactory.buildDeck(10, 10, 10, 10, 10);
+        assertEquals(50, deck.getCards().size());
         assertNotNull(deck);
     }
 
     @Test
     void buildDeckNegValue() {
         Deck deck = deckFactory.buildDeck(-10, 10, 10, 10, 10);
+        assertEquals(40, deck.getCards().size());
         assertNotNull(deck);
     }
 
