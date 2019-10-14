@@ -3,10 +3,14 @@ package com.company.tests;
 import com.company.game.Board;
 import com.company.game.GameEngine;
 import com.company.game.RoundCounter;
+import com.company.game.cards.BuffCard;
 import com.company.game.cards.Card;
+import com.company.game.cards.DebuffCard;
 import com.company.game.cards.MonsterCard;
 import com.company.game.collections.Hand;
+import com.company.game.enums.EffectType;
 import com.company.game.factories.DeckFactory;
+import com.company.game.factories.EffectCardFactory;
 import com.company.game.factories.MonsterCardFactory;
 import com.company.game.players.Player;
 import org.junit.jupiter.api.BeforeEach;
@@ -75,8 +79,52 @@ class BoardTest {
     }
 
     @Test
-    void placeCardOnCardWithId() {
+    void placeBuffOwnCard() {
+        board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
+        BuffCard buff = (BuffCard) new EffectCardFactory().buildEffectCard(2, true);
+        MonsterCard target = (MonsterCard) monsterPiles[roundCounter.getTurn()].get(0);
+
+        assertEquals(0, target.getBuffCard().getValue());
+        assertTrue(board.placeEffectOnMonsterWithId(buff, 1));
+        assertTrue(target.getBuffCard().getValue() > 0);
     }
+
+    @Test
+    void placeDebuffOwnCard() {
+        board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
+        DebuffCard debuff = (DebuffCard) new EffectCardFactory().buildEffectCard(2, false);
+        MonsterCard target = (MonsterCard) monsterPiles[roundCounter.getTurn()].get(0);
+
+        assertEquals(0, target.getDebuffCard().getValue());
+        assertFalse(board.placeEffectOnMonsterWithId(debuff, 1));
+        assertTrue(target.getDebuffCard().getValue() == 0);
+    }
+
+    @Test
+    void placeDebuffOpponentCard() {
+        board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
+        MonsterCard target = (MonsterCard) monsterPiles[roundCounter.getTurn()].get(0);
+        roundCounter.nextTurn();
+
+        DebuffCard debuff = (DebuffCard) new EffectCardFactory().buildEffectCard(2, true);
+
+        assertEquals(0, target.getDebuffCard().getValue());
+        assertTrue(board.placeEffectOnMonsterWithId(debuff, 1));
+        assertTrue(target.getDebuffCard().getValue() > 0);
+    }
+
+    @Test
+    void placeBuffOpponentCard() {
+        board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
+        MonsterCard target = (MonsterCard) monsterPiles[roundCounter.getTurn()].get(0);
+        roundCounter.nextTurn();
+
+        BuffCard buff = (BuffCard) new EffectCardFactory().buildEffectCard(2, true);
+        assertEquals(0, target.getBuffCard().getValue());
+        assertFalse(board.placeEffectOnMonsterWithId(buff, 1));
+        assertTrue(target.getBuffCard().getValue() == 0);
+    }
+
 
     @Test
     void attackMonsterWithMonster() {
