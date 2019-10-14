@@ -2,13 +2,16 @@ package com.company.tests.collections;
 
 import com.company.game.cards.BuffCard;
 import com.company.game.cards.Card;
+import com.company.game.collections.Deck;
 import com.company.game.collections.Hand;
 import com.company.game.enums.EffectType;
+import com.company.game.factories.DeckFactory;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -110,5 +113,23 @@ class HandTest {
         } catch (Exception e) {
             fail();
         }
+    }
+
+    @Test
+    void testHandAsString(){
+        try{
+            Deck deck = new DeckFactory().buildDeck(10, 10, 10, 10, 10);
+            Hand hand = new Hand();
+            Field field = Deck.class.getDeclaredField("cards");
+            field.setAccessible(true);
+            List<String> cards = ((List<Card>) field.get(deck)).stream().map(card -> card.toString()).collect(Collectors.toList());
+            while (deck.hasCards()){
+                hand.putCard(deck.drawCard());
+            }
+            assertIterableEquals(cards, hand.getCardsOnHandAsString());     
+        } catch (Exception e){
+            fail();
+        }
+
     }
 }
