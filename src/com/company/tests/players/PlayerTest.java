@@ -65,4 +65,9 @@ class PlayerTest {
     void isAlive() {
 
     }
+
+    @Test
+    void healPlayer(){
+
+    }
 }
