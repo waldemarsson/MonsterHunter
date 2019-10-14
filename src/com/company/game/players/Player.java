@@ -68,7 +68,7 @@ public class Player {
         return false;
     }
 
-    public boolean placeCardOnBoardFromHand(){
+    public boolean placeCardOnBoardFromHand(int id){
         return false;
     }
 
