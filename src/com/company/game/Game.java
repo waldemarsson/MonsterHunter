@@ -11,7 +11,7 @@ public class Game {
     private final Player[] players;
     private final Board board;
     private final DeckFactory deckFactory;
-    private final GameCLI gameCLI;
+    private static GameCLI gameCLI = null;
 
 
     public Game() {
@@ -29,5 +29,9 @@ public class Game {
 
     private void run() {
 
+    }
+
+    public static GameCLI getGameCLI() {
+        return gameCLI;
     }
 }
