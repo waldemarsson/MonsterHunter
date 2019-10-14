@@ -1,12 +1,14 @@
 package com.company.game;
 
 import com.company.game.cards.Card;
+import com.company.game.cards.EffectCard;
 import com.company.game.cards.MagicCard;
+import com.company.game.cards.MonsterCard;
 import com.company.game.players.Player;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Board {
 
@@ -15,32 +17,38 @@ public class Board {
     private final RoundCounter roundCounter;
 
     public Board(RoundCounter roundCounter, Player[] players) {
-        monsterPiles = new List[]{new ArrayList<Card>(), new ArrayList<Card>()};
+        monsterPiles = new List[]{new ArrayList<MonsterCard>(), new ArrayList<MonsterCard>()};
         gameEngine = new GameEngine(players, roundCounter);
         this.roundCounter = roundCounter;
     }
 
+
     public List<String> getMonsterPile(int player) {
-            return null;
-        }
+        if (player != 0 && player != 1) return null;
 
-    public boolean placeCardOnBoard(Card card) {
-                                             return false;
-                                                          }
+        return (List<String>) monsterPiles[player].stream().map(card -> card.toString()).collect(Collectors.toList());
 
-    public boolean placeCardOnCardWithId(Card card, int id) {
-                                                          return false;
-                                                                       }
+    }
+
+    public boolean placeMonsterOnBoard(MonsterCard monster) {
+
+        return false;
+    }
+
+    public boolean placeEffectOnMonsterWithId(EffectCard effect, int id) {
+        return false;
+    }
 
     public boolean attackMonsterWithMonster(int defender, int attacker) {
-                                                                      return false;
-                                                                                   }
+        return false;
+    }
 
     public boolean useMagicOnMonster(MagicCard magicCard, int monsterCard) {
-                                                                         return false;
-                                                                                      }
+        return false;
+    }
 
     public boolean useMagic(MagicCard magicCard) {
-            return false;
+
+        return false;
     }
 }
