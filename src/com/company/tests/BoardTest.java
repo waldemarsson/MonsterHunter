@@ -106,11 +106,11 @@ class BoardTest {
         MonsterCard target = (MonsterCard) monsterPiles[roundCounter.getTurn()].get(0);
         roundCounter.nextTurn();
 
-        DebuffCard debuff = (DebuffCard) new EffectCardFactory().buildEffectCard(2, true);
+        DebuffCard debuff = (DebuffCard) new EffectCardFactory().buildEffectCard(2, false);
 
         assertEquals(0, target.getDebuffCard().getValue());
         assertTrue(board.placeEffectOnMonsterWithId(debuff, 1));
-        assertTrue(target.getDebuffCard().getValue() > 0);
+        assertTrue(target.getDebuffCard().getValue() < 0);
     }
 
     @Test
