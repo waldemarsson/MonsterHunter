@@ -59,4 +59,9 @@ public class Player {
     public boolean isAlive() {
         return false;
     }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }
