@@ -1,6 +1,12 @@
 package com.company.game.factories;
 
+import com.company.game.cards.BuffCard;
+import com.company.game.cards.Card;
 import com.company.game.collections.Deck;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class DeckFactory {
 
@@ -19,21 +25,78 @@ public class DeckFactory {
 
     /**
      * @param monsters num of normal monsters
-     * @param epics num of epic monsters
-     * @param magics num of magic
-     * @param buffs num of buffs
-     * @param debuffs num of debuffs
+     * @param epics    num of epic monsters
+     * @param magics   num of magic
+     * @param buffs    num of buffs
+     * @param debuffs  num of debuffs
      * @return
      */
     public Deck buildDeck(int monsters, int epics, int magics, int buffs, int debuffs) {
-        return null;
+        List<Card> cards = new ArrayList<>();
+        cards.addAll(buildMonsterCards(monsters));
+        cards.addAll(buildEpicCards(epics));
+        cards.addAll(buildMagicCards(magics));
+        cards.addAll(buildBuffCards(buffs));
+        cards.addAll(buildDebuffCards(debuffs));
+        return shuffle(new Deck(cards));
+    }
+
+    private void increaseCreatedCards() {
+        createdCards++;
+    }
+
+
+    private List<Card> buildMonsterCards(int numOfCards) {
+        List<Card> cards = new ArrayList<>();
+        for (int i = 0; i < numOfCards; i++) {
+            cards.add(monsterCardFactory.buildCard(createdCards));
+            increaseCreatedCards();
+        }
+        return cards;
+    }
+
+    private List<Card> buildEpicCards(int numOfCards) {
+        List<Card> cards = new ArrayList<>();
+        for (int i = 0; i < numOfCards; i++) {
+            cards.add(monsterCardFactory.buildCard(createdCards, (BuffCard) effectCardFactory.buildEffectCard(0, true)));
+            increaseCreatedCards();
+        }
+        return cards;
+    }
+
+    private List<Card> buildMagicCards(int numOfCards) {
+        List<Card> cards = new ArrayList<>();
+        for (int i = 0; i < numOfCards; i++) {
+            cards.add(magicCardFactory.buildCard(createdCards));
+            increaseCreatedCards();
+        }
+        return cards;
+    }
+
+    private List<Card> buildBuffCards(int numOfCards) {
+        List<Card> cards = new ArrayList<>();
+        for (int i = 0; i < numOfCards; i++) {
+            cards.add(effectCardFactory.buildEffectCard(createdCards, true));
+            increaseCreatedCards();
+        }
+        return cards;
+    }
+
+    private List<Card> buildDebuffCards(int numOfCards) {
+        List<Card> cards = new ArrayList<>();
+        for (int i = 0; i < numOfCards; i++) {
+            cards.add(effectCardFactory.buildEffectCard(createdCards, false));
+            increaseCreatedCards();
+        }
+        return cards;
     }
 
     /**
      * @param deck
      * @return new shuffled Deck
      */
-    public Deck shuffle(Deck deck) {
-        return null;
+    private Deck shuffle(Deck deck) {
+        Collections.shuffle(deck.getCards());
+        return new Deck(deck.getCards());
     }
 }

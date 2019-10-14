@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Deck {
 
+
     private List<Card> cards;
 
     public Deck(List<Card> cards) {
@@ -17,23 +18,27 @@ public class Deck {
      * @return true if cards != empty
      */
     public boolean hasCards() {
-        return false;
+        return !cards.isEmpty();
     }
 
 
     /**
      * @return a Card at index 0 from cards, removes Card at the same time
      */
-    public Card drawCard(){
-        return null;
+    public Card drawCard() {
+        if (!hasCards()) return null;
+        return cards.remove(0);
     }
 
     /**
      * @return size of cards
      */
     public int cardsLeft() {
-        return 0;
+        return cards.size();
     }
 
+    public List<Card> getCards() {
+        return cards;
+    }
 
 }

@@ -229,6 +229,13 @@ class MonsterCardTest {
             }
 
             @Test
+            void test3(){
+                card = new MonsterCard(4, "RAT", 1, 4, 2, 4, new BuffCard(0, 2, EffectType.ATTACK));
+                testString = "EPIC_RAT_4: HP 4/4 STA 1 ATT 4 DEF 4";
+                assertEquals(testString, card.toString());
+            }
+
+            @Test
             void test4() {
                 testString = "RAT_4: HP 4/4 STA 1 ATT 6(+2) DEF 4";
                 card.setBuffCard(new BuffCard(5, 2, EffectType.ATTACK));
