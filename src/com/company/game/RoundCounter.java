@@ -21,7 +21,7 @@ public class RoundCounter {
     /**
      * increase currentRound
      */
-    public void nextPlayer() {
+    public void nextTurn() {
 
     }
 }
