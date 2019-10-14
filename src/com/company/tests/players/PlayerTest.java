@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class PlayerTest {
 
     Deck deck = new DeckFactory().buildDeck(10, 10, 10, 10, 10);
+    Deck monsterDeck = new DeckFactory().buildDeck(100, 0,0,0,0);
 
     @Test
     void constructorTest(){
