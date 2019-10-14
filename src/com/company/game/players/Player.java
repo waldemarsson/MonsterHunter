@@ -60,6 +60,10 @@ public class Player {
         return false;
     }
 
+    public void heal(int value){
+
+    }
+
     @Override
     public String toString() {
         return super.toString();
