@@ -5,6 +5,7 @@ import com.company.game.cards.Card;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class Hand {
     private final List<Card> cardsOnHand;
@@ -57,6 +58,6 @@ public class Hand {
     }
 
     public List<String> getCardsOnHandAsString(){
-        return null;
+        return cardsOnHand.stream().map(Card::toString).collect(Collectors.toList());
     }
 }
