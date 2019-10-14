@@ -55,4 +55,8 @@ public class Hand {
     public boolean hasCards() {
         return !cardsOnHand.isEmpty();
     }
+
+    public List<String> getCardsOnHandAsString(){
+        return null;
+    }
 }

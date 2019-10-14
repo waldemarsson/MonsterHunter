@@ -1,4 +1,4 @@
-package com.company.game;
+package com.company.game.cli;
 
 public class InputHandler {
 }

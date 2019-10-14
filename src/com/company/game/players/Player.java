@@ -4,6 +4,8 @@ import com.company.game.Board;
 import com.company.game.collections.Deck;
 import com.company.game.collections.Hand;
 
+import java.util.List;
+
 public class Player {
 
     private final String name;
@@ -36,6 +38,10 @@ public class Player {
 
     public void addDamage(int damageTaken) {
 
+    }
+
+    public List<String> getHandAsString() {
+        return hand.getCardsOnHandAsString();
     }
 
     /**
