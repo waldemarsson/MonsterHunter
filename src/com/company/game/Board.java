@@ -24,23 +24,23 @@ public class Board {
             return null;
         }
 
-        public boolean placeCardOnBoard(Card card) {
-            return false;
-        }
+    public boolean placeCardOnBoard(Card card) {
+                                             return false;
+                                                          }
 
-        public boolean placeCardOnCardWithId(Card card, int id) {
-            return false;
-        }
+    public boolean placeCardOnCardWithId(Card card, int id) {
+                                                          return false;
+                                                                       }
 
-        public boolean attackMonsterWithMonster(int defender, int attacker) {
-            return false;
-        }
+    public boolean attackMonsterWithMonster(int defender, int attacker) {
+                                                                      return false;
+                                                                                   }
 
-        public boolean useMagicOnMonster(MagicCard magicCard, int monsterCard) {
-            return false;
-        }
+    public boolean useMagicOnMonster(MagicCard magicCard, int monsterCard) {
+                                                                         return false;
+                                                                                      }
 
-        public boolean useMagic(MagicCard magicCard) {
+    public boolean useMagic(MagicCard magicCard) {
             return false;
     }
 }
