@@ -22,8 +22,7 @@ public class Game {
     }
 
 
-    void run() {
-
+    private void run() {
 
     }
 }

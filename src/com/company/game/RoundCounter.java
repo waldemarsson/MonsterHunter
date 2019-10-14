@@ -5,7 +5,7 @@ public class RoundCounter {
     private int currentRound;
 
     public RoundCounter() {
-        currentRound = 1;
+        currentRound = 0;
     }
 
 
