@@ -1,7 +1,9 @@
 package com.company.tests.collections;
 
+import com.company.game.cards.BuffCard;
 import com.company.game.cards.Card;
 import com.company.game.collections.Hand;
+import com.company.game.enums.EffectType;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
@@ -35,19 +37,53 @@ class HandTest {
 
 
     @Test
-    void playCard() {
+    void playCardEmpty(){
+
+    }
+
+    @Test
+    void playCardOneCardOnHand(){
 
     }
 
     @Test
     void putCard() {
+
     }
 
     @Test
-    void hasCard() {
+    void doesNotHaveCard() {
+
+    }
+
+    @Test
+    void hasCard(){
+
+    }
+
+    @Test
+    void hasNoCards(){
+        try {
+            Field field = Hand.class.getDeclaredField("cardsOnHand");
+            field.setAccessible(true);
+            List<Card> list = (List<Card>) field.get(new Hand());
+            assertTrue(list.isEmpty());
+        } catch (Exception e) {
+            fail();
+        }
     }
 
     @Test
     void hasCards() {
+        try {
+            Hand hand = new Hand();
+            hand.putCard(new BuffCard(2 ,1, EffectType.STAMINA));
+            Field field = Hand.class.getDeclaredField("cardsOnHand");
+            field.setAccessible(true);
+            List<Card> list = (List<Card>) field.get(hand);
+            assertTrue(list.size() == 1);
+        } catch (Exception e) {
+            fail();
+        }
     }
 }
