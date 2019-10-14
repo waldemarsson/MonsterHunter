@@ -78,7 +78,19 @@ class PlayerTest {
         assertEquals(10, player.getDamage());
     }
 
-    
+    @Test
+    void addNegativeDamage(){
+        Player player = new Player("Player_1", deck);
+        player.addDamage(-1);
+        assertEquals(20, player.getDamage());
+    }
+
+    @Test
+    void addZeroDamage(){
+        Player player = new Player("Player_1", deck);
+        player.addDamage(0);
+        assertEquals(20, player.getDamage());
+    }
 
 
     @Test
