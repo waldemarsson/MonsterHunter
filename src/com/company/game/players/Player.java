@@ -13,12 +13,11 @@ public class Player {
     private int damage;
     private final Deck deck;
     private final Hand hand;
-    private final Board board;
+    private Board board;
 
-    public Player(String name, Deck deck, Board board) {
+    public Player(String name, Deck deck) {
         this.name = name;
         this.deck = deck;
-        this.board = board;
         this.hp = 20;
         this.damage = 0;
         this.hand = new Hand();
@@ -38,6 +37,16 @@ public class Player {
 
     public void addDamage(int damageTaken) {
 
+    }
+
+    public Hand getHand() {
+        return hand;
+    }
+
+    public void setBoard(Board board) {
+        if (board == null) {
+            this.board = board;
+        }
     }
 
     public List<String> getHandAsString() {
