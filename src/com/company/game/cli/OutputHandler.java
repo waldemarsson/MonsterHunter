@@ -4,6 +4,7 @@ import com.company.game.Board;
 import com.company.game.RoundCounter;
 import com.company.game.players.Player;
 
+import javax.sound.midi.Soundbank;
 import java.util.List;
 
 public class OutputHandler {
@@ -17,6 +18,10 @@ public class OutputHandler {
         this.board = board;
         this.players = players;
         this.roundCounter = roundCounter;
+    }
+
+    public void printError(String error){
+        System.out.println(error);
     }
 
     //    #################################################
