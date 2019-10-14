@@ -1,6 +1,7 @@
 package com.company.tests.players;
 
 import com.company.game.collections.Deck;
+import com.company.game.collections.Hand;
 import com.company.game.factories.DeckFactory;
 import com.company.game.players.Player;
 import org.junit.jupiter.api.Test;
@@ -56,13 +57,19 @@ class PlayerTest {
 
     @Test
     void playerHasCorrectHand(){
-        
+        try {
+            Field handField = Player.class.getDeclaredField("hand");
+            handField.setAccessible(true);
+            Hand hand = (Hand) handField.get(new Player("Player_1", deck));
+            assertNotNull(hand);
+            assertTrue(hand.hasCards());
+            assertEquals(5, hand.getCardsOnHandAsString().size());
+        } catch (Exception e) {
+            fail();
+        }
     }
 
-    @Test
-    void constructorDrawsFiveCardsToHand(){
 
-    }
 
     @Test
     void addDamage() {
