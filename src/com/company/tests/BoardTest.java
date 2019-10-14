@@ -154,7 +154,7 @@ class BoardTest {
     void useMagicOnMonster() {
         board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
         MagicCard magicCard = magicCardFactory.buildCard(2);
-        
+
         assertTrue(board.useMagicOnMonster(magicCard, 1));
         assertFalse(board.useMagicOnMonster(magicCard, 10));
         assertFalse(board.useMagicOnMonster(null, 1));

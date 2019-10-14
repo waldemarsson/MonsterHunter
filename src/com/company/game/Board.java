@@ -3,10 +3,9 @@ package com.company.game;
 import com.company.game.cards.*;
 import com.company.game.players.Player;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Board {
 
@@ -102,7 +101,36 @@ public class Board {
     }
 
     public boolean useMagicOnMonster(MagicCard magicCard, int target) {
-        return false;
+        boolean wasMagicUsed = false;
+        int whatMonsterPile = -1;
+
+        if (magicCard != null
+                && (getCurrentPlayerMonsterPile().stream().anyMatch(card -> card.getId() == target)
+                || getOpponentMonsterPile().stream().anyMatch(card -> card.getId() == target)
+        )) {
+            List<Card> targetCard = null;
+
+            if (getCurrentPlayerMonsterPile().stream().anyMatch(card -> card.getId() == target)) {
+                whatMonsterPile = roundCounter.getTurn();
+                targetCard = getCurrentPlayerMonsterPile().stream().filter(card -> card.getId() == target).collect(Collectors.toList());
+                getCurrentPlayerMonsterPile().remove(targetCard.get(0));
+            }
+
+            if (getOpponentMonsterPile().stream().anyMatch(card -> card.getId() == target)) {
+                whatMonsterPile = roundCounter.getTurn();
+                targetCard = getOpponentMonsterPile().stream().filter(card -> card.getId() == target).collect(Collectors.toList());
+                getOpponentMonsterPile().remove(targetCard.get(0));
+            }
+
+//            List<Card> targetCard = Stream.of(monsterPiles[0], monsterPiles[1]).flatMap(Collection::stream).filter(card -> card.getId() == target).collect(Collectors.toList());
+            if (targetCard.size() == 1 && whatMonsterPile >= 0) {
+                Card[] affectedCards = gameEngine.engage(magicCard, targetCard);
+                int finalWhatMonsterPile = whatMonsterPile;
+                Stream.of(affectedCards).map(card -> monsterPiles[finalWhatMonsterPile].add((MonsterCard) card));
+                wasMagicUsed = true;
+            }
+        }
+        return wasMagicUsed;
     }
 
     public boolean useMagic(MagicCard magicCard) {
