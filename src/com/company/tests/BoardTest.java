@@ -240,7 +240,6 @@ class BoardTest {
     class useMagic {
 
 
-
         @BeforeEach
         void setup() {
             board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
@@ -260,43 +259,32 @@ class BoardTest {
         @Test
         void usePositiveMagic() {
             assertFalse(board.useMagic(new MagicCard(10, MagicType.HEAL_CARD, true, 1)));
-            assertFalse(board.useMagic(new MagicCard(10, MagicType.HEAL_CARD, false,1 )));
-            assertFalse(board.useMagic(new MagicCard(10, MagicType.REMOVE_DEBUFF, false,1 )));
-            assertFalse(board.useMagic(new MagicCard(10, MagicType.REMOVE_DEBUFF, true,1 )));
-            assertTrue(board.useMagic(new MagicCard(10, MagicType.HEAL_PLAYER, true,1 )));
-            assertTrue(board.useMagic(new MagicCard(10, MagicType.HEAL_PLAYER, false,1 )));
-
+            assertTrue(board.useMagic(new MagicCard(10, MagicType.HEAL_CARD, false, 1)));
+            assertFalse(board.useMagic(new MagicCard(10, MagicType.REMOVE_DEBUFF, true, 1)));
+            assertTrue(board.useMagic(new MagicCard(10, MagicType.REMOVE_DEBUFF, false, 1)));
+            assertTrue(board.useMagic(new MagicCard(10, MagicType.HEAL_PLAYER, true, 1)));
         }
 
         @Test
-        void useNegativeMagicOnSelf() {
+        void useNegativeMagic() {
             assertFalse(board.useMagic(new MagicCard(10, MagicType.STUN, true, 1)));
-            assertFalse(board.useMagic(new MagicCard(10, MagicType.STUN, false,1 )));
+            assertTrue(board.useMagic(new MagicCard(10, MagicType.STUN, false, 1)));
             assertFalse(board.useMagic(new MagicCard(10, MagicType.ATTACK_CARD, true, 1)));
-            assertFalse(board.useMagic(new MagicCard(10, MagicType.ATTACK_CARD, false,1 )));
-            assertFalse(board.useMagic(new MagicCard(10, MagicType.REMOVE_BUFF, false,1 )));
-            assertFalse(board.useMagic(new MagicCard(10, MagicType.REMOVE_BUFF, true,1 )));
-            assertTrue(board.useMagic(new MagicCard(10, MagicType.ATTACK_PLAYER, true,1 )));
-            assertTrue(board.useMagic(new MagicCard(10, MagicType.ATTACK_PLAYER, false,1 )));
-        }
-
-
-
-        @Test
-        void useMagicOnOpponent() {
-
+            assertTrue(board.useMagic(new MagicCard(10, MagicType.ATTACK_CARD, false, 1)));
+            assertFalse(board.useMagic(new MagicCard(10, MagicType.REMOVE_BUFF, true, 1)));
+            assertTrue(board.useMagic(new MagicCard(10, MagicType.REMOVE_BUFF, false, 1)));
+            assertTrue(board.useMagic(new MagicCard(10, MagicType.ATTACK_PLAYER, true, 1)));
         }
 
         @Test
-        void useTargetedOnSelf() {
-
+        void useNonTargetedOnSelf() {
+            assertFalse(board.useMagic(new MagicCard(10, MagicType.HEAL_PLAYER, false, 1)));
         }
 
         @Test
-        void useTargetedOnOpponent() {
-
+        void useNonTargetedOnOpponent() {
+            assertFalse(board.useMagic(new MagicCard(10, MagicType.ATTACK_PLAYER, false, 1)));
         }
-
     }
 
     @Test

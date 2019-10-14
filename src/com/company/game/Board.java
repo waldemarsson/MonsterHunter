@@ -138,7 +138,6 @@ public class Board {
     }
 
     public boolean useMagic(MagicCard magicCard) {
-
         return false;
     }
 
