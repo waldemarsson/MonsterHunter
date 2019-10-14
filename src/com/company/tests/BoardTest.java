@@ -70,7 +70,7 @@ class BoardTest {
     @Test
     void placeCardOnBoard() {
         assertEquals(0, monsterPiles[roundCounter.getTurn()].size());
-        board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
+        assertTrue(board.placeMonsterOnBoard(monsterCardFactory.buildCard(1)));
         assertEquals(1, monsterPiles[roundCounter.getTurn()].size());
     }
 

@@ -31,8 +31,7 @@ public class Board {
     }
 
     public boolean placeMonsterOnBoard(MonsterCard monster) {
-
-        return false;
+        return monsterPiles[roundCounter.getTurn()].add(monster);
     }
 
     public boolean placeEffectOnMonsterWithId(EffectCard effect, int id) {
