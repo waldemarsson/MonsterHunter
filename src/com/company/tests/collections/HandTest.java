@@ -122,11 +122,12 @@ class HandTest {
             Hand hand = new Hand();
             Field field = Deck.class.getDeclaredField("cards");
             field.setAccessible(true);
-            List<String> cards = ((List<Card>) field.get(deck)).stream().map(card -> card.toString()).collect(Collectors.toList());
+            List<String> cards = deck.getCards().stream().map(Card::toString).collect(Collectors.toList());
             while (deck.hasCards()){
                 hand.putCard(deck.drawCard());
             }
-            assertIterableEquals(cards, hand.getCardsOnHandAsString());     
+            hand.getCardsOnHandAsString().forEach(System.out::println);
+            assertIterableEquals(cards, hand.getCardsOnHandAsString());
         } catch (Exception e){
             fail();
         }
