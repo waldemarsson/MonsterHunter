@@ -30,6 +30,12 @@ class PlayerTest {
     }
 
     @Test
+    void playerNullName(){
+
+    }
+
+
+    @Test
     void playerHasValidHp(){
         Player player = new Player("Player_1", deck);
         assertEquals(20, player.getHp());
@@ -95,7 +101,9 @@ class PlayerTest {
 
     @Test
     void drawCardFromDeckToHand(){
-
+        Player player = new Player("Player_1", deck);
+        player.drawFromDeckToHand();
+        assertEquals(6, player.getHand().getCardsOnHandAsString().size());
     }
 
     @Test
