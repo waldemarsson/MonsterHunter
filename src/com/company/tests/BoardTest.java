@@ -3,14 +3,12 @@ package com.company.tests;
 import com.company.game.Board;
 import com.company.game.GameEngine;
 import com.company.game.RoundCounter;
-import com.company.game.cards.BuffCard;
-import com.company.game.cards.Card;
-import com.company.game.cards.DebuffCard;
-import com.company.game.cards.MonsterCard;
+import com.company.game.cards.*;
 import com.company.game.collections.Hand;
 import com.company.game.enums.EffectType;
 import com.company.game.factories.DeckFactory;
 import com.company.game.factories.EffectCardFactory;
+import com.company.game.factories.MagicCardFactory;
 import com.company.game.factories.MonsterCardFactory;
 import com.company.game.players.Player;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,6 +28,7 @@ class BoardTest {
     Board board;
     Player[] players;
     MonsterCardFactory monsterCardFactory = new MonsterCardFactory();
+    MagicCardFactory magicCardFactory = new MagicCardFactory();
     List[] monsterPiles;
 
 
@@ -153,6 +152,14 @@ class BoardTest {
 
     @Test
     void useMagicOnMonster() {
+        board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
+        MagicCard magicCard = magicCardFactory.buildCard(2);
+        
+        assertTrue(board.useMagicOnMonster(magicCard, 1));
+        assertFalse(board.useMagicOnMonster(magicCard, 10));
+        assertFalse(board.useMagicOnMonster(null, 1));
+        assertFalse(board.useMagicOnMonster(null, 10));
+
     }
 
     @Test
