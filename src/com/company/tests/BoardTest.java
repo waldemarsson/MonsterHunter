@@ -128,25 +128,27 @@ class BoardTest {
 
     @Test
     void attackMonsterWithMonster() {
+        //Player 1 turn: places card
         board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
-        MonsterCard target = (MonsterCard) monsterPiles[roundCounter.getTurn()].get(0);
         roundCounter.nextTurn();
+
+
+        //Player 2 turn: places card
         board.placeMonsterOnBoard(monsterCardFactory.buildCard(2));
-        MonsterCard attacker = (MonsterCard) monsterPiles[roundCounter.getTurn()].get(0);
         roundCounter.nextTurn();
 
+        //Player 1 attacks Player 2
+        assertTrue(board.attackMonsterWithMonster(2, 1));
+        assertFalse(board.attackMonsterWithMonster(11, 1));
+        assertFalse(board.attackMonsterWithMonster(10, 2));
 
+        //Switch turn to Player 2
+        roundCounter.nextTurn();
+
+        //Player 2 attacks Player 1
         assertTrue(board.attackMonsterWithMonster(1, 2));
         assertFalse(board.attackMonsterWithMonster(1, 10));
         assertFalse(board.attackMonsterWithMonster(10, 2));
-        roundCounter.nextTurn();
-        assertTrue(board.attackMonsterWithMonster(2, 1));
-        assertFalse(board.attackMonsterWithMonster(1, 10));
-        assertFalse(board.attackMonsterWithMonster(10, 2));
-
-
-
-
     }
 
     @Test

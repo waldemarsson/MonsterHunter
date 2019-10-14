@@ -56,41 +56,49 @@ public class Board {
 
     public boolean attackMonsterWithMonster(int target, int attacker) {
         boolean didAttack = false;
-        if (monsterPiles[roundCounter.getTurn()]
+        if (getCurrentPlayerMonsterPile()
                 .stream()
                 .anyMatch(card -> card.getId() == attacker)
-                && monsterPiles[roundCounter.getOpponentIndex()]
+                && getOpponentMonsterPile()
                 .stream()
                 .anyMatch(card -> card.getId() == target)) {
 
-            Optional<MonsterCard> targetCard = monsterPiles[roundCounter.getOpponentIndex()]
+            Optional<MonsterCard> targetCard = getOpponentMonsterPile()
                     .stream()
                     .filter(card -> card.getId() == target)
                     .findFirst();
 
-            Optional<MonsterCard> attackerCard = monsterPiles[roundCounter.getTurn()]
+            Optional<MonsterCard> attackerCard = getCurrentPlayerMonsterPile()
                     .stream()
                     .filter(card -> card.getId() == attacker)
                     .findFirst();
 
             if (targetCard.isPresent() && attackerCard.isPresent()) {
-                monsterPiles[roundCounter.getOpponentIndex()].remove(targetCard);
-                monsterPiles[roundCounter.getTurn()].remove(attackerCard);
+                getOpponentMonsterPile().remove(targetCard);
+                getCurrentPlayerMonsterPile().remove(attackerCard);
 
                 MonsterCard[] engagedCards = gameEngine.engage(targetCard.get(), attackerCard.get());
 
                 if (engagedCards[0] != null) {
-                    monsterPiles[roundCounter.getOpponentIndex()].add(engagedCards[0]);
+                    getOpponentMonsterPile().add(engagedCards[0]);
                 }
 
                 if (engagedCards[1] != null) {
-                    monsterPiles[roundCounter.getTurn()].add(engagedCards[1]);
+                    getCurrentPlayerMonsterPile().add(engagedCards[1]);
                 }
 
                 didAttack = true;
             }
         }
         return didAttack;
+    }
+
+    private List<MonsterCard> getCurrentPlayerMonsterPile() {
+        return monsterPiles[roundCounter.getTurn()];
+    }
+
+    private List<MonsterCard> getOpponentMonsterPile() {
+        return monsterPiles[roundCounter.getOpponentIndex()];
     }
 
     public boolean useMagicOnMonster(MagicCard magicCard, int target) {

@@ -33,7 +33,7 @@ public class GameEngine {
      * @return List[0] attacker card if it survives, List[1] defense cards if survives (filter card.calchp > 0)
      */
     public MonsterCard[] engage(MonsterCard target, MonsterCard attacker) {
-        return null;
+        return new MonsterCard[]{target, attacker};
     }
 
     /**
