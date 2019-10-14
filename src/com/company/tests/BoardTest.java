@@ -6,6 +6,7 @@ import com.company.game.RoundCounter;
 import com.company.game.cards.*;
 import com.company.game.collections.Hand;
 import com.company.game.enums.EffectType;
+import com.company.game.enums.MagicType;
 import com.company.game.factories.DeckFactory;
 import com.company.game.factories.EffectCardFactory;
 import com.company.game.factories.MagicCardFactory;
@@ -151,16 +152,34 @@ class BoardTest {
     }
 
     @Test
-    void useMagicOnMonster() {
+    void useMagicOnMonsterOwnMonster() {
         board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
-        MagicCard magicCard = magicCardFactory.buildCard(2);
+        MagicCard magicCard = new MagicCard(2, MagicType.HEAL_CARD, true, 2);
 
         assertTrue(board.useMagicOnMonster(magicCard, 1));
         assertFalse(board.useMagicOnMonster(magicCard, 10));
         assertFalse(board.useMagicOnMonster(null, 1));
         assertFalse(board.useMagicOnMonster(null, 10));
+    }
+
+    @Test
+    void useMagicOnMonsterOpponentMonster() {
+        board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
+        roundCounter.nextTurn();
+        MagicCard magicCard = new MagicCard(2, MagicType.ATTACK_CARD, true, 2);
+
+        assertTrue(board.useMagicOnMonster(magicCard, 1));
+        assertFalse(board.useMagicOnMonster(magicCard, 10));
+        assertFalse(board.useMagicOnMonster(null, 1));
+        assertFalse(board.useMagicOnMonster(null, 10));
+    }
+
+    @Test
+    void useMagicTypePlayerOnMonster() {
 
     }
+
+
 
     @Test
     void useMagic() {

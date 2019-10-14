@@ -5,7 +5,9 @@ import com.company.game.cards.MagicCard;
 import com.company.game.cards.MonsterCard;
 import com.company.game.players.Player;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GameEngine {
 
@@ -19,31 +21,31 @@ public class GameEngine {
 
 
     /**
-     * @implNote attackPlayer or healPlayer
      * @param magicCard
+     * @implNote attackPlayer or healPlayer
      */
     public void engage(MagicCard magicCard) {
 
     }
 
     /**
-     * @implNote if defense = 0, attack player
      * @param target
      * @param attacker
      * @return List[0] attacker card if it survives, List[1] defense cards if survives (filter card.calchp > 0)
+     * @implNote if defense = 0, attack player
      */
     public MonsterCard[] engage(MonsterCard target, MonsterCard attacker) {
         return new MonsterCard[]{target, attacker};
     }
 
     /**
-     * @implNote if defense = 0, attack player
      * @param activeCard
      * @param targets
-     * @return  List<Card> defense cards if survives (filter card.calchp > 0)
+     * @return List<Card> defense cards if survives (filter card.calchp > 0)
+     * @implNote if defense = 0, attack player
      */
-    public Card[] engage(MagicCard activeCard, List<Card> targets) {
-        return null;
+    public List<Card> engage(MagicCard activeCard, List<Card> targets) {
+        return targets;
     }
 
 
@@ -56,15 +58,16 @@ public class GameEngine {
 
 
     /**
-     * @implNote attack player with card.attack / 2 rounded up
      * @param monsterCard
+     * @implNote attack player with card.attack / 2 rounded up
      */
     private void attackPlayer(MonsterCard monsterCard) {
 
     }
+
     /**
-     * @implNote attack player with card.value
      * @param magicCard
+     * @implNote attack player with card.value
      */
     private void attackPlayer(MagicCard magicCard) {
 
