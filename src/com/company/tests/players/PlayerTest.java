@@ -5,6 +5,8 @@ import com.company.game.factories.DeckFactory;
 import com.company.game.players.Player;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Field;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
@@ -23,7 +25,7 @@ class PlayerTest {
     @Test
     void playerHasValidNameUpperCase(){
         assertEquals("PLAYER_1",
-                new Player("Player1", deck);
+                new Player("Player1", deck));
     }
 
     @Test
@@ -39,8 +41,22 @@ class PlayerTest {
     }
 
     @Test
-    void playerHasDeckAndHand(){
+    void playerHasCorrectDeck(){
+        try {
+            Field field = Player.class.getDeclaredField("deck");
+            field.setAccessible(true);
+            Deck compareDeck = (Deck) field.get(new Player("Player_1", deck));
+            assertNotNull(compareDeck);
+            assertEquals(deck, compareDeck);
+            assertEquals(50, compareDeck.getCards().size());
+        } catch (Exception e) {
+            fail();
+        }
+    }
 
+    @Test
+    void playerHasCorrectHand(){
+        
     }
 
     @Test
