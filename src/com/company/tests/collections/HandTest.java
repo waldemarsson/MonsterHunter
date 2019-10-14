@@ -97,4 +97,18 @@ class HandTest {
             fail();
         }
     }
+
+    @Test
+    void putNullAndHasNoCards() {
+        try {
+            Hand hand = new Hand();
+            hand.putCard(null);
+            Field field = Hand.class.getDeclaredField("cardsOnHand");
+            field.setAccessible(true);
+            List<Card> list = (List<Card>) field.get(hand);
+            assertTrue(list.isEmpty());
+        } catch (Exception e) {
+            fail();
+        }
+    }
 }
