@@ -64,6 +64,14 @@ public class Player {
 
     }
 
+    public boolean drawFromDeckToHand(){
+        return false;
+    }
+
+    public boolean placeCardOnBoardFromHand(){
+        return false;
+    }
+
     @Override
     public String toString() {
         return super.toString();
