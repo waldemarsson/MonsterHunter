@@ -36,7 +36,7 @@ public class Hand {
      * @return boolean if cardsOnHand contains Card with id
      */
     public boolean hasCard(int id) {
-        return false;
+        return cardsOnHand.stream().filter(card -> card.getId() == id).count() == 1;
     }
 
 
@@ -44,6 +44,6 @@ public class Hand {
      * @return boolean if cardsOnHand != empty
      */
     public boolean hasCards() {
-        return false;
+        return !cardsOnHand.isEmpty();
     }
 }
