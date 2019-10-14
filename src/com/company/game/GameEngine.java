@@ -28,21 +28,21 @@ public class GameEngine {
 
     /**
      * @implNote if defense = 0, attack player
-     * @param activeCard
-     * @param passiveCards
+     * @param target
+     * @param attacker
      * @return List[0] attacker card if it survives, List[1] defense cards if survives (filter card.calchp > 0)
      */
-    public List[] engage(MonsterCard activeCard, List<Card> passiveCards) {
+    public MonsterCard[] engage(MonsterCard target, MonsterCard attacker) {
         return null;
     }
 
     /**
      * @implNote if defense = 0, attack player
      * @param activeCard
-     * @param passiveCards
+     * @param targets
      * @return  List<Card> defense cards if survives (filter card.calchp > 0)
      */
-    public List<Card> engage(MagicCard activeCard, List<Card> passiveCards) {
+    public Card[] engage(MagicCard activeCard, List<Card> targets) {
         return null;
     }
 

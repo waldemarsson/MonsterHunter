@@ -5,6 +5,7 @@ import com.company.game.players.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Board {
@@ -53,12 +54,46 @@ public class Board {
         return cardPlaced;
     }
 
+    public boolean attackMonsterWithMonster(int target, int attacker) {
+        boolean didAttack = false;
+        if (monsterPiles[roundCounter.getTurn()]
+                .stream()
+                .anyMatch(card -> card.getId() == attacker)
+                && monsterPiles[roundCounter.getOpponentIndex()]
+                .stream()
+                .anyMatch(card -> card.getId() == target)) {
 
-    public boolean attackMonsterWithMonster(int defender, int attacker) {
-        return false;
+            Optional<MonsterCard> targetCard = monsterPiles[roundCounter.getOpponentIndex()]
+                    .stream()
+                    .filter(card -> card.getId() == target)
+                    .findFirst();
+
+            Optional<MonsterCard> attackerCard = monsterPiles[roundCounter.getTurn()]
+                    .stream()
+                    .filter(card -> card.getId() == attacker)
+                    .findFirst();
+
+            if (targetCard.isPresent() && attackerCard.isPresent()) {
+                monsterPiles[roundCounter.getOpponentIndex()].remove(targetCard);
+                monsterPiles[roundCounter.getTurn()].remove(attackerCard);
+
+                MonsterCard[] engagedCards = gameEngine.engage(targetCard.get(), attackerCard.get());
+
+                if (engagedCards[0] != null) {
+                    monsterPiles[roundCounter.getOpponentIndex()].add(engagedCards[0]);
+                }
+
+                if (engagedCards[1] != null) {
+                    monsterPiles[roundCounter.getTurn()].add(engagedCards[1]);
+                }
+
+                didAttack = true;
+            }
+        }
+        return didAttack;
     }
 
-    public boolean useMagicOnMonster(MagicCard magicCard, int monsterCard) {
+    public boolean useMagicOnMonster(MagicCard magicCard, int target) {
         return false;
     }
 

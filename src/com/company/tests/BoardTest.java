@@ -128,6 +128,25 @@ class BoardTest {
 
     @Test
     void attackMonsterWithMonster() {
+        board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
+        MonsterCard target = (MonsterCard) monsterPiles[roundCounter.getTurn()].get(0);
+        roundCounter.nextTurn();
+        board.placeMonsterOnBoard(monsterCardFactory.buildCard(2));
+        MonsterCard attacker = (MonsterCard) monsterPiles[roundCounter.getTurn()].get(0);
+        roundCounter.nextTurn();
+
+
+        assertTrue(board.attackMonsterWithMonster(1, 2));
+        assertFalse(board.attackMonsterWithMonster(1, 10));
+        assertFalse(board.attackMonsterWithMonster(10, 2));
+        roundCounter.nextTurn();
+        assertTrue(board.attackMonsterWithMonster(2, 1));
+        assertFalse(board.attackMonsterWithMonster(1, 10));
+        assertFalse(board.attackMonsterWithMonster(10, 2));
+
+
+
+
     }
 
     @Test
@@ -136,5 +155,12 @@ class BoardTest {
 
     @Test
     void useMagic() {
+    }
+
+    @Test
+    void nextRound(){
+        // roundcounter++
+        // nolla fatigue
+        // nytt kort player.drawfromdecktohand
     }
 }
