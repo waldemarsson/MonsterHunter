@@ -47,11 +47,6 @@ class HandTest {
     }
 
     @Test
-    void putCard() {
-
-    }
-
-    @Test
     void doesNotHaveCard() {
 
     }
@@ -73,8 +68,11 @@ class HandTest {
         }
     }
 
+    /**
+     * Testing both putCard and hasCards in same test
+     */
     @Test
-    void hasCards() {
+    void putCardAndHasCards() {
         try {
             Hand hand = new Hand();
             hand.putCard(new BuffCard(2 ,1, EffectType.STAMINA));
