@@ -38,12 +38,21 @@ class HandTest {
 
     @Test
     void playCardEmpty(){
+        assertNull(new Hand().playCard(1));
+    }
 
+    @Test
+    void playWrongCard(){
+        Hand hand = new Hand();
+        hand.putCard(new BuffCard(1, 2, EffectType.DEFENSE));
+        assertNull(hand.playCard(2));
     }
 
     @Test
     void playCardOneCardOnHand(){
-
+        Hand hand = new Hand();
+        hand.putCard(new BuffCard(1, 2, EffectType.DEFENSE));
+        assertNotNull(hand.playCard(1));
     }
 
     @Test
