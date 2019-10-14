@@ -1,5 +1,8 @@
 package com.company.tests.players;
 
+import com.company.game.Board;
+import com.company.game.RoundCounter;
+import com.company.game.cards.Card;
 import com.company.game.collections.Deck;
 import com.company.game.collections.Hand;
 import com.company.game.factories.DeckFactory;
@@ -7,13 +10,14 @@ import com.company.game.players.Player;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
 
     Deck deck = new DeckFactory().buildDeck(10, 10, 10, 10, 10);
-    Deck monsterDeck = new DeckFactory().buildDeck(100, 0,0,0,0);
+    Deck monsterDeck = new DeckFactory().buildDeck(50, 0,0,0,0);
 
     @Test
     void constructorTest(){
@@ -109,7 +113,24 @@ class PlayerTest {
 
     @Test
     void putCardOnBoardFromHand(){
-
+        try {
+            RoundCounter roundCounter = new RoundCounter();
+            Player p1 = new Player("Player_1", monsterDeck);
+            Player p2 = new Player("Player_2", deck);
+            Board board = new Board(roundCounter, new Player[]{p1, p2});
+            p1.setBoard(board);
+            p2.setBoard(board);
+            Field field = Hand.class.getDeclaredField("cardsOnHand");
+            field.setAccessible(true);
+            List<Card> cards = (List<Card>) field.get(p1);
+            int cardsOnHand = cards.size();
+            assertEquals(0, board.getMonsterPile(roundCounter.getTurn()).size());
+            assertTrue(p1.placeCardOnBoardFromHand(cards.get(0).getId()));
+            assertNotEquals(cardsOnHand, cards.size());
+            assertEquals(1, board.getMonsterPile(roundCounter.getTurn()).size());
+        } catch (Exception e) {
+            fail();
+        }
     }
 
     @Test
