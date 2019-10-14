@@ -27,7 +27,9 @@ public class Hand {
      * @implNote Add Card to cardsOnHand
      */
     public void putCard(Card card) {
-
+        if(card != null){
+            cardsOnHand.add(card);
+        }
     }
 
 
