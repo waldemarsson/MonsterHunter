@@ -12,15 +12,17 @@ class PlayerTest {
     @Test
     void constructorTest(){
         try{
-            new Player("Player1", new DeckFactory().buildDeck(10, 10, 10, 10, 10));
+            new Player("Player_1", new DeckFactory().buildDeck(10, 10, 10, 10, 10));
         } catch (Exception e){
-            fail(); 
+            fail();
         }
     }
 
     @Test
     void playerHasValidNameUpperCase(){
-
+        assertEquals("PLAYER_1",
+                new Player("Player1", new DeckFactory()
+                        .buildDeck(10, 10, 10, 10, 10)).getName());
     }
 
     @Test
