@@ -57,12 +57,16 @@ class HandTest {
 
     @Test
     void doesNotHaveCard() {
-
+        Hand hand = new Hand();
+        hand.putCard(new BuffCard(1,2,EffectType.DEFENSE));
+        assertFalse(hand.hasCard(2));
     }
 
     @Test
     void hasCard(){
-
+        Hand hand = new Hand();
+        hand.putCard(new BuffCard(1, 2, EffectType.DEFENSE));
+        assertTrue(hand.hasCard(1));
     }
 
     @Test
