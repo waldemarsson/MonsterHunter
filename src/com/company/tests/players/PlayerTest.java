@@ -121,6 +121,11 @@ class PlayerTest {
         assertEquals(20, player.getDamage());
     }
 
+    @Test
+    void addDamageBeyondMaxHp(){
+        
+    }
+
 
     @Test
     void drawCardFromDeckToHand(){
@@ -163,7 +168,33 @@ class PlayerTest {
     }
 
     @Test
-    void healPlayer(){
+    void isDead(){
 
     }
+
+    @Test
+    void healPlayer1HP(){
+
+    }
+
+    @Test
+    void healPlayer0Hp(){
+
+    }
+
+    @Test
+    void healPlayerNegativeHp(){
+
+    }
+
+    @Test
+    void healPlayerBeyondZero(){
+
+    }
+
+    @Test
+    void healPlayerWithNoDamage(){
+
+    }
+
 }
