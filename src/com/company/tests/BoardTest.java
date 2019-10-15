@@ -18,6 +18,7 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,8 +30,14 @@ class BoardTest {
     Player[] players;
     MonsterCardFactory monsterCardFactory = new MonsterCardFactory();
     MagicCardFactory magicCardFactory = new MagicCardFactory();
-    List[] monsterPiles;
+    List<MonsterCard>[] monsterPiles;
 
+
+    void addFatigueToAllMonstersInPile(List<MonsterCard> monsters) {
+        for (MonsterCard card : monsters) {
+            card.addOneToFatigue();
+        }
+    }
 
     @BeforeEach
     void setUp() {
@@ -130,9 +137,58 @@ class BoardTest {
     }
 
     @Nested
-    @DisplayName("TESTS useMagicOnMonster")
-    class useMagicOnMonster {
+    @DisplayName("TESTS attackPlayerWithMonster")
+    class AttackPlayerWithMonster {
 
+        @BeforeEach
+        void setup() {
+            board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
+            roundCounter.nextTurn();
+            board.placeMonsterOnBoard(monsterCardFactory.buildCard(2));
+            roundCounter.nextTurn();
+
+        }
+
+        @Test
+        void attackMonsterCardExists() {
+            board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
+            assertTrue(board.attackPlayerWithMonster(1));
+        }
+
+        @Test
+        void attackMonsterCardDoesNotExists() {
+            assertFalse(board.attackPlayerWithMonster(99));
+        }
+
+        @Test
+        void attackMonsterCardIsNotMine() {
+            board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
+            roundCounter.nextTurn();
+            board.attackPlayerWithMonster(1);
+        }
+
+        @Test
+        void attackMonsterCardIsNegative() {
+            assertFalse(board.attackPlayerWithMonster(-1));
+        }
+
+        @Test
+        void attackPlayerMonstersOnBoard() {
+            board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
+            board.placeMonsterOnBoard(monsterCardFactory.buildCard(2));
+            roundCounter.nextTurn();
+            board.placeMonsterOnBoard(monsterCardFactory.buildCard(3));
+            addFatigueToAllMonstersInPile(monsterPiles[roundCounter.getTurn()]);
+            addFatigueToAllMonstersInPile(monsterPiles[roundCounter.getTurn()]);
+
+            assertFalse(board.attackPlayerWithMonster(3));
+        }
+
+    }
+
+    @Nested
+    @DisplayName("TESTS attackMonsterWithMonster")
+    class MonsterVsMonster {
         @Test
         void attackMonsterWithMonster() {
             //Player 1 turn: places card
@@ -157,6 +213,47 @@ class BoardTest {
             assertFalse(board.attackMonsterWithMonster(1, 10));
             assertFalse(board.attackMonsterWithMonster(10, 2));
         }
+
+        // Disabled for now, waiting for logic in gameEngine.engage to return list with surviving mosters
+        @Disabled
+        @Test
+        void attackMonsterVsMonsterAttackerDied() {
+            board.placeMonsterOnBoard(new MonsterCard(2, "Target", 1, 100, 100, 100, new BuffCard(0, 0, EffectType.NONE)));
+            roundCounter.nextTurn();
+            board.placeMonsterOnBoard(new MonsterCard(1, "Attacker", 1, 1, 1, 1, new BuffCard(0, 0, EffectType.NONE)));
+            assertEquals(1, monsterPiles[roundCounter.getOpponentIndex()].size());
+            assertEquals(1, monsterPiles[roundCounter.getTurn()].size());
+            assertTrue(board.attackMonsterWithMonster(2, 1));
+            assertEquals(1, monsterPiles[roundCounter.getOpponentIndex()].size());
+            assertEquals(0, monsterPiles[roundCounter.getTurn()].size());
+        }
+
+        // Disabled for now, waiting for logic in gameEngine.engage to return list with surviving mosters
+        @Disabled
+        @Test
+        void attackMonsterVsMonsterTargetDied() {
+            board.placeMonsterOnBoard(new MonsterCard(1, "Target", 1, 1, 1, 1, new BuffCard(0, 0, EffectType.NONE)));
+            roundCounter.nextTurn();
+            board.placeMonsterOnBoard(new MonsterCard(2, "Attacker", 1, 100, 100, 100, new BuffCard(0, 0, EffectType.NONE)));
+            assertEquals(1, monsterPiles[roundCounter.getOpponentIndex()].size());
+            assertEquals(1, monsterPiles[roundCounter.getTurn()].size());
+            assertTrue(board.attackMonsterWithMonster(1, 2));
+            assertEquals(0, monsterPiles[roundCounter.getOpponentIndex()].size());
+            assertEquals(1, monsterPiles[roundCounter.getTurn()].size());
+        }
+
+        @Test
+        void attackMonsterVsMonsterAttackerStamina0() {
+            board.placeMonsterOnBoard(new MonsterCard(1, "Target", 1, 1, 1, 1, new BuffCard(0, 0, EffectType.NONE)));
+            roundCounter.nextTurn();
+            board.placeMonsterOnBoard(new MonsterCard(2, "Attacker", 0, 100, 100, 100, new BuffCard(0, 0, EffectType.NONE)));
+            assertFalse(board.attackMonsterWithMonster(2, 1));
+        }
+    }
+
+    @Nested
+    @DisplayName("TESTS useMagicOnMonster")
+    class useMagicOnMonster {
 
         @Test
         void useMagicOnMonsterOwnMonster() {
@@ -309,13 +406,6 @@ class BoardTest {
         @DisplayName("TESTS resetFatigue")
         class Fatigue {
 
-            void addFatigueToAllMonstersInPile(List<MonsterCard> monsters) {
-                for (MonsterCard card : monsters) {
-                    card.addOneToFatigue();
-                    assertEquals(1, card.getFatigue());
-                }
-            }
-
             @BeforeEach
             void addFatigueToMonsters() {
                 addFatigueToAllMonstersInPile((List<MonsterCard>) monsterPiles[roundCounter.getTurn()]);
@@ -344,4 +434,6 @@ class BoardTest {
             }
         }
     }
+
+
 }

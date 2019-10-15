@@ -19,6 +19,10 @@ public class GameEngine {
     }
 
 
+    public boolean engage(MonsterCard monsterCard) {
+        return true;
+    }
+
     /**
      * @param magicCard
      * @implNote attackPlayer or healPlayer
