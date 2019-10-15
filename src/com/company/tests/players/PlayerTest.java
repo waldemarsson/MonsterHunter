@@ -3,6 +3,8 @@ package com.company.tests.players;
 import com.company.game.Board;
 import com.company.game.RoundCounter;
 import com.company.game.cards.Card;
+import com.company.game.cards.EffectCard;
+import com.company.game.cards.MonsterCard;
 import com.company.game.collections.Deck;
 import com.company.game.collections.Hand;
 import com.company.game.factories.DeckFactory;
@@ -159,6 +161,38 @@ class PlayerTest {
             e.printStackTrace();
             fail();
         }
+    }
+
+    @Test
+    void failingOneParamPutCard(){
+        fail();
+    }
+
+    @Test
+    void placeEffectOnMonster(){
+        try {
+            RoundCounter roundCounter = new RoundCounter();
+            Player p1 = new Player("Player_1", getFreshDeck());
+            Player p2 = new Player("Player_2", getFreshDeck());
+            Board board = new Board(roundCounter, new Player[]{p1, p2});
+            p1.setBoard(board);
+            p2.setBoard(board);
+            Field field = Hand.class.getDeclaredField("cardsOnHand");
+            field.setAccessible(true);
+            List<Card> player1Cards = (List<Card>) field.get(p1.getHand());
+            int monsterId = player1Cards.stream().filter(card -> card instanceof MonsterCard).findFirst().get().getId();
+            int effectId = player1Cards.stream().filter(card -> card instanceof EffectCard).findFirst().get().getId();
+            p1.placeCardOnBoardFromHand(monsterId);
+            p1.placeCardOnBoardFromHand(effectId, monsterId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+    }
+
+    @Test
+    void failingTwoParamPut(){
+        fail();
     }
 
     @Test
