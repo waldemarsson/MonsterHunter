@@ -1,6 +1,10 @@
 package com.company.game.players;
 
 import com.company.game.Board;
+import com.company.game.Game;
+import com.company.game.cards.Card;
+import com.company.game.cards.EffectCard;
+import com.company.game.cards.MonsterCard;
 import com.company.game.collections.Deck;
 import com.company.game.collections.Hand;
 
@@ -46,7 +50,7 @@ public class Player {
     }
 
     public void setBoard(Board board) {
-        if (board == null) {
+        if (board != null) {
             this.board = board;
         }
     }
@@ -75,7 +79,16 @@ public class Player {
     }
 
     public boolean placeCardOnBoardFromHand(int id){
+        Card card;
+        if(hand.hasCard(id)){
+            card = hand.playCard(id);
+            if(!(card instanceof MonsterCard))
+        }
         return false;
+    }
+    public boolean placeCardOnBoardFromHand(int id, int otherId){
+        if()
+        board.placeEffectOnMonsterWithId()
     }
 
     @Override
