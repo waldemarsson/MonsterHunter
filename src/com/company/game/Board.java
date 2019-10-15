@@ -60,6 +60,8 @@ public class Board {
     }
 
     public boolean attackMonsterWithMonster(int target, int attacker) {
+        if(target <= 0 || attacker <= 0) return false;
+
         boolean didAttack = false;
         Optional<MonsterCard> optTargetCard = getOpponentMonsterPile()
                 .stream()
