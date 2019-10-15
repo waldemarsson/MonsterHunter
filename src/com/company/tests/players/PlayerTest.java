@@ -165,6 +165,13 @@ class PlayerTest {
     }
 
     @Test
+    void isAliveSmallDamage(){
+        Player player = new Player("Player_1", deck);
+        player.addDamage(player.getHp());
+        assertFalse(player.isAlive());
+    }
+
+    @Test
     void isAliveFullDamage() {
         Player player = new Player("Player_1", deck);
         player.addDamage(player.getHp());
@@ -173,7 +180,9 @@ class PlayerTest {
 
     @Test
     void isDead(){
-
+        Player player = new Player("Player_1", deck);
+        player.addDamage(player.getHp() + 1);
+        assertFalse(player.isAlive());
     }
 
     @Test
