@@ -54,43 +54,38 @@ public class Board {
         }
         return cardPlaced;
     }
-    
+
+    public boolean attackPlayerWithMonster(int attacker) {
+        return false;
+    }
 
     public boolean attackMonsterWithMonster(int target, int attacker) {
         boolean didAttack = false;
-        if (getCurrentPlayerMonsterPile()
+        Optional<MonsterCard> optTargetCard = getOpponentMonsterPile()
                 .stream()
-                .anyMatch(card -> card.getId() == attacker)
-                && getOpponentMonsterPile()
+                .filter(card -> card.getId() == target)
+                .findFirst();
+
+        Optional<MonsterCard> optAttackerCard = getCurrentPlayerMonsterPile()
                 .stream()
-                .anyMatch(card -> card.getId() == target)) {
+                .filter(card -> card.getId() == attacker && card.getCalculatedStamina() > 0)
+                .findFirst();
 
-            Optional<MonsterCard> targetCard = getOpponentMonsterPile()
-                    .stream()
-                    .filter(card -> card.getId() == target)
-                    .findFirst();
+        if (optTargetCard.isPresent() && optAttackerCard.isPresent()) {
+            MonsterCard attackerCard = optAttackerCard.get();
+            MonsterCard targetCard = optTargetCard.get();
 
-            Optional<MonsterCard> attackerCard = getCurrentPlayerMonsterPile()
-                    .stream()
-                    .filter(card -> card.getId() == attacker)
-                    .findFirst();
+            didAttack = (getOpponentMonsterPile().remove(targetCard) && getCurrentPlayerMonsterPile().remove(attackerCard));
 
-            if (targetCard.isPresent() && attackerCard.isPresent()) {
-                getOpponentMonsterPile().remove(targetCard);
-                getCurrentPlayerMonsterPile().remove(attackerCard);
+            MonsterCard[] engagedCards = gameEngine.engage(targetCard, attackerCard);
 
-                MonsterCard[] engagedCards = gameEngine.engage(targetCard.get(), attackerCard.get());
-
-                if (engagedCards[0] != null) {
-                    getOpponentMonsterPile().add(engagedCards[0]);
-                }
-
-                if (engagedCards[1] != null) {
-                    getCurrentPlayerMonsterPile().add(engagedCards[1]);
-                }
-
-                didAttack = true;
+            if (engagedCards[0] != null) {
+                getOpponentMonsterPile().add(engagedCards[0]);
             }
+            if (engagedCards[1] != null) {
+                getCurrentPlayerMonsterPile().add(engagedCards[1]);
+            }
+
         }
         return didAttack;
     }

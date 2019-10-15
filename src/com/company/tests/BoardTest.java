@@ -134,9 +134,26 @@ class BoardTest {
     class AttackPlayerWithMonster {
 
         @Test
-        void attack() {
+        void attackMonsterCardExists() {
 
         }
+
+        @Test
+        void attackMonsterCardDoesNotExists() {
+
+        }
+
+        @Test
+        void attackMonsterCardIsNotMine() {
+
+        }
+
+        @Test
+        void attackMonsterCardIsNegative() {
+
+        }
+
+
     }
 
     @Nested
@@ -165,6 +182,37 @@ class BoardTest {
             assertTrue(board.attackMonsterWithMonster(1, 2));
             assertFalse(board.attackMonsterWithMonster(1, 10));
             assertFalse(board.attackMonsterWithMonster(10, 2));
+        }
+
+        @Test
+        void attackMonsterVsMonsterAttackerDied() {
+            board.placeMonsterOnBoard(new MonsterCard(2, "Target", 1, 100, 100, 100, new BuffCard(0, 0, EffectType.NONE)));
+            roundCounter.nextTurn();
+            board.placeMonsterOnBoard(new MonsterCard(1, "Attacker", 1, 1, 1, 1, new BuffCard(0, 0, EffectType.NONE)));
+            assertEquals(1,monsterPiles[roundCounter.getOpponentIndex()].size());
+            assertEquals(1, monsterPiles[roundCounter.getTurn()].size());
+            assertTrue(board.attackMonsterWithMonster(2, 1));
+            assertEquals(1,monsterPiles[roundCounter.getOpponentIndex()].size());
+            assertEquals(0, monsterPiles[roundCounter.getTurn()].size());
+
+
+        }
+
+        @Test
+        void attackMonsterVsMonsterTargetDied() {
+            board.placeMonsterOnBoard(new MonsterCard(1, "Target", 1, 1, 1, 1, new BuffCard(0, 0, EffectType.NONE)));
+            roundCounter.nextTurn();
+            board.placeMonsterOnBoard(new MonsterCard(2, "Attacker", 1, 100, 100, 100, new BuffCard(0, 0, EffectType.NONE)));
+            assertEquals(1,monsterPiles[roundCounter.getOpponentIndex()].size());
+            assertEquals(1, monsterPiles[roundCounter.getTurn()].size());
+            assertTrue(board.attackMonsterWithMonster(1, 2));
+            assertEquals(0,monsterPiles[roundCounter.getOpponentIndex()].size());
+            assertEquals(1, monsterPiles[roundCounter.getTurn()].size());
+        }
+
+        @Test
+        void attackMonsterVsMonsterAttackerStamina0(){
+
         }
     }
 
