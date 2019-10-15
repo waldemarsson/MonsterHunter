@@ -165,8 +165,7 @@ public class Board {
                     break;
                 case ATTACK_PLAYER:
                 case HEAL_PLAYER:
-                    gameEngine.engage(magicCard);
-                    wasMagicUsed = true;
+                    wasMagicUsed = gameEngine.engage(magicCard);
                     break;
                 default:
                     return false;

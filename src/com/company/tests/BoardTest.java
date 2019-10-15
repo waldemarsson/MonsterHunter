@@ -249,6 +249,7 @@ class BoardTest {
             board.placeMonsterOnBoard(monsterCardFactory.buildCard(4));
             board.placeMonsterOnBoard(monsterCardFactory.buildCard(5));
             board.placeMonsterOnBoard(monsterCardFactory.buildCard(6));
+            roundCounter.nextTurn();
         }
 
         @Test
@@ -277,10 +278,69 @@ class BoardTest {
         }
     }
 
-    @Test
-    void nextRound() {
+    @Nested
+    @DisplayName("TESTS nextRound")
+    class NextRound {
+
         // roundcounter++
         // nolla fatigue
         // nytt kort player.drawfromdecktohand
+        @Test
+        void didCounterIncrease() {
+            int counter = roundCounter.getTurn();
+            board.nextRound();
+            assertEquals(counter + 1, roundCounter.getTurn());
+        }
+
+        @Test
+        void didCounterIncreaseLoop() {
+            for (int i = roundCounter.getTurn(); i < 1000; i++) {
+                assertEquals(i, roundCounter.getTurn());
+                board.nextRound();
+                assertEquals(i + 1, roundCounter.getTurn());
+            }
+
+        }
+
+        @Nested
+        @DisplayName("TESTS resetFatigue")
+        class Fatigue {
+
+            void addFatigueToAllMonstersInPile(List<MonsterCard> monsters) {
+                for (MonsterCard card : monsters) {
+                    card.addOneToFatigue();
+                    assertEquals(1, card.getFatigue());
+                }
+            }
+
+            @BeforeEach
+            void addFatigueToMonsters() {
+                addFatigueToAllMonstersInPile((List<MonsterCard>) monsterPiles[roundCounter.getTurn()]);
+                addFatigueToAllMonstersInPile((List<MonsterCard>) monsterPiles[roundCounter.getOpponentIndex()]);
+
+            }
+
+            @Test
+            void resetFatigue() {
+                board.nextRound();
+                for (MonsterCard card : (List<MonsterCard>) monsterPiles[roundCounter.getOpponentIndex()]) {
+                    assertEquals(0, card.getFatigue());
+                }
+                addFatigueToAllMonstersInPile((List<MonsterCard>) monsterPiles[roundCounter.getTurn()]);
+
+                board.nextRound();
+                for (MonsterCard card : (List<MonsterCard>) monsterPiles[roundCounter.getOpponentIndex()]) {
+                    assertEquals(0, card.getFatigue());
+                }
+                addFatigueToAllMonstersInPile((List<MonsterCard>) monsterPiles[roundCounter.getTurn()]);
+
+                board.nextRound();
+                for (MonsterCard card : (List<MonsterCard>) monsterPiles[roundCounter.getOpponentIndex()]) {
+                    assertEquals(0, card.getFatigue());
+                }
+            }
+        }
+
+
     }
 }
