@@ -41,8 +41,13 @@ class PlayerTest {
         assertEquals("UNKNOWN_PLAYER", player.getName());
     }
 
-   
+    @Test
+    void playerNoName(){
+        Player player = new Player("", deck);
+        assertEquals("UNKNOWN_PLAYER", player.getName());
+    }
 
+  
     @Test
     void playerHasValidHp(){
         Player player = new Player("Player_1", deck);
