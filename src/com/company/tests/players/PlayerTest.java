@@ -167,7 +167,7 @@ class PlayerTest {
     @Test
     void isAliveSmallDamage(){
         Player player = new Player("Player_1", deck);
-        player.addDamage(player.getHp());
+        player.addDamage(1);
         assertFalse(player.isAlive());
     }
 
