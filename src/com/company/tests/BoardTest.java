@@ -281,10 +281,6 @@ class BoardTest {
     @Nested
     @DisplayName("TESTS nextRound")
     class NextRound {
-
-        // roundcounter++
-        // nolla fatigue
-        // nytt kort player.drawfromdecktohand
         @Test
         void didCounterIncrease() {
             int counter = roundCounter.getTurn();
@@ -340,7 +336,5 @@ class BoardTest {
                 }
             }
         }
-
-
     }
 }
