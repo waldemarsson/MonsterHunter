@@ -1,13 +1,12 @@
 package com.company.game;
 
-import com.company.game.cards.Card;
 import com.company.game.cards.MagicCard;
 import com.company.game.cards.MonsterCard;
 import com.company.game.players.Player;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.concurrent.ThreadLocalRandom;
+
 
 public class GameEngine {
 
@@ -53,7 +52,7 @@ public class GameEngine {
      * @return random int 1 - 6
      */
     private int throwDice() {
-        return 0;
+        return ThreadLocalRandom.current().nextInt(1, 7);
     }
 
 
