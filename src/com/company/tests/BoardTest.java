@@ -18,6 +18,7 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,7 +30,7 @@ class BoardTest {
     Player[] players;
     MonsterCardFactory monsterCardFactory = new MonsterCardFactory();
     MagicCardFactory magicCardFactory = new MagicCardFactory();
-    List[] monsterPiles;
+    List<MonsterCard>[] monsterPiles;
 
 
     void addFatigueToAllMonstersInPile(List<MonsterCard> monsters) {
@@ -177,12 +178,10 @@ class BoardTest {
             board.placeMonsterOnBoard(monsterCardFactory.buildCard(2));
             roundCounter.nextTurn();
             board.placeMonsterOnBoard(monsterCardFactory.buildCard(3));
-            addFatigueToAllMonstersInPile((List<MonsterCard>) monsterPiles[roundCounter.getTurn()]);
-            addFatigueToAllMonstersInPile((List<MonsterCard>) monsterPiles[roundCounter.getTurn()]);
-            addFatigueToAllMonstersInPile((List<MonsterCard>) monsterPiles[roundCounter.getTurn()]);
+            addFatigueToAllMonstersInPile(monsterPiles[roundCounter.getTurn()]);
+            addFatigueToAllMonstersInPile(monsterPiles[roundCounter.getTurn()]);
 
             assertFalse(board.attackPlayerWithMonster(3));
-
         }
 
     }
@@ -222,10 +221,10 @@ class BoardTest {
             board.placeMonsterOnBoard(new MonsterCard(2, "Target", 1, 100, 100, 100, new BuffCard(0, 0, EffectType.NONE)));
             roundCounter.nextTurn();
             board.placeMonsterOnBoard(new MonsterCard(1, "Attacker", 1, 1, 1, 1, new BuffCard(0, 0, EffectType.NONE)));
-            assertEquals(1,monsterPiles[roundCounter.getOpponentIndex()].size());
+            assertEquals(1, monsterPiles[roundCounter.getOpponentIndex()].size());
             assertEquals(1, monsterPiles[roundCounter.getTurn()].size());
             assertTrue(board.attackMonsterWithMonster(2, 1));
-            assertEquals(1,monsterPiles[roundCounter.getOpponentIndex()].size());
+            assertEquals(1, monsterPiles[roundCounter.getOpponentIndex()].size());
             assertEquals(0, monsterPiles[roundCounter.getTurn()].size());
         }
 
@@ -236,15 +235,15 @@ class BoardTest {
             board.placeMonsterOnBoard(new MonsterCard(1, "Target", 1, 1, 1, 1, new BuffCard(0, 0, EffectType.NONE)));
             roundCounter.nextTurn();
             board.placeMonsterOnBoard(new MonsterCard(2, "Attacker", 1, 100, 100, 100, new BuffCard(0, 0, EffectType.NONE)));
-            assertEquals(1,monsterPiles[roundCounter.getOpponentIndex()].size());
+            assertEquals(1, monsterPiles[roundCounter.getOpponentIndex()].size());
             assertEquals(1, monsterPiles[roundCounter.getTurn()].size());
             assertTrue(board.attackMonsterWithMonster(1, 2));
-            assertEquals(0,monsterPiles[roundCounter.getOpponentIndex()].size());
+            assertEquals(0, monsterPiles[roundCounter.getOpponentIndex()].size());
             assertEquals(1, monsterPiles[roundCounter.getTurn()].size());
         }
 
         @Test
-        void attackMonsterVsMonsterAttackerStamina0(){
+        void attackMonsterVsMonsterAttackerStamina0() {
             board.placeMonsterOnBoard(new MonsterCard(1, "Target", 1, 1, 1, 1, new BuffCard(0, 0, EffectType.NONE)));
             roundCounter.nextTurn();
             board.placeMonsterOnBoard(new MonsterCard(2, "Attacker", 0, 100, 100, 100, new BuffCard(0, 0, EffectType.NONE)));
