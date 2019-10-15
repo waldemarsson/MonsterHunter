@@ -21,7 +21,7 @@ public class GameEngine {
 
 
     public boolean engage(MonsterCard monsterCard) {
-        return false;
+        return true;
     }
 
     /**

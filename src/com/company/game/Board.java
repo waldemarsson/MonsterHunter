@@ -65,10 +65,10 @@ public class Board {
                 .findFirst();
 
         if(optAttackerCard.isPresent()) {
-//            gameEngine.
+            didAttack = gameEngine.engage(optAttackerCard.get());
         }
 
-        return false;
+        return didAttack;
     }
 
     public boolean attackMonsterWithMonster(int target, int attacker) {
