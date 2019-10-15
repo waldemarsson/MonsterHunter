@@ -144,18 +144,19 @@ class PlayerTest {
             RoundCounter roundCounter = new RoundCounter();
             Player p1 = new Player("Player_1", monsterDeck);
             Player p2 = new Player("Player_2", getFreshDeck());
-             Board board = new Board(roundCounter, new Player[]{p1, p2});
+            Board board = new Board(roundCounter, new Player[]{p1, p2});
             p1.setBoard(board);
             p2.setBoard(board);
             Field field = Hand.class.getDeclaredField("cardsOnHand");
             field.setAccessible(true);
-            List<Card> cards = (List<Card>) field.get(p1);
+            List<Card> cards = (List<Card>) field.get(p1.getHand());
             int cardsOnHand = cards.size();
             assertEquals(0, board.getMonsterPile(roundCounter.getTurn()).size());
             assertTrue(p1.placeCardOnBoardFromHand(cards.get(0).getId()));
             assertNotEquals(cardsOnHand, cards.size());
             assertEquals(1, board.getMonsterPile(roundCounter.getTurn()).size());
         } catch (Exception e) {
+            e.printStackTrace();
             fail();
         }
     }
