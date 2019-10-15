@@ -99,37 +99,38 @@ public class Board {
     }
 
     public boolean useMagicOnMonster(MagicCard magicCard, int target) {
+        if (magicCard == null || target <= 0 || !magicCard.isTargeted()) return false;
+
         boolean wasMagicUsed = false;
         Optional<MonsterCard> targetCard;
 
-        if (magicCard != null && magicCard.isTargeted()) {
-            switch (magicCard.getMagicType()) {
-                case HEAL_CARD:
-                case REMOVE_DEBUFF:
-                    targetCard = getCurrentPlayerMonsterPile().stream().filter(card -> card.getId() == target).findFirst();
-                    if (targetCard.isPresent()) {
-                        getCurrentPlayerMonsterPile().remove(targetCard.get());
-                        List<MonsterCard> affectedCards = gameEngine.engage(magicCard, new ArrayList<>(Arrays.asList(targetCard.get())));
-                        getCurrentPlayerMonsterPile().addAll(affectedCards);
-                        wasMagicUsed = true;
-                    }
-                    break;
-                case STUN:
-                case ATTACK_CARD:
-                case REMOVE_BUFF:
-                    targetCard = getOpponentMonsterPile().stream().filter(card -> card.getId() == target).findFirst();
-                    if (targetCard.isPresent()) {
-                        getOpponentMonsterPile().remove(targetCard.get());
-                        List<MonsterCard> affectedCards = gameEngine.engage(magicCard, new ArrayList<>(Arrays.asList(targetCard.get())));
-                        getOpponentMonsterPile().addAll(affectedCards);
-                        wasMagicUsed = true;
-                    }
-                    break;
-                case ATTACK_PLAYER:
-                case HEAL_PLAYER:
-                default:
-                    return false;
-            }
+
+        switch (magicCard.getMagicType()) {
+            case HEAL_CARD:
+            case REMOVE_DEBUFF:
+                targetCard = getCurrentPlayerMonsterPile().stream().filter(card -> card.getId() == target).findFirst();
+                if (targetCard.isPresent()) {
+                    getCurrentPlayerMonsterPile().remove(targetCard.get());
+                    List<MonsterCard> affectedCards = gameEngine.engage(magicCard, new ArrayList<>(Arrays.asList(targetCard.get())));
+                    getCurrentPlayerMonsterPile().addAll(affectedCards);
+                    wasMagicUsed = true;
+                }
+                break;
+            case STUN:
+            case ATTACK_CARD:
+            case REMOVE_BUFF:
+                targetCard = getOpponentMonsterPile().stream().filter(card -> card.getId() == target).findFirst();
+                if (targetCard.isPresent()) {
+                    getOpponentMonsterPile().remove(targetCard.get());
+                    List<MonsterCard> affectedCards = gameEngine.engage(magicCard, new ArrayList<>(Arrays.asList(targetCard.get())));
+                    getOpponentMonsterPile().addAll(affectedCards);
+                    wasMagicUsed = true;
+                }
+                break;
+            case ATTACK_PLAYER:
+            case HEAL_PLAYER:
+            default:
+                return false;
         }
         return wasMagicUsed;
     }
