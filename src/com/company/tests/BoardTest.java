@@ -130,9 +130,18 @@ class BoardTest {
     }
 
     @Nested
-    @DisplayName("TESTS useMagicOnMonster")
-    class useMagicOnMonster {
+    @DisplayName("TESTS attackPlayerWithMonster")
+    class AttackPlayerWithMonster {
 
+        @Test
+        void attack() {
+
+        }
+    }
+
+    @Nested
+    @DisplayName("TESTS attackMonsterWithMonster")
+    class MonsterVsMonster {
         @Test
         void attackMonsterWithMonster() {
             //Player 1 turn: places card
@@ -157,6 +166,11 @@ class BoardTest {
             assertFalse(board.attackMonsterWithMonster(1, 10));
             assertFalse(board.attackMonsterWithMonster(10, 2));
         }
+    }
+
+    @Nested
+    @DisplayName("TESTS useMagicOnMonster")
+    class useMagicOnMonster {
 
         @Test
         void useMagicOnMonsterOwnMonster() {
@@ -344,4 +358,6 @@ class BoardTest {
             }
         }
     }
+
+
 }
