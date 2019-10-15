@@ -47,7 +47,17 @@ class PlayerTest {
         assertEquals("UNKNOWN_PLAYER", player.getName());
     }
 
-  
+    @Test
+    void nullDeck(){
+        try{
+            Field field = Player.class.getDeclaredField("deck");
+            field.setAccessible(true);
+            assertNotNull(field.get(new Player("Player_1", null)));
+        } catch (Exception e){
+            fail();
+        }
+    }
+
     @Test
     void playerHasValidHp(){
         Player player = new Player("Player_1", deck);
