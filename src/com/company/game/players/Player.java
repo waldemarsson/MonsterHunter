@@ -36,7 +36,7 @@ public class Player {
     }
 
     public void addDamage(int damageTaken) {
-
+        this.damage += Math.max(damageTaken, 0);
     }
 
     public Hand getHand() {
@@ -61,7 +61,8 @@ public class Player {
     }
 
     public void heal(int value){
-
+        value = Math.max(value, 0);
+        this.damage = Math.max(0, this.damage - value);
     }
 
     public boolean drawFromDeckToHand(){
