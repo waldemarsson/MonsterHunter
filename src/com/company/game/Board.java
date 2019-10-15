@@ -34,23 +34,23 @@ public class Board {
     }
 
     public boolean placeEffectOnMonsterWithId(EffectCard effect, int id) {
+        if(effect == null || id <= 0) return false;
+        
         boolean cardPlaced = false;
 
         if (effect instanceof BuffCard) {
+
             if (monsterPiles[roundCounter.getTurn()].stream().anyMatch(card -> card.getId() == id)) {
                 monsterPiles[roundCounter.getTurn()].stream().filter(card -> card.getId() == id).findFirst().get().setBuffCard((BuffCard) effect);
                 cardPlaced = true;
-            } else {
-                cardPlaced = false;
             }
+
         } else if (effect instanceof DebuffCard) {
+
             if (monsterPiles[roundCounter.getOpponentIndex()].stream().anyMatch(card -> card.getId() == id)) {
                 monsterPiles[roundCounter.getOpponentIndex()].stream().filter(card -> card.getId() == id).findFirst().get().setDebuffCard((DebuffCard) effect);
                 cardPlaced = true;
-            } else {
-                cardPlaced = false;
             }
-
         }
         return cardPlaced;
     }
@@ -60,7 +60,7 @@ public class Board {
     }
 
     public boolean attackMonsterWithMonster(int target, int attacker) {
-        if(target <= 0 || attacker <= 0) return false;
+        if (target <= 0 || attacker <= 0) return false;
 
         boolean didAttack = false;
         Optional<MonsterCard> optTargetCard = getOpponentMonsterPile()
