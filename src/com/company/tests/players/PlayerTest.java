@@ -153,7 +153,8 @@ class PlayerTest {
 
     @Test
     void getHandAsString() {
-
+        Player player = new Player("Player_1", deck);
+        assertIterableEquals(player.getHandAsString(), player.getHand().getCardsOnHandAsString());
     }
 
     @Test
