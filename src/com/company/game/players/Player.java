@@ -16,11 +16,13 @@ public class Player {
     private Board board;
 
     public Player(String name, Deck deck) {
-        this.name = name;
-        this.deck = deck;
+        this.name = name == null || name.trim().equals("") ? "UNKNOWN_PLAYER" : name.trim().toUpperCase();
+        this.deck = deck != null ? deck : new Deck(List.of());
         this.hp = 20;
         this.damage = 0;
         this.hand = new Hand();
+        for(int i = 0; i < 5; i++)
+            drawFromDeckToHand();
     }
 
     public String getName() {
