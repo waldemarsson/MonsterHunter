@@ -36,9 +36,12 @@ class PlayerTest {
 
     @Test
     void playerNullName(){
-
+        Player player = new Player(null, deck);
+        assertNotNull(player.getName());
+        assertEquals("UNKNOWN_PLAYER", player.getName());
     }
 
+   
 
     @Test
     void playerHasValidHp(){
@@ -117,7 +120,7 @@ class PlayerTest {
             RoundCounter roundCounter = new RoundCounter();
             Player p1 = new Player("Player_1", monsterDeck);
             Player p2 = new Player("Player_2", deck);
-            Board board = new Board(roundCounter, new Player[]{p1, p2});
+             Board board = new Board(roundCounter, new Player[]{p1, p2});
             p1.setBoard(board);
             p2.setBoard(board);
             Field field = Hand.class.getDeclaredField("cardsOnHand");
