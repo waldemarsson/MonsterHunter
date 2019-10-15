@@ -65,7 +65,10 @@ public class Player {
     }
 
     public boolean drawFromDeckToHand(){
-        return false;
+        boolean hasCards = deck.hasCards();
+        if(hasCards)
+            hand.putCard(deck.drawCard());
+        return hasCards;
     }
 
     public boolean placeCardOnBoardFromHand(int id){
