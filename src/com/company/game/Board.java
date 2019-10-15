@@ -1,25 +1,24 @@
 package com.company.game;
 
 import com.company.game.cards.*;
-import com.company.game.enums.EffectType;
 import com.company.game.enums.MagicType;
 import com.company.game.players.Player;
-import com.sun.security.jgss.GSSUtil;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Board {
 
     private final List<MonsterCard>[] monsterPiles;
     private final GameEngine gameEngine;
     private final RoundCounter roundCounter;
+    private final Player[] players;
 
     public Board(RoundCounter roundCounter, Player[] players) {
         monsterPiles = new List[]{new ArrayList<MonsterCard>(), new ArrayList<MonsterCard>()};
         gameEngine = new GameEngine(players, roundCounter);
         this.roundCounter = roundCounter;
+        this.players = players;
     }
 
 
@@ -175,7 +174,8 @@ public class Board {
     }
 
     public void nextRound() {
-
-
+        getCurrentPlayerMonsterPile().stream().forEach(MonsterCard::resetFatigue);
+        players[roundCounter.getTurn()].drawFromDeckToHand();
+        roundCounter.nextTurn();
     }
 }
