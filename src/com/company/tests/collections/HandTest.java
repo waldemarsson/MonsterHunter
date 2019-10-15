@@ -126,7 +126,6 @@ class HandTest {
             while (deck.hasCards()){
                 hand.putCard(deck.drawCard());
             }
-            hand.getCardsOnHandAsString().forEach(System.out::println);
             assertIterableEquals(cards, hand.getCardsOnHandAsString());
         } catch (Exception e){
             fail();
