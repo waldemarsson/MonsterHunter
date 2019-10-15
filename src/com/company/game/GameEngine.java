@@ -5,7 +5,9 @@ import com.company.game.cards.MagicCard;
 import com.company.game.cards.MonsterCard;
 import com.company.game.players.Player;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GameEngine {
 
@@ -19,31 +21,31 @@ public class GameEngine {
 
 
     /**
-     * @implNote attackPlayer or healPlayer
      * @param magicCard
+     * @implNote attackPlayer or healPlayer
      */
-    public void engage(MagicCard magicCard) {
-
+    public boolean engage(MagicCard magicCard) {
+        return true;
     }
 
     /**
-     * @implNote if defense = 0, attack player
-     * @param activeCard
-     * @param passiveCards
+     * @param target
+     * @param attacker
      * @return List[0] attacker card if it survives, List[1] defense cards if survives (filter card.calchp > 0)
+     * @implNote if defense = 0, attack player
      */
-    public List[] engage(MonsterCard activeCard, List<Card> passiveCards) {
-        return null;
+    public MonsterCard[] engage(MonsterCard target, MonsterCard attacker) {
+        return new MonsterCard[]{target, attacker};
     }
 
     /**
-     * @implNote if defense = 0, attack player
      * @param activeCard
-     * @param passiveCards
-     * @return  List<Card> defense cards if survives (filter card.calchp > 0)
+     * @param targets
+     * @return List<MonsterCard> defense cards if survives (filter card.calchp > 0)
+     * @implNote if defense = 0, attack player
      */
-    public List<Card> engage(MagicCard activeCard, List<Card> passiveCards) {
-        return null;
+    public List<MonsterCard> engage(MagicCard activeCard, List<MonsterCard> targets) {
+        return targets;
     }
 
 
@@ -56,15 +58,16 @@ public class GameEngine {
 
 
     /**
-     * @implNote attack player with card.attack / 2 rounded up
      * @param monsterCard
+     * @implNote attack player with card.attack / 2 rounded up
      */
     private void attackPlayer(MonsterCard monsterCard) {
 
     }
+
     /**
-     * @implNote attack player with card.value
      * @param magicCard
+     * @implNote attack player with card.value
      */
     private void attackPlayer(MagicCard magicCard) {
 

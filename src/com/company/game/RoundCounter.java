@@ -17,6 +17,10 @@ public class RoundCounter {
         return currentRound % 2;
     }
 
+    public int getOpponentIndex() {
+        return getTurn() == 1 ? 0 : 1;
+    }
+
 
     /**
      * increase currentRound

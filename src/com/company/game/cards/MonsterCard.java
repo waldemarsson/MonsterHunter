@@ -80,6 +80,10 @@ public class MonsterCard extends Card {
         return fatigue;
     }
 
+    public void resetFatigue() {
+        fatigue = 0;
+    }
+
     public void setDebuffCard(DebuffCard debuffCard) {
         if (debuffCard != null) {
             this.debuffCard = debuffCard;
