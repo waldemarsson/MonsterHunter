@@ -1,6 +1,8 @@
 package com.company.game;
 
 import com.company.game.cards.*;
+import com.company.game.enums.EffectType;
+import com.company.game.enums.MagicType;
 import com.company.game.players.Player;
 import com.sun.security.jgss.GSSUtil;
 
@@ -112,8 +114,8 @@ public class Board {
                     targetCard = getCurrentPlayerMonsterPile().stream().filter(card -> card.getId() == target).findFirst();
                     if (targetCard.isPresent()) {
                         getCurrentPlayerMonsterPile().remove(targetCard.get());
-                        List<Card> affectedCards = gameEngine.engage(magicCard, new ArrayList<>(Arrays.asList(targetCard.get())));
-                        affectedCards.forEach(card -> getCurrentPlayerMonsterPile().add((MonsterCard) card));
+                        List<MonsterCard> affectedCards = gameEngine.engage(magicCard, new ArrayList<>(Arrays.asList(targetCard.get())));
+                        getCurrentPlayerMonsterPile().addAll(affectedCards);
                         wasMagicUsed = true;
                     }
                     break;
@@ -123,8 +125,8 @@ public class Board {
                     targetCard = getOpponentMonsterPile().stream().filter(card -> card.getId() == target).findFirst();
                     if (targetCard.isPresent()) {
                         getOpponentMonsterPile().remove(targetCard.get());
-                        List<Card> affectedCards = gameEngine.engage(magicCard, new ArrayList<>(Arrays.asList(targetCard.get())));
-                        affectedCards.forEach(card -> getOpponentMonsterPile().add((MonsterCard) card));
+                        List<MonsterCard> affectedCards = gameEngine.engage(magicCard, new ArrayList<>(Arrays.asList(targetCard.get())));
+                        getOpponentMonsterPile().addAll(affectedCards);
                         wasMagicUsed = true;
                     }
                     break;
@@ -138,7 +140,39 @@ public class Board {
     }
 
     public boolean useMagic(MagicCard magicCard) {
-        return false;
+        boolean wasMagicUsed = false;
+        List<MonsterCard> targetCards;
+        List<MagicType> magicTypesTargetsPlayer = Arrays.asList(MagicType.HEAL_PLAYER, MagicType.ATTACK_PLAYER);
+
+        if (magicCard != null
+                && (!magicCard.isTargeted()
+                || magicTypesTargetsPlayer.contains(magicCard.getMagicType()))) {
+            switch (magicCard.getMagicType()) {
+                case HEAL_CARD:
+                case REMOVE_DEBUFF:
+                    targetCards = getCurrentPlayerMonsterPile();
+                    getCurrentPlayerMonsterPile().clear();
+                    getCurrentPlayerMonsterPile().addAll(gameEngine.engage(magicCard, targetCards));
+                    wasMagicUsed = true;
+                    break;
+                case STUN:
+                case ATTACK_CARD:
+                case REMOVE_BUFF:
+                    targetCards = getOpponentMonsterPile();
+                    getOpponentMonsterPile().clear();
+                    getOpponentMonsterPile().addAll(gameEngine.engage(magicCard, targetCards));
+                    wasMagicUsed = true;
+                    break;
+                case ATTACK_PLAYER:
+                case HEAL_PLAYER:
+                    gameEngine.engage(magicCard);
+                    wasMagicUsed = true;
+                    break;
+                default:
+                    return false;
+            }
+        }
+        return wasMagicUsed;
     }
 
     public void nextRound() {

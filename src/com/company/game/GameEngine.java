@@ -41,10 +41,10 @@ public class GameEngine {
     /**
      * @param activeCard
      * @param targets
-     * @return List<Card> defense cards if survives (filter card.calchp > 0)
+     * @return List<MonsterCard> defense cards if survives (filter card.calchp > 0)
      * @implNote if defense = 0, attack player
      */
-    public List<Card> engage(MagicCard activeCard, List<Card> targets) {
+    public List<MonsterCard> engage(MagicCard activeCard, List<MonsterCard> targets) {
         return targets;
     }
 

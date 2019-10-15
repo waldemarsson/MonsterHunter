@@ -275,16 +275,6 @@ class BoardTest {
             assertTrue(board.useMagic(new MagicCard(10, MagicType.REMOVE_BUFF, false, 1)));
             assertTrue(board.useMagic(new MagicCard(10, MagicType.ATTACK_PLAYER, true, 1)));
         }
-
-        @Test
-        void useNonTargetedOnSelf() {
-            assertFalse(board.useMagic(new MagicCard(10, MagicType.HEAL_PLAYER, false, 1)));
-        }
-
-        @Test
-        void useNonTargetedOnOpponent() {
-            assertFalse(board.useMagic(new MagicCard(10, MagicType.ATTACK_PLAYER, false, 1)));
-        }
     }
 
     @Test
