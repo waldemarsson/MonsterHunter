@@ -123,7 +123,9 @@ class PlayerTest {
 
     @Test
     void addDamageBeyondMaxHp(){
-        
+        Player player = new Player("Player_1", deck);
+        player.addDamage(1000);
+        assertEquals(1000, player.getDamage());
     }
 
 
@@ -163,8 +165,10 @@ class PlayerTest {
     }
 
     @Test
-    void isAlive() {
-
+    void isAliveFullDamage() {
+        Player player = new Player("Player_1", deck);
+        player.addDamage(player.getHp());
+        assertFalse(player.isAlive());
     }
 
     @Test
