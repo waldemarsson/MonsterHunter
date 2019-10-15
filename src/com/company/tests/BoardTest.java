@@ -133,26 +133,47 @@ class BoardTest {
     @DisplayName("TESTS attackPlayerWithMonster")
     class AttackPlayerWithMonster {
 
+        @BeforeEach
+        void setup() {
+            board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
+            roundCounter.nextTurn();
+            board.placeMonsterOnBoard(monsterCardFactory.buildCard(2));
+            roundCounter.nextTurn();
+
+        }
+
         @Test
         void attackMonsterCardExists() {
-
+            board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
+            assertTrue(board.attackPlayerWithMonster(1));
         }
 
         @Test
         void attackMonsterCardDoesNotExists() {
-
+            assertFalse(board.attackPlayerWithMonster(1));
         }
 
         @Test
         void attackMonsterCardIsNotMine() {
-
+            board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
+            roundCounter.nextTurn();
+            board.attackPlayerWithMonster(1);
         }
 
         @Test
         void attackMonsterCardIsNegative() {
-
+            assertFalse(board.attackPlayerWithMonster(-1));
         }
 
+        @Test
+        void attackPlayerMonstersOnBoard() {
+            board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
+            board.placeMonsterOnBoard(monsterCardFactory.buildCard(2));
+            roundCounter.nextTurn();
+            board.placeMonsterOnBoard(monsterCardFactory.buildCard(3));
+            assertFalse(board.attackPlayerWithMonster(3));
+
+        }
 
     }
 
@@ -194,8 +215,6 @@ class BoardTest {
             assertTrue(board.attackMonsterWithMonster(2, 1));
             assertEquals(1,monsterPiles[roundCounter.getOpponentIndex()].size());
             assertEquals(0, monsterPiles[roundCounter.getTurn()].size());
-
-
         }
 
         @Test
@@ -212,7 +231,10 @@ class BoardTest {
 
         @Test
         void attackMonsterVsMonsterAttackerStamina0(){
-
+            board.placeMonsterOnBoard(new MonsterCard(1, "Target", 1, 1, 1, 1, new BuffCard(0, 0, EffectType.NONE)));
+            roundCounter.nextTurn();
+            board.placeMonsterOnBoard(new MonsterCard(2, "Attacker", 0, 100, 100, 100, new BuffCard(0, 0, EffectType.NONE)));
+            assertFalse(board.attackMonsterWithMonster(2, 1));
         }
     }
 
