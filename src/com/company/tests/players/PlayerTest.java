@@ -133,8 +133,9 @@ class PlayerTest {
     @Test
     void drawCardFromDeckToHand(){
         Player player = new Player("Player_1", getFreshDeck());
+        int handSize = player.getHandAsString().size();
         player.drawFromDeckToHand();
-        assertEquals(6, player.getHand().getCardsOnHandAsString().size());
+        assertEquals(handSize + 1, player.getHand().getCardsOnHandAsString().size());
     }
 
     @Test
