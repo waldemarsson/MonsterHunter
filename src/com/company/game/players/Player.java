@@ -79,16 +79,20 @@ public class Player {
     }
 
     public boolean placeCardOnBoardFromHand(int id){
-        Card card;
-        if(hand.hasCard(id)){
-            card = hand.playCard(id);
-            if(!(card instanceof MonsterCard))
+        Card card = hand.hasCard(id) ? hand.playCard(id) : null;
+        boolean wasPlaced = false;
+
+        if(card instanceof MonsterCard){
+            wasPlaced = board.placeMonsterOnBoard((MonsterCard) card);
+
+            if(!wasPlaced) {
+                hand.putCard(card);
+            }
         }
-        return false;
+        return wasPlaced;
     }
     public boolean placeCardOnBoardFromHand(int id, int otherId){
-        if()
-        board.placeEffectOnMonsterWithId()
+        return false;
     }
 
     @Override
