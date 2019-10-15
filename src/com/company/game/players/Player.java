@@ -91,7 +91,8 @@ public class Player {
         }
         return wasPlaced;
     }
-    public boolean placeCardOnBoardFromHand(int id, int otherId){
+
+    public boolean placeCardOnBoardFromHand(int effectId, int monsterId){
         return false;
     }
 
