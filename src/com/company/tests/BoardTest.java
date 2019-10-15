@@ -281,6 +281,13 @@ class BoardTest {
     @Nested
     @DisplayName("TESTS nextRound")
     class NextRound {
+
+
+        @BeforeEach
+        void getRoundCounterFromBoard() {
+
+        }
+
         @Test
         void didCounterIncrease() {
             int counter = roundCounter.getTurn();
@@ -291,9 +298,9 @@ class BoardTest {
         @Test
         void didCounterIncreaseLoop() {
             for (int i = roundCounter.getTurn(); i < 1000; i++) {
-                assertEquals(i, roundCounter.getTurn());
+                assertEquals(i % 2, roundCounter.getTurn());
                 board.nextRound();
-                assertEquals(i + 1, roundCounter.getTurn());
+                assertEquals((i + 1) % 2, roundCounter.getTurn());
             }
 
         }
