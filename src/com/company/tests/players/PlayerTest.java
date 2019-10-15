@@ -31,7 +31,7 @@ class PlayerTest {
     @Test
     void playerHasValidNameUpperCase(){
         assertEquals("PLAYER_1",
-                new Player("Player1", getFreshDeck()));
+                new Player("Player_1", getFreshDeck()).getName());
     }
 
     @Test
@@ -79,7 +79,7 @@ class PlayerTest {
             Deck compareDeck = (Deck) field.get(new Player("Player_1", localDeck));
             assertNotNull(compareDeck);
             assertEquals(localDeck, compareDeck);
-            assertEquals(50, compareDeck.getCards().size());
+            assertEquals(45, compareDeck.getCards().size());
         } catch (Exception e) {
             fail();
         }
