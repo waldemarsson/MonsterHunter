@@ -34,8 +34,8 @@ public class Board {
     }
 
     public boolean placeEffectOnMonsterWithId(EffectCard effect, int id) {
-        if(effect == null || id <= 0) return false;
-        
+        if (effect == null || id <= 0) return false;
+
         boolean cardPlaced = false;
 
         if (effect instanceof BuffCard) {
@@ -56,6 +56,18 @@ public class Board {
     }
 
     public boolean attackPlayerWithMonster(int attacker) {
+        if(attacker <= 0) return false;
+
+        boolean didAttack = false;
+        Optional<MonsterCard> optAttackerCard = getCurrentPlayerMonsterPile()
+                .stream()
+                .filter(card -> card.getId() == attacker && card.getCalculatedStamina() > 0)
+                .findFirst();
+
+        if(optAttackerCard.isPresent()) {
+//            gameEngine.
+        }
+
         return false;
     }
 
