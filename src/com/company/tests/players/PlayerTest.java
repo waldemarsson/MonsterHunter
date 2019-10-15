@@ -112,14 +112,14 @@ class PlayerTest {
     void addNegativeDamage(){
         Player player = new Player("Player_1", getFreshDeck());
         player.addDamage(-1);
-        assertEquals(20, player.getDamage());
+        assertEquals(0, player.getDamage());
     }
 
     @Test
     void addZeroDamage(){
         Player player = new Player("Player_1", getFreshDeck());
         player.addDamage(0);
-        assertEquals(20, player.getDamage());
+        assertEquals(0, player.getDamage());
     }
 
     @Test
