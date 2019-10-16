@@ -90,7 +90,36 @@ public class OutputHandler {
     //    FORFEIT: Admit loss
     public void printHelp() {
 
-        
+        printer(List.of(
+                "HELP SECTION FOR MONSTER HUNTER",
+                innerDivider(),
+                "COMMANDS AND HOW TO USE THEM:",
+                "ALL PLAYABLE CARDS ARE LISTED AS 'NAME_ID'",
+                "YOU REFER TO ALL CARDS BY THEIR ID",
+                "YOU CAN ONLY USE COMMANDS ON CARDS THAT ARE VISIBLE ON YOUR HAND OUR THE BOARD",
+                innerDivider(),
+                "'USE' : COMMAND FOR USING MAGIC CARDS",
+                "USAGE EXAMPLE >> USE 15 ON 84 (WILL USE THE MAGIC SPELL OF CARD 15 ON MONSTER WITH ID 84)",
+                "USAGE EXAMPLE >> USE 44 (WILL USE MAGIC ON MULTIPLE MONSTERS OR A PLAYER)",
+                "",
+                "'PUT' : COMMAND FOR PLACING A MONSTER ON THE BOARD OR AN EFFECT ON A MONSTER THAT HAS BEEN PLACED ON THE BOARD",
+                "USAGE EXAMPLE >> PUT 15 (PLACES MONSTER)",
+                "USAGE EXAMPLE >> PUT 15 (PLACES MONSTER)",
+                "",
+                "'ATTACK' : COMMAND FOR ATTACKING OPPONENTS MONSTER WITH YOUR MONSTER, BOTH MONSTERS MUST BE VISIBLE ON THE BOARD",
+                "ALSO USED FOR ATTACKING OPPONENT IF HE/SHE DOES NOT HAVE ANY MONSTERS TO DEFEND THEM",
+                "USAGE EXAMPLE >> ATTACK 5 WITH 67 (WILL ATTACK MONSTER WITH ID 5 WITH MONSTER WITH ID 67)",
+                "USAGE EXAMPLE >> ATTACK OPPONENT WITH 9",
+                "",
+                "'SHOW' : COMMAND FOR PRINTING MORE DETAILED INFORMATION ABOUT A CARD THAT IS ON THE BOARD OR IN YOUR HAND",
+                "USAGE EXAMPLE >> SHOW 34 (PRINTS DETAILED INFORMATION ABOUT CARD 34)",
+                "",
+                "'DONE' : COMMAND FOR FINISHING YOUR TURN",
+                "USAGE EXAMPLE >> DONE (IT IS NOW YOUR OPPONENTS TURN)",
+                "",
+                "'FORFEIT' : COMMAND FOR FORFEITING THE GAME",
+                "USAGE EXAMPLE >> FORFEIT (OPPONENT IS NOW THE WINNER)"
+        ));
     }
 
     //    Player[]:
