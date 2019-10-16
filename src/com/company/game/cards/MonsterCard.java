@@ -96,6 +96,12 @@ public class MonsterCard extends Card {
         }
     }
 
+    public int getStamina() {
+        return stamina;
+    }
+
+
+
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder(super.toString());
