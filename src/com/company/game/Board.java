@@ -24,9 +24,7 @@ public class Board {
 
     public List<String> getMonsterPile(int player) {
         if (player != 0 && player != 1) return null;
-
         return monsterPiles[player].stream().map(card -> card.toString()).collect(Collectors.toList());
-
     }
 
     public boolean placeMonsterOnBoard(MonsterCard monster) {
@@ -37,18 +35,18 @@ public class Board {
         if (effect == null || id <= 0) return false;
 
         boolean cardPlaced = false;
+        Optional<MonsterCard> target;
 
         if (effect instanceof BuffCard) {
-
-            if (monsterPiles[roundCounter.getTurn()].stream().anyMatch(card -> card.getId() == id)) {
-                monsterPiles[roundCounter.getTurn()].stream().filter(card -> card.getId() == id).findFirst().get().setBuffCard((BuffCard) effect);
+            target = getCurrentPlayerMonsterPile().stream().filter(monsterCard -> monsterCard.getId() == id).findFirst();
+            if (target.isPresent()) {
+                target.get().setBuffCard((BuffCard) effect);
                 cardPlaced = true;
             }
-
         } else if (effect instanceof DebuffCard) {
-
-            if (monsterPiles[roundCounter.getOpponentIndex()].stream().anyMatch(card -> card.getId() == id)) {
-                monsterPiles[roundCounter.getOpponentIndex()].stream().filter(card -> card.getId() == id).findFirst().get().setDebuffCard((DebuffCard) effect);
+            target = getOpponentMonsterPile().stream().filter(monsterCard -> monsterCard.getId() == id).findFirst();
+            if (target.isPresent()) {
+                target.get().setDebuffCard((DebuffCard) effect);
                 cardPlaced = true;
             }
         }
@@ -56,7 +54,7 @@ public class Board {
     }
 
     public boolean attackPlayerWithMonster(int attacker) {
-        if(attacker <= 0) return false;
+        if (attacker <= 0) return false;
 
         boolean didAttack = false;
         Optional<MonsterCard> optAttackerCard = getCurrentPlayerMonsterPile()
@@ -64,7 +62,7 @@ public class Board {
                 .filter(card -> card.getId() == attacker && card.getCalculatedStamina() > 0)
                 .findFirst();
 
-        if(optAttackerCard.isPresent()) {
+        if (optAttackerCard.isPresent()) {
             didAttack = gameEngine.engage(optAttackerCard.get());
         }
 
