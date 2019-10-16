@@ -21,6 +21,10 @@ public class GameEngine {
 
 
     public boolean engage(MonsterCard monsterCard) {
+        if (monsterCard == null) return false;
+
+        int damage = Math.max(0, (int) Math.ceil(monsterCard.getDamage() / 2));
+        players[roundCounter.getOpponentIndex()].addDamage(damage);
         return true;
     }
 
@@ -29,6 +33,7 @@ public class GameEngine {
      * @implNote attackPlayer or healPlayer
      */
     public boolean engage(MagicCard magicCard) {
+        if(magicCard == null) return false;
         return true;
     }
 

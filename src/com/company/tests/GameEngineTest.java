@@ -105,6 +105,7 @@ class GameEngineTest {
 
             gameEngine.engage(monster);
             assertFalse(players[roundCounter.getOpponentIndex()].isAlive());
+            assertTrue(players[roundCounter.getTurn()].isAlive());
         }
 
         @Test
@@ -115,6 +116,7 @@ class GameEngineTest {
 
             gameEngine.engage(monster);
             assertFalse(players[roundCounter.getOpponentIndex()].isAlive());
+            assertTrue(players[roundCounter.getTurn()].isAlive());
         }
 
         @Test
@@ -125,6 +127,7 @@ class GameEngineTest {
 
             gameEngine.engage(monster);
             assertTrue(players[roundCounter.getOpponentIndex()].isAlive());
+            assertTrue(players[roundCounter.getTurn()].isAlive());
         }
     }
 
