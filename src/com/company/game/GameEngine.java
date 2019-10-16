@@ -23,7 +23,7 @@ public class GameEngine {
     public boolean engage(MonsterCard monsterCard) {
         if (monsterCard == null) return false;
 
-        int damage = Math.max(0, (int) Math.ceil(monsterCard.getDamage() / 2));
+        int damage = Math.max(0, (int) Math.ceil(monsterCard.getCalculatedAttack() / 2.0));
         players[roundCounter.getOpponentIndex()].addDamage(damage);
         return true;
     }

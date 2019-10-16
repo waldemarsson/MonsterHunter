@@ -99,33 +99,30 @@ class GameEngineTest {
 
         @Test
         void engageOpponentDead() {
-            assertTrue(players[roundCounter.getOpponentIndex()].isAlive());
             players[roundCounter.getOpponentIndex()].addDamage(19);
-            assertTrue(players[roundCounter.getOpponentIndex()].isAlive());
+            players[roundCounter.getTurn()].addDamage(19);
 
-            gameEngine.engage(monster);
+            assertTrue(gameEngine.engage(monster));
             assertFalse(players[roundCounter.getOpponentIndex()].isAlive());
             assertTrue(players[roundCounter.getTurn()].isAlive());
         }
 
         @Test
         void engageOpponentDead2() {
-            assertTrue(players[roundCounter.getOpponentIndex()].isAlive());
             players[roundCounter.getOpponentIndex()].addDamage(17);
-            assertTrue(players[roundCounter.getOpponentIndex()].isAlive());
+            players[roundCounter.getTurn()].addDamage(17);
+            assertTrue(gameEngine.engage(monster));
 
-            gameEngine.engage(monster);
             assertFalse(players[roundCounter.getOpponentIndex()].isAlive());
             assertTrue(players[roundCounter.getTurn()].isAlive());
         }
 
         @Test
         void engageOpponentAlive() {
-            assertTrue(players[roundCounter.getOpponentIndex()].isAlive());
             players[roundCounter.getOpponentIndex()].addDamage(16);
-            assertTrue(players[roundCounter.getOpponentIndex()].isAlive());
-
+            players[roundCounter.getTurn()].addDamage(16);
             gameEngine.engage(monster);
+
             assertTrue(players[roundCounter.getOpponentIndex()].isAlive());
             assertTrue(players[roundCounter.getTurn()].isAlive());
         }
