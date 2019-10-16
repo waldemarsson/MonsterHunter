@@ -94,7 +94,15 @@ class MonsterCardTest {
         }
 
         @Test
-        void getCalculatedStamina() {
+        void fatigueIsMaxedOutAfterConstructorAndStaminaIsZero(){
+            assertEquals(Integer.MAX_VALUE, cStats4BonusNone.getFatigue());
+            assertEquals(0, cStats4BonusNone.getCalculatedStamina());
+        }
+
+        @Test
+        void getCalculatedStaminaAfterReset() {
+            cStats4BonusNone.resetFatigue();
+            cStats6Bonus4Attack.resetFatigue();
             assertEquals(1, cStats4BonusNone.getCalculatedStamina(), "Stamina was not equal");
             assertEquals(1, cStats6Bonus4Attack.getCalculatedStamina(), "Stamina was not equal");
         }
@@ -172,6 +180,7 @@ class MonsterCardTest {
 
         @Test
         void addOneToFatigue() {
+            cStats4BonusNone.resetFatigue();
             cStats4BonusNone.addOneToFatigue();
             assertEquals(1, cStats4BonusNone.getFatigue());
             cStats4BonusNone.addOneToFatigue();
