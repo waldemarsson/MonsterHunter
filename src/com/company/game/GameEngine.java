@@ -19,12 +19,10 @@ public class GameEngine {
         this.roundCounter = roundCounter;
     }
 
-
     public boolean engage(MonsterCard monsterCard) {
         if (monsterCard == null) return false;
 
-        int damage = Math.max(0, (int) Math.ceil(monsterCard.getCalculatedAttack() / 2.0));
-        players[roundCounter.getOpponentIndex()].addDamage(damage);
+        attackPlayer(monsterCard);
         return true;
     }
 
@@ -70,7 +68,8 @@ public class GameEngine {
      * @implNote attack player with card.attack / 2 rounded up
      */
     private void attackPlayer(MonsterCard monsterCard) {
-
+        int damage = Math.max(0, (int) Math.ceil(monsterCard.getCalculatedAttack() / 2.0));
+        players[roundCounter.getOpponentIndex()].addDamage(damage);
     }
 
     /**
