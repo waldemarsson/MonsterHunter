@@ -2,6 +2,7 @@ package com.company.game;
 
 import com.company.game.cards.MagicCard;
 import com.company.game.cards.MonsterCard;
+import com.company.game.enums.MagicType;
 import com.company.game.players.Player;
 
 import java.util.ArrayList;
@@ -31,7 +32,19 @@ public class GameEngine {
      * @implNote attackPlayer or healPlayer
      */
     public boolean engage(MagicCard magicCard) {
-        if (magicCard == null) return false;
+        List<MagicType> acceptedMagicTypes = List.of(MagicType.ATTACK_PLAYER, MagicType.HEAL_PLAYER);
+        if (magicCard == null || !acceptedMagicTypes.contains(magicCard.getMagicType())) return false;
+
+        switch (magicCard.getMagicType()) {
+            case ATTACK_PLAYER:
+                attackPlayer(magicCard);
+                break;
+            case HEAL_PLAYER:
+                healPlayer(magicCard);
+                break;
+            default:
+                return false;
+        }
         return true;
     }
 
@@ -47,13 +60,24 @@ public class GameEngine {
     }
 
     /**
-     * @param activeCard
+     * @param magicCard
      * @param targets
      * @return List<MonsterCard> surviving cards
      * @implNote use private method
      */
-    public List<MonsterCard> engage(MagicCard activeCard, List<MonsterCard> targets) {
-        return new ArrayList<MonsterCard>();
+    public List<MonsterCard> engage(MagicCard magicCard, List<MonsterCard> targets) {
+        List<MagicType> notAcceptedMagicTypes = List.of(MagicType.ATTACK_PLAYER, MagicType.HEAL_PLAYER);
+        if (magicCard == null || notAcceptedMagicTypes.contains(magicCard.getMagicType()) || targets.isEmpty())
+            return targets;
+
+        List<MonsterCard> monsters = new ArrayList<>();
+        for (MonsterCard monsterCard : targets) {
+            MonsterCard card = magicOnMonster(magicCard, monsterCard);
+            if (card != null) {
+                monsters.add(card);
+            }
+        }
+        return monsters;
     }
 
 
@@ -79,7 +103,21 @@ public class GameEngine {
      * @implNote attack player with card.value
      */
     private void attackPlayer(MagicCard magicCard) {
+        Player player = players[roundCounter.getOpponentIndex()];
+        player.addDamage(magicCard.getValue());
+        List<String> rapport = new ArrayList<>(List.of("ATTACK", player.getName() + " now has " + player.getHp() + " hp"));
+        if (!player.isAlive()) rapport.add(player.getName() + " died");
+        Game.getGameCLI().getOutputHandler().printRapport(rapport);
+    }
 
+    /**
+     * @param magicCard
+     * @implNote heal player with card.value
+     */
+    private void healPlayer(MagicCard magicCard) {
+        Player player = players[roundCounter.getTurn()];
+        Game.getGameCLI().getOutputHandler().printRapport(new ArrayList<>(List.of("HEAL", player + " now has " + player.getHp() + " hp")));
+        player.heal(magicCard.getValue());
     }
 
     /**
