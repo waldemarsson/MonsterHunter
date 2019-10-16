@@ -22,14 +22,14 @@ public class MonsterCard extends Card {
         this.attack = (attack < 2 || attack > 7) ? 4 : attack;
         this.defense = (defense < 2 || defense > 7) ? 4 : defense;
         this.bonus = bonus;
-        this.fatigue = 0;
+        this.fatigue = Integer.MAX_VALUE;
         this.damage = 0;
         this.buffCard = new BuffCard(0, 0, EffectType.NONE);
         this.debuffCard = new DebuffCard(0, 0, EffectType.NONE);
     }
 
     public int getCalculatedStamina() {
-        return stamina - fatigue + bonus.getStaminaEffect() + buffCard.getStaminaEffect() + debuffCard.getStaminaEffect();
+        return fatigue == Integer.MAX_VALUE ? 0 : stamina - fatigue + bonus.getStaminaEffect() + buffCard.getStaminaEffect() + debuffCard.getStaminaEffect();
     }
 
     public int getHp() {
@@ -101,6 +101,7 @@ public class MonsterCard extends Card {
         StringBuilder str = new StringBuilder(super.toString());
         str.append("HP " + getCalculatedHealth() + "/" + hp);
         str.append(" STA " + getCalculatedStamina());
+        str.append(String.format("/%d", (stamina+bonus.getStaminaEffect()+debuffCard.getStaminaEffect()+buffCard.getStaminaEffect())));
         if (buffCard.getStaminaEffect() > 0) str.append("(+" + buffCard.getStaminaEffect() + ")");
         if (debuffCard.getStaminaEffect() < 0) str.append("(" + debuffCard.getStaminaEffect() + ")");
         str.append(" ATT " + getCalculatedAttack());
