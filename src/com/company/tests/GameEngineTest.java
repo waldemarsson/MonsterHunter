@@ -147,8 +147,8 @@ class GameEngineTest {
         @Test
         void engageMonsterVsMonster() {
             MonsterCard[] cards = gameEngine.engage(monsterWorst, monsterBest);
-            assertNotNull(cards[0]);
-            assertNull(cards[1]);
+            assertNotNull(cards[1]);
+            assertNull(cards[0]);
             assertEquals(2, cards.length);
         }
 
@@ -162,23 +162,33 @@ class GameEngineTest {
         }
 
         @Test
-        void engageMonsterVsMonsterDefenderWin() {
-            MonsterCard[] cards = gameEngine.engage(monsterWorst, monsterBest);
-            assertNotNull(cards[1]);
-            assertNull(cards[0]);
+        void engageMonsterVsMonsterTargetWin() {
+            MonsterCard[] cards = gameEngine.engage(monsterBest, monsterWorst);
+            assertNull(cards[1]);
+            assertNotNull(cards[0]);
             assertEquals(2, cards.length);
         }
 
         @Test
         void engageMonsterVsMonsterNullIn() {
-            assertNull(gameEngine.engage(monsterBest, null));
-            assertNull(gameEngine.engage(null, monsterBest));
-            assertNull(gameEngine.engage((MonsterCard) null, null));
+            MonsterCard[] cards = gameEngine.engage(monsterBest, null);
+            assertNull(cards[0]);
+            assertNull(cards[1]);
+
+            cards = gameEngine.engage(null, monsterBest);
+            assertNull(cards[0]);
+            assertNull(cards[1]);
+
+            cards = gameEngine.engage((MonsterCard) null, null);
+            assertNull(cards[0]);
+            assertNull(cards[1]);
         }
 
         @Test
         void engageMonsterVsMonsterSameCardIn() {
-            assertNull(gameEngine.engage(monsterBest, monsterBest));
+            MonsterCard[] cards = gameEngine.engage(monsterBest, monsterBest);
+            assertNull(cards[0]);
+            assertNull(cards[1]);
         }
     }
 
