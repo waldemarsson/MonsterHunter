@@ -307,4 +307,9 @@ class PlayerTest {
         assertEquals(0, player.getDamage());
     }
 
+    @Test
+    void testToString(){
+        Player player = new Player("Player_1", getFreshDeck());
+        assertEquals("PLAYER_1 20/20 HP", player.toString());
+    }
 }
