@@ -52,7 +52,7 @@ class GameEngineTest {
     }
 
     @Test
-    void engageMagicCardNullAndNull () {
+    void engageMagicCardNullAndNull() {
         List<MonsterCard> cards = gameEngine.engage((MagicCard) null, null);
         assertTrue(cards.isEmpty());
     }
@@ -85,10 +85,71 @@ class GameEngineTest {
     }
 
     @Nested
+    @DisplayName("TESTS engage Magic Non Targeted")
+    class MagicNonTargeted {
+
+        @BeforeEach
+        void setup() {
+
+        }
+
+        @Nested
+        @DisplayName("")
+        class General {
+            @Test
+            void engageMagicNull() {
+                assertFalse(gameEngine.engage((MagicCard) null));
+            }
+
+            @Test
+            void engageMagicNonTargetedAttack() {
+
+            }
+        }
+
+        @Test
+        void engageMagicNonTargetedAttackPlayer() {
+
+        }
+
+        @Test
+        void engageMagicNonTargetedNoTargets() {
+
+        }
+
+        @Test
+        void engageMagicNonTargetedStun() {
+
+        }
+
+        @Test
+        void engageMagicNonTargetedHealPlayer() {
+
+        }
+
+        @Test
+        void engageMagicNonTargetedHealing() {
+
+        }
+
+
+        @Test
+        void engageMagicNonTargetedRemoveBuff() {
+
+        }
+
+        @Test
+        void engageMagicNonTargetedRemoveDebuff() {
+
+        }
+    }
+
+    @Nested
     @DisplayName("TESTS engage Monster")
     class Monster {
 
         MonsterCard monster = new MonsterCard(100, "Monster", 5, 5, 5, 5, new BuffCard(0, 0, EffectType.NONE));
+
         @BeforeEach
         void setup() {
             players[roundCounter.getOpponentIndex()].heal(999);
@@ -128,9 +189,6 @@ class GameEngineTest {
         }
     }
 
-
-
-
     @Nested
     @DisplayName("TESTS engage Monster vs Monster")
     class MonsterVsMonster {
@@ -151,7 +209,6 @@ class GameEngineTest {
             assertNull(cards[0]);
             assertEquals(2, cards.length);
         }
-
 
         @Test
         void engageMonsterVsMonsterAttackerWin() {
@@ -190,56 +247,5 @@ class GameEngineTest {
             assertNull(cards[0]);
             assertNull(cards[1]);
         }
-    }
-
-    @Nested
-    @DisplayName("TESTS engage Magic Non Targeted")
-    class MagicNonTargeted {
-
-        @Test
-        void engageMagicNull(){
-
-        }
-
-        @Test
-        void engageMagicNonTargetedNoTargets() {
-
-        }
-
-        @Test
-        void engageMagicNonTargetedStun() {
-
-        }
-
-        @Test
-        void engageMagicNonTargetedHealPlayer() {
-
-        }
-
-        @Test
-        void engageMagicNonTargetedHealing() {
-
-        }
-
-        @Test
-        void engageMagicNonTargetedAttack() {
-
-        }
-
-        @Test
-        void engageMagicNonTargetedAttackPlayer() {
-
-        }
-
-        @Test
-        void engageMagicNonTargetedRemoveBuff() {
-
-        }
-
-        @Test
-        void engageMagicNonTargetedRemoveDebuff() {
-
-        }
-
     }
 }

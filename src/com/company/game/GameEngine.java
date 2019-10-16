@@ -116,13 +116,11 @@ public class GameEngine {
             rapport.add("Attacker did " + damage + " damage");
             target.addDamage(damage);
             target = target.isAlive() ? target : null;
-            System.out.println(target);
             str = target == null ? "Target died" : "Target survived with " + target.getCalculatedHealth() + " hp";
         } else {
             rapport.add("Attacker took " + damage + " damage");
             attacker.addDamage(damage);
             attacker = attacker.isAlive() ? attacker : null;
-            System.out.println(attacker);
             str = attacker == null ? "Attacker died" : "Attacker survived with " + attacker.getCalculatedHealth() + " hp";
         }
         rapport.add(str);

@@ -189,29 +189,58 @@ class BoardTest {
     @Nested
     @DisplayName("TESTS attackMonsterWithMonster")
     class MonsterVsMonster {
-        @Test
-        void attackMonsterWithMonster() {
-            //Player 1 turn: places card
-            board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
-            roundCounter.nextTurn();
 
+        @Nested
+        @DisplayName("TESTS -- Monster VS Monster ")
+        class Monster {
 
-            //Player 2 turn: places card
-            board.placeMonsterOnBoard(monsterCardFactory.buildCard(2));
-            roundCounter.nextTurn();
+            @BeforeEach
+            void setup() {
+                //Player 1 turn: places card
+                board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
+                roundCounter.nextTurn();
 
-            //Player 1 attacks Player 2
-            assertTrue(board.attackMonsterWithMonster(2, 1));
-            assertFalse(board.attackMonsterWithMonster(11, 1));
-            assertFalse(board.attackMonsterWithMonster(10, 2));
+                //Player 2 turn: places card
+                board.placeMonsterOnBoard(monsterCardFactory.buildCard(2));
+                roundCounter.nextTurn();
+            }
 
-            //Switch turn to Player 2
-            roundCounter.nextTurn();
+            @Test
+            void attack() {
+                //Player 1 attacks Player 2
+                assertTrue(board.attackMonsterWithMonster(2, 1));
+            }
 
-            //Player 2 attacks Player 1
-            assertTrue(board.attackMonsterWithMonster(1, 2));
-            assertFalse(board.attackMonsterWithMonster(1, 10));
-            assertFalse(board.attackMonsterWithMonster(10, 2));
+            @Test
+            void attack2() {
+                //Player 1 attacks Player 2
+                assertFalse(board.attackMonsterWithMonster(11, 1));
+            }
+
+            @Test
+            void attack3() {
+                //Player 1 attacks Player 2
+                assertFalse(board.attackMonsterWithMonster(10, 2));
+            }
+
+            @Test
+            void attack4() {
+                roundCounter.nextTurn();
+                //Player 2 attacks Player 1
+                assertTrue(board.attackMonsterWithMonster(1, 2));
+            }
+
+            @Test
+            void attack5() {
+                //Player 2 attacks Player 1
+                assertFalse(board.attackMonsterWithMonster(1, 10));
+            }
+
+            @Test
+            void attack6() {
+                //Player 2 attacks Player 1
+                assertFalse(board.attackMonsterWithMonster(10, 2));
+            }
         }
 
         // Disabled for now, waiting for logic in gameEngine.engage to return list with surviving monsters
