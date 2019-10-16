@@ -35,7 +35,6 @@ public class GameEngine {
      * @param target
      * @param attacker
      * @return List[0] attacker card if it survives, List[1] defense cards if survives (filter card.calchp > 0)
-     * @implNote if defense = 0, attack player
      */
     public MonsterCard[] engage(MonsterCard target, MonsterCard attacker) {
         return new MonsterCard[]{target, attacker};
@@ -44,8 +43,8 @@ public class GameEngine {
     /**
      * @param activeCard
      * @param targets
-     * @return List<MonsterCard> defense cards if survives (filter card.calchp > 0)
-     * @implNote if defense = 0, attack player
+     * @return List<MonsterCard> surviving cards
+     * @implNote use private method
      */
     public List<MonsterCard> engage(MagicCard activeCard, List<MonsterCard> targets) {
         return targets;
