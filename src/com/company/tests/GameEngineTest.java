@@ -4,10 +4,13 @@ import com.company.game.Board;
 import com.company.game.GameEngine;
 import com.company.game.RoundCounter;
 import com.company.game.cards.BuffCard;
+import com.company.game.cards.DebuffCard;
 import com.company.game.cards.MagicCard;
 import com.company.game.cards.MonsterCard;
 import com.company.game.enums.EffectType;
+import com.company.game.enums.MagicType;
 import com.company.game.factories.DeckFactory;
+import com.company.game.factories.EffectCardFactory;
 import com.company.game.factories.MagicCardFactory;
 import com.company.game.factories.MonsterCardFactory;
 import com.company.game.players.Player;
@@ -16,7 +19,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -88,14 +93,18 @@ class GameEngineTest {
     @DisplayName("TESTS engage Magic Non Targeted")
     class MagicNonTargeted {
 
+        List<MonsterCard> monsterCards;
+
         @BeforeEach
         void setup() {
-
+            for(int i = 0; i < 10; i++) {
+                monsterCards.add(monsterCardFactory.buildCard(i +1));
+            }
         }
 
         @Nested
-        @DisplayName("")
-        class General {
+        @DisplayName("TESTS misc")
+        class Misc {
             @Test
             void engageMagicNull() {
                 assertFalse(gameEngine.engage((MagicCard) null));
@@ -103,44 +112,120 @@ class GameEngineTest {
 
             @Test
             void engageMagicNonTargetedAttack() {
-
+                assertTrue(gameEngine.engage(new MagicCard(501, MagicType.ATTACK_CARD, false, 2)));
             }
         }
 
         @Test
         void engageMagicNonTargetedAttackPlayer() {
+            MagicCard card = new MagicCard(100, MagicType.ATTACK_PLAYER, false, 2);
+            assertFalse(gameEngine.engage(card));
+        }
 
+        @Test
+        void engageMagicTargetedAttackPlayer() {
+            MagicCard card = new MagicCard(100, MagicType.ATTACK_PLAYER, true, 2);
+            assertTrue(gameEngine.engage(card));
         }
 
         @Test
         void engageMagicNonTargetedNoTargets() {
+            MagicCard card = new MagicCard(100, MagicType.ATTACK_CARD, false, 2);
+            assertEquals(0, gameEngine.engage(card, new ArrayList<>()).size());
+        }
 
+        @Test
+        void engageMagicTargetedNoTargets() {
+            MagicCard card = new MagicCard(100, MagicType.ATTACK_CARD, true, 2);
+            assertEquals(0, gameEngine.engage(card, new ArrayList<>()).size());
         }
 
         @Test
         void engageMagicNonTargetedStun() {
+            MagicCard card = new MagicCard(100, MagicType.STUN, false, 2);
+            int stunTotalBefore = monsterCards.stream().map(MonsterCard::getFatigue).mapToInt(Integer::intValue).sum();
+            assertEquals(monsterCards.size(), gameEngine.engage(card, monsterCards).size());
+            int stunTotalAfter = monsterCards.stream().map(MonsterCard::getFatigue).mapToInt(Integer::intValue).sum();
+            assertTrue(stunTotalAfter < stunTotalBefore);
+        }
 
+        @Test
+        void engageMagicTargetedStun() {
+            MagicCard card = new MagicCard(100, MagicType.STUN, true, 2);
+            int stunTotalBefore = monsterCards.stream().map(MonsterCard::getFatigue).mapToInt(Integer::intValue).sum();
+            assertEquals(monsterCards.size(), gameEngine.engage(card, monsterCards).size());
+            int stunTotalAfter = monsterCards.stream().map(MonsterCard::getFatigue).mapToInt(Integer::intValue).sum();
+            assertTrue(stunTotalAfter == stunTotalBefore);
         }
 
         @Test
         void engageMagicNonTargetedHealPlayer() {
+            MagicCard card = new MagicCard(100, MagicType.HEAL_PLAYER, false, 2);
+            assertEquals(monsterCards.size(), gameEngine.engage(card, monsterCards).size());
+        }
 
+        @Test
+        void engageMagicTargetedHealPlayer() {
+            MagicCard card = new MagicCard(100, MagicType.HEAL_PLAYER, true, 2);
+            assertEquals(monsterCards.size(), gameEngine.engage(card, monsterCards).size());
         }
 
         @Test
         void engageMagicNonTargetedHealing() {
+            MagicCard card = new MagicCard(100, MagicType.HEAL_CARD, false, 2);
+            monsterCards.forEach(monsterCard -> monsterCard.addDamage(2));
+            int damageTotalBefore = monsterCards.stream().map(MonsterCard::getDamage).mapToInt(Integer::intValue).sum();
+            assertEquals(monsterCards.size(), gameEngine.engage(card, monsterCards).size());
+            int damageTotalAfter = monsterCards.stream().map(MonsterCard::getDamage).mapToInt(Integer::intValue).sum();
+            assertTrue(damageTotalAfter < damageTotalBefore);
+        }
 
+        @Test
+        void engageMagicTargetedHealing() {
+            MagicCard card = new MagicCard(100, MagicType.HEAL_CARD, true, 2);
+            monsterCards.forEach(monsterCard -> monsterCard.addDamage(2));
+            int damageTotalBefore = monsterCards.stream().map(MonsterCard::getDamage).mapToInt(Integer::intValue).sum();
+            assertEquals(monsterCards.size(), gameEngine.engage(card, monsterCards).size());
+            int damageTotalAfter = monsterCards.stream().map(MonsterCard::getDamage).mapToInt(Integer::intValue).sum();
+            assertTrue(damageTotalAfter == damageTotalBefore);
         }
 
 
         @Test
         void engageMagicNonTargetedRemoveBuff() {
+            MagicCard card = new MagicCard(100, MagicType.REMOVE_BUFF, false, 2);
+            monsterCards.forEach(monsterCard -> monsterCard.setBuffCard((BuffCard) new EffectCardFactory().buildEffectCard(20, true)));
+            assertEquals(0, monsterCards.stream().filter(monsterCard -> monsterCard.getBuffCard().getId() != 0).count());
+            assertEquals(monsterCards.size(), gameEngine.engage(card, monsterCards).size());
+            assertEquals(monsterCards.size(), monsterCards.stream().filter(monsterCard -> monsterCard.getBuffCard().getId() != 0).count());
+        }
+
+        @Test
+        void engageMagicTargetedRemoveBuff() {
+            MagicCard card = new MagicCard(100, MagicType.REMOVE_BUFF, true, 2);
+            monsterCards.forEach(monsterCard -> monsterCard.setBuffCard((BuffCard) new EffectCardFactory().buildEffectCard(20, true)));
+            assertEquals(0, monsterCards.stream().filter(monsterCard -> monsterCard.getBuffCard().getId() != 0).count());
+            assertEquals(monsterCards.size(), gameEngine.engage(card, monsterCards).size());
+            assertEquals(0, monsterCards.stream().filter(monsterCard -> monsterCard.getBuffCard().getId() != 0).count());
 
         }
 
         @Test
         void engageMagicNonTargetedRemoveDebuff() {
+            MagicCard card = new MagicCard(100, MagicType.REMOVE_DEBUFF, false, 2);
+            monsterCards.forEach(monsterCard -> monsterCard.setDebuffCard((DebuffCard) new EffectCardFactory().buildEffectCard(20, false)));
+            assertEquals(0, monsterCards.stream().filter(monsterCard -> monsterCard.getDebuffCard().getId() != 0).count());
+            assertEquals(monsterCards.size(), gameEngine.engage(card, monsterCards).size());
+            assertEquals(monsterCards.size(), monsterCards.stream().filter(monsterCard -> monsterCard.getDebuffCard().getId() != 0).count());
+        }
 
+        @Test
+        void engageMagicTargetedRemoveDebuff() {
+            MagicCard card = new MagicCard(100, MagicType.REMOVE_DEBUFF, true, 2);
+            monsterCards.forEach(monsterCard -> monsterCard.setDebuffCard((DebuffCard) new EffectCardFactory().buildEffectCard(20, false)));
+            assertEquals(0, monsterCards.stream().filter(monsterCard -> monsterCard.getDebuffCard().getId() != 0).count());
+            assertEquals(monsterCards.size(), gameEngine.engage(card, monsterCards).size());
+            assertEquals(0, monsterCards.stream().filter(monsterCard -> monsterCard.getDebuffCard().getId() != 0).count());
         }
     }
 
