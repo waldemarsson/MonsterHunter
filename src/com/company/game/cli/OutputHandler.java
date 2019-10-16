@@ -2,6 +2,7 @@ package com.company.game.cli;
 
 import com.company.game.Board;
 import com.company.game.RoundCounter;
+import com.company.game.cards.Card;
 import com.company.game.players.Player;
 
 import javax.sound.midi.Soundbank;
@@ -20,8 +21,8 @@ public class OutputHandler {
         this.roundCounter = roundCounter;
     }
 
-    public void printError(String error){
-        System.out.println(error);
+    public void printError(String invalidCommand){
+        printer(List.of(invalidCommand, "is not a valid command or move", "try typing HELP for more information"));
     }
 
     //    #################################################
@@ -38,6 +39,7 @@ public class OutputHandler {
     //    Card3
     //    ################################################
     public void printBoard() {
+
     }
 
     //    Cards left in deck: 12
@@ -57,7 +59,7 @@ public class OutputHandler {
     //
     //    #####################################
     public void printRapport(List<String> rapport) {
-
+        printer(rapport);
     }
 
     //    SHOW if monster
@@ -74,7 +76,7 @@ public class OutputHandler {
     //    NAME
     //    ENUM
     //    VALUE
-    public void printCard() {
+    public void printCard(Card card) {
 
     }
 
@@ -88,10 +90,44 @@ public class OutputHandler {
     //    FORFEIT: Admit loss
     public void printHelp() {
 
+        
     }
 
     //    Player[]:
     private void printNextCommand() {
-
+        System.out.println(players[roundCounter.getTurn()].getName().concat(": "));
     }
+
+    // Private printer handles all output
+    private void printer(List<String> output){
+        clearConsole();
+        System.out.println(outerDivider());
+
+        output.forEach(System.out::println);
+
+        System.out.println(outerDivider());
+        printNextCommand();
+    }
+
+    private void clearConsole(){
+        String s = "";
+        for(int i = 0; i < 100; i++)
+            s = s.concat("\n");
+        System.out.print(s);
+    }
+
+    private String outerDivider(){
+        String s = "\n";
+        for (int i = 0; i < 120; i++)
+            s = s.concat("¤");
+        return s.concat("\n");
+    }
+
+    private String innerDivider(){
+        String s = "\n";
+        for (int i = 0; i < 120; i++)
+            s = s.concat("-");
+        return s.concat("\n");
+    }
+
 }
