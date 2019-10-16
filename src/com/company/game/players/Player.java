@@ -114,6 +114,6 @@ public class Player {
 
     @Override
     public String toString() {
-        return super.toString();
+        return String.format("%s %d/%d HP", getName(), (getHp()-getDamage()), getHp());
     }
 }
