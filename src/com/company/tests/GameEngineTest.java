@@ -3,8 +3,10 @@ package com.company.tests;
 import com.company.game.Board;
 import com.company.game.GameEngine;
 import com.company.game.RoundCounter;
+import com.company.game.cards.BuffCard;
 import com.company.game.cards.MagicCard;
 import com.company.game.cards.MonsterCard;
+import com.company.game.enums.EffectType;
 import com.company.game.factories.DeckFactory;
 import com.company.game.factories.MagicCardFactory;
 import com.company.game.factories.MonsterCardFactory;
@@ -86,14 +88,43 @@ class GameEngineTest {
     @DisplayName("TESTS engage Monster")
     class Monster {
 
-//        MonsterCard monster =
+        MonsterCard monster = new MonsterCard(100, "Monster", 5, 5, 5, 5, new BuffCard(0, 0, EffectType.NONE));
         @BeforeEach
         void setup() {
-
+            players[roundCounter.getOpponentIndex()].heal(999);
+            players[roundCounter.getTurn()].heal(999);
+            assertTrue(players[roundCounter.getOpponentIndex()].isAlive());
+            assertTrue(players[roundCounter.getTurn()].isAlive());
         }
-        @Test
-        void engageWithMonsterRightTookDamage() {
 
+        @Test
+        void engageOpponentDead() {
+            assertTrue(players[roundCounter.getOpponentIndex()].isAlive());
+            players[roundCounter.getOpponentIndex()].addDamage(19);
+            assertTrue(players[roundCounter.getOpponentIndex()].isAlive());
+
+            gameEngine.engage(monster);
+            assertFalse(players[roundCounter.getOpponentIndex()].isAlive());
+        }
+
+        @Test
+        void engageOpponentDead2() {
+            assertTrue(players[roundCounter.getOpponentIndex()].isAlive());
+            players[roundCounter.getOpponentIndex()].addDamage(17);
+            assertTrue(players[roundCounter.getOpponentIndex()].isAlive());
+
+            gameEngine.engage(monster);
+            assertFalse(players[roundCounter.getOpponentIndex()].isAlive());
+        }
+
+        @Test
+        void engageOpponentAlive() {
+            assertTrue(players[roundCounter.getOpponentIndex()].isAlive());
+            players[roundCounter.getOpponentIndex()].addDamage(16);
+            assertTrue(players[roundCounter.getOpponentIndex()].isAlive());
+
+            gameEngine.engage(monster);
+            assertTrue(players[roundCounter.getOpponentIndex()].isAlive());
         }
     }
 
