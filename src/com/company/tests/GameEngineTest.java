@@ -135,24 +135,50 @@ class GameEngineTest {
     @DisplayName("TESTS engage Monster vs Monster")
     class MonsterVsMonster {
 
+        MonsterCard monsterBest;
+        MonsterCard monsterWorst;
+
+        @BeforeEach
+        void setup() {
+            monsterBest = new MonsterCard(1, "BEST", 1, 8, 7, 7, new BuffCard(0, 100, EffectType.ATTACK));
+            monsterWorst = new MonsterCard(2, "WORST", 1, 3, 2, 2, new BuffCard(0, 0, EffectType.NONE));
+        }
+
         @Test
         void engageMonsterVsMonster() {
+            MonsterCard[] cards = gameEngine.engage(monsterWorst, monsterBest);
+            assertNotNull(cards[0]);
+            assertNull(cards[1]);
+            assertEquals(2, cards.length);
         }
 
 
         @Test
         void engageMonsterVsMonsterAttackerWin() {
-
+            MonsterCard[] cards = gameEngine.engage(monsterWorst, monsterBest);
+            assertNotNull(cards[0]);
+            assertNull(cards[1]);
+            assertEquals(2, cards.length);
         }
 
         @Test
         void engageMonsterVsMonsterDefenderWin() {
-
+            MonsterCard[] cards = gameEngine.engage(monsterWorst, monsterBest);
+            assertNotNull(cards[1]);
+            assertNull(cards[0]);
+            assertEquals(2, cards.length);
         }
 
         @Test
         void engageMonsterVsMonsterNullIn() {
+            assertNull(gameEngine.engage(monsterBest, null));
+            assertNull(gameEngine.engage(null, monsterBest));
+            assertNull(gameEngine.engage((MonsterCard) null, null));
+        }
 
+        @Test
+        void engageMonsterVsMonsterSameCardIn() {
+            assertNull(gameEngine.engage(monsterBest, monsterBest));
         }
     }
 
