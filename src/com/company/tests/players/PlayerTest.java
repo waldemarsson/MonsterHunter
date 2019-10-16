@@ -2,7 +2,7 @@ package com.company.tests.players;
 
 import com.company.game.Board;
 import com.company.game.RoundCounter;
-import com.company.game.cards.Card;
+import com.company.game.cards.*;
 import com.company.game.collections.Deck;
 import com.company.game.collections.Hand;
 import com.company.game.factories.DeckFactory;
@@ -16,8 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
 
-    Deck monsterDeck = new DeckFactory().buildDeck(50, 0,0,0,0);
-    private static Deck getFreshDeck() { return new DeckFactory().buildDeck(10, 10, 10, 10, 10); }
+    private Deck getFreshDeck() { return new DeckFactory().buildDeck(10, 10, 10, 10, 10); }
 
     @Test
     void constructorTest(){
@@ -31,7 +30,7 @@ class PlayerTest {
     @Test
     void playerHasValidNameUpperCase(){
         assertEquals("PLAYER_1",
-                new Player("Player1", getFreshDeck()));
+                new Player("Player_1", getFreshDeck()).getName());
     }
 
     @Test
@@ -79,7 +78,7 @@ class PlayerTest {
             Deck compareDeck = (Deck) field.get(new Player("Player_1", localDeck));
             assertNotNull(compareDeck);
             assertEquals(localDeck, compareDeck);
-            assertEquals(50, compareDeck.getCards().size());
+            assertEquals(45, compareDeck.getCards().size());
         } catch (Exception e) {
             fail();
         }
@@ -140,6 +139,7 @@ class PlayerTest {
 
     @Test
     void putCardOnBoardFromHand(){
+        Deck monsterDeck = new DeckFactory().buildDeck(50, 0,0,0,0);
         try {
             RoundCounter roundCounter = new RoundCounter();
             Player p1 = new Player("Player_1", monsterDeck);
@@ -162,6 +162,86 @@ class PlayerTest {
     }
 
     @Test
+    void failingOneParamPutCard(){
+        Deck buffDeck = new DeckFactory().buildDeck(0, 0,0,5,0);
+        try {
+            RoundCounter roundCounter = new RoundCounter();
+            Player p1 = new Player("Player_1", buffDeck);
+            Player p2 = new Player("Player_2", getFreshDeck());
+            Board board = new Board(roundCounter, new Player[]{p1, p2});
+            p1.setBoard(board);
+            p2.setBoard(board);
+            Field field = Hand.class.getDeclaredField("cardsOnHand");
+            field.setAccessible(true);
+            List<Card> cards = (List<Card>) field.get(p1.getHand());
+            boolean hasCards;
+            do{hasCards = p1.drawFromDeckToHand();}while(hasCards);
+            int cardsOnHand = cards.size();
+            assertEquals(0, board.getMonsterPile(roundCounter.getTurn()).size());
+            assertFalse(p1.placeCardOnBoardFromHand(cards.get(0).getId()));
+            assertEquals(cardsOnHand, cards.size());
+            assertEquals(0, board.getMonsterPile(roundCounter.getTurn()).size());
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+    }
+
+    @Test
+    void placeEffectOnMonster(){
+        try {
+            RoundCounter roundCounter = new RoundCounter();
+            Player p1 = new Player("Player_1", getFreshDeck());
+            Player p2 = new Player("Player_2", getFreshDeck());
+            Board board = new Board(roundCounter, new Player[]{p1, p2});
+            p1.setBoard(board);
+            p2.setBoard(board);
+            Field field = Hand.class.getDeclaredField("cardsOnHand");
+            field.setAccessible(true);
+            List<Card> player1Cards = (List<Card>) field.get(p1.getHand());
+            boolean hasCards;
+            do{hasCards = p1.drawFromDeckToHand();}while(hasCards);
+            int handSizeBeforeDraw = player1Cards.size();
+            int monsterId = player1Cards.stream().filter(card -> card instanceof MonsterCard).findFirst().get().getId();
+            int effectId = player1Cards.stream().filter(card -> card instanceof BuffCard).findFirst().get().getId();
+            assertEquals(handSizeBeforeDraw, player1Cards.size());
+            assertTrue(p1.placeCardOnBoardFromHand(monsterId));
+            assertTrue(p1.placeCardOnBoardFromHand(monsterId, effectId));
+            assertEquals(handSizeBeforeDraw - 2, player1Cards.size());
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+    }
+
+    @Test
+    void failingTwoParamPut() {
+        try {
+            RoundCounter roundCounter = new RoundCounter();
+            Player p1 = new Player("Player_1", getFreshDeck());
+            Player p2 = new Player("Player_2", getFreshDeck());
+            Board board = new Board(roundCounter, new Player[]{p1, p2});
+            p1.setBoard(board);
+            p2.setBoard(board);
+            Field field = Hand.class.getDeclaredField("cardsOnHand");
+            field.setAccessible(true);
+            List<Card> player1Cards = (List<Card>) field.get(p1.getHand());
+            boolean hasCards;
+            do{hasCards = p1.drawFromDeckToHand();}while(hasCards);
+            int sizeOfHandBefore = player1Cards.size();
+            int monsterId = player1Cards.stream().filter(card -> card instanceof MonsterCard).findFirst().get().getId();
+            assertTrue(p1.placeCardOnBoardFromHand(monsterId));
+            int monster2Id = player1Cards.stream().filter(card -> card instanceof MonsterCard).findFirst().get().getId();
+            assertFalse(p1.placeCardOnBoardFromHand(monster2Id, monsterId));
+            assertNotEquals(monsterId, monster2Id);
+            assertEquals(sizeOfHandBefore - 1, player1Cards.size());
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+    }
+
+    @Test
     void getHandAsString() {
         Player player = new Player("Player_1", getFreshDeck());
         assertIterableEquals(player.getHandAsString(), player.getHand().getCardsOnHandAsString());
@@ -171,7 +251,7 @@ class PlayerTest {
     void isAliveSmallDamage(){
         Player player = new Player("Player_1", getFreshDeck());
         player.addDamage(1);
-        assertFalse(player.isAlive());
+        assertTrue(player.isAlive());
     }
 
     @Test
@@ -227,4 +307,9 @@ class PlayerTest {
         assertEquals(0, player.getDamage());
     }
 
+    @Test
+    void testToString(){
+        Player player = new Player("Player_1", getFreshDeck());
+        assertEquals("PLAYER_1 20/20 HP", player.toString());
+    }
 }

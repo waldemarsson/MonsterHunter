@@ -1,6 +1,11 @@
 package com.company.game.players;
 
 import com.company.game.Board;
+import com.company.game.Game;
+import com.company.game.cards.Card;
+import com.company.game.cards.EffectCard;
+import com.company.game.cards.MagicCard;
+import com.company.game.cards.MonsterCard;
 import com.company.game.collections.Deck;
 import com.company.game.collections.Hand;
 
@@ -16,11 +21,13 @@ public class Player {
     private Board board;
 
     public Player(String name, Deck deck) {
-        this.name = name;
-        this.deck = deck;
+        this.name = name == null || name.trim().equals("") ? "UNKNOWN_PLAYER" : name.trim().toUpperCase();
+        this.deck = deck != null ? deck : new Deck(List.of());
         this.hp = 20;
         this.damage = 0;
         this.hand = new Hand();
+        for(int i = 0; i < 5; i++)
+            drawFromDeckToHand();
     }
 
     public String getName() {
@@ -44,7 +51,7 @@ public class Player {
     }
 
     public void setBoard(Board board) {
-        if (board == null) {
+        if (board != null) {
             this.board = board;
         }
     }
@@ -57,7 +64,7 @@ public class Player {
      * @return boolean hp - damage > 0
      */
     public boolean isAlive() {
-        return false;
+        return getDamage() < getHp();
     }
 
     public void heal(int value){
@@ -73,11 +80,40 @@ public class Player {
     }
 
     public boolean placeCardOnBoardFromHand(int id){
-        return false;
+        Card card = hand.hasCard(id) ? hand.playCard(id) : null;
+        boolean wasPlaced = false;
+
+        if(card instanceof MonsterCard){
+            wasPlaced = board.placeMonsterOnBoard((MonsterCard) card);
+        } else if (card instanceof MagicCard){
+            wasPlaced = board.useMagic((MagicCard) card);
+        }
+
+        if(!wasPlaced && card != null) {
+            hand.putCard(card);
+        }
+        return wasPlaced;
+    }
+
+    public boolean placeCardOnBoardFromHand(int passiveCardId, int activeCardId){
+        Card card = hand.hasCard(activeCardId) ? hand.playCard(activeCardId) : null;
+        boolean wasPlaced = false;
+
+
+        if(card instanceof EffectCard){
+            wasPlaced = board.placeEffectOnMonsterWithId((EffectCard) card, passiveCardId);
+        } else if (card instanceof MagicCard){
+            wasPlaced = board.useMagicOnMonster((MagicCard) card, passiveCardId);
+        }
+
+        if(!wasPlaced && card != null) {
+            hand.putCard(card);
+        }
+        return wasPlaced;
     }
 
     @Override
     public String toString() {
-        return super.toString();
+        return String.format("%s %d/%d HP", getName(), (getHp()-getDamage()), getHp());
     }
 }
