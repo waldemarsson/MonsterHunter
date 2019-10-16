@@ -89,13 +89,15 @@ public class Board {
 
             didAttack = (getOpponentMonsterPile().remove(targetCard) && getCurrentPlayerMonsterPile().remove(attackerCard));
 
-            MonsterCard[] engagedCards = gameEngine.engage(targetCard, attackerCard);
+            if (didAttack) {
+                MonsterCard[] engagedCards = gameEngine.engage(targetCard, attackerCard);
 
-            if (engagedCards[0] != null) {
-                getOpponentMonsterPile().add(engagedCards[0]);
-            }
-            if (engagedCards[1] != null) {
-                getCurrentPlayerMonsterPile().add(engagedCards[1]);
+                if (engagedCards[0] != null) {
+                    didAttack = getOpponentMonsterPile().add(engagedCards[0]);
+                }
+                if (engagedCards[1] != null) {
+                    didAttack = getCurrentPlayerMonsterPile().add(engagedCards[1]);
+                }
             }
 
         }

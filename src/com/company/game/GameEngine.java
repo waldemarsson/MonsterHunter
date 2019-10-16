@@ -4,6 +4,7 @@ import com.company.game.cards.MagicCard;
 import com.company.game.cards.MonsterCard;
 import com.company.game.players.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -37,7 +38,7 @@ public class GameEngine {
      * @return List[0] attacker card if it survives, List[1] defense cards if survives (filter card.calchp > 0)
      */
     public MonsterCard[] engage(MonsterCard target, MonsterCard attacker) {
-        return new MonsterCard[]{target, attacker};
+        return new MonsterCard[]{null, null};
     }
 
     /**
@@ -47,7 +48,7 @@ public class GameEngine {
      * @implNote use private method
      */
     public List<MonsterCard> engage(MagicCard activeCard, List<MonsterCard> targets) {
-        return targets;
+        return new ArrayList<MonsterCard>();
     }
 
 

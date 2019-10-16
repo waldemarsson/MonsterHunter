@@ -86,7 +86,7 @@ class GameEngineTest {
     @DisplayName("TESTS engage Monster")
     class Monster {
 
-        MonsterCard monster =
+//        MonsterCard monster =
         @BeforeEach
         void setup() {
 
