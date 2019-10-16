@@ -156,8 +156,8 @@ class GameEngineTest {
         @Test
         void engageMonsterVsMonsterAttackerWin() {
             MonsterCard[] cards = gameEngine.engage(monsterWorst, monsterBest);
-            assertNotNull(cards[0]);
-            assertNull(cards[1]);
+            assertNull(cards[0]);
+            assertNotNull(cards[1]);
             assertEquals(2, cards.length);
         }
 

@@ -41,7 +41,9 @@ public class GameEngine {
      * @return List[0] attacker card if it survives, List[1] defense cards if survives (filter card.calchp > 0)
      */
     public MonsterCard[] engage(MonsterCard target, MonsterCard attacker) {
-        return new MonsterCard[]{null, null};
+        if(target == null || attacker == null) return new MonsterCard[]{null,null};
+
+        return monsterOnMonster(target, attacker);
     }
 
     /**
@@ -82,11 +84,24 @@ public class GameEngine {
 
     /**
      * @param attacker
-     * @param defender
-     * @return Card[0] attacker, Card[1] defender
+     * @param target
+     * @return Card[0] target, Card[1] attacker
      */
-    private MonsterCard[] monsterOnMonster(MonsterCard attacker, MonsterCard defender) {
-        return null;
+    private MonsterCard[] monsterOnMonster(MonsterCard target, MonsterCard attacker) {
+        int attackStat = attacker.getCalculatedAttack() + throwDice();
+        int defendStat = target.getCalculatedDefense() + throwDice();
+
+        int damage = attackStat - defendStat;
+        if (damage > 0) {
+            target.addDamage(damage);
+        } else {
+            attacker.addDamage(damage);
+        }
+
+        target = target.isAlive() ? target : null;
+        attacker = attacker.isAlive() ? attacker : null;
+
+        return new MonsterCard[]{target, attacker};
     }
 
     private MonsterCard magicOnMonster(MagicCard magicCard, MonsterCard monsterCard) {
