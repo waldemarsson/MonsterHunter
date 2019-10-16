@@ -123,19 +123,21 @@ public class OutputHandler {
     }
 
     //    Player[]:
-    private void printNextCommand() {
-        System.out.println(players[roundCounter.getTurn()].getName().concat(": "));
+    private void printActivePlayerCommandLine() {
+        System.out.print(players[roundCounter.getTurn()].getName().concat(": "));
     }
 
     // Private printer handles all output
     private void printer(List<String> output){
         clearConsole();
+
         System.out.println(outerDivider());
 
         output.forEach(System.out::println);
 
         System.out.println(outerDivider());
-        printNextCommand();
+
+        printActivePlayerCommandLine();
     }
 
     private void clearConsole(){
