@@ -4,6 +4,7 @@ import com.company.game.Board;
 import com.company.game.Game;
 import com.company.game.cards.Card;
 import com.company.game.cards.EffectCard;
+import com.company.game.cards.MagicCard;
 import com.company.game.cards.MonsterCard;
 import com.company.game.collections.Deck;
 import com.company.game.collections.Hand;
@@ -63,7 +64,7 @@ public class Player {
      * @return boolean hp - damage > 0
      */
     public boolean isAlive() {
-        return false;
+        return getDamage() < getHp();
     }
 
     public void heal(int value){
@@ -84,16 +85,31 @@ public class Player {
 
         if(card instanceof MonsterCard){
             wasPlaced = board.placeMonsterOnBoard((MonsterCard) card);
+        } else if (card instanceof MagicCard){
+            wasPlaced = board.useMagic((MagicCard) card);
+        }
 
-            if(!wasPlaced) {
-                hand.putCard(card);
-            }
+        if(!wasPlaced && card != null) {
+            hand.putCard(card);
         }
         return wasPlaced;
     }
 
-    public boolean placeCardOnBoardFromHand(int effectId, int monsterId){
-        return false;
+    public boolean placeCardOnBoardFromHand(int passiveCardId, int activeCardId){
+        Card card = hand.hasCard(activeCardId) ? hand.playCard(activeCardId) : null;
+        boolean wasPlaced = false;
+
+
+        if(card instanceof EffectCard){
+            wasPlaced = board.placeEffectOnMonsterWithId((EffectCard) card, passiveCardId);
+        } else if (card instanceof MagicCard){
+            wasPlaced = board.useMagicOnMonster((MagicCard) card, passiveCardId);
+        }
+
+        if(!wasPlaced && card != null) {
+            hand.putCard(card);
+        }
+        return wasPlaced;
     }
 
     @Override
