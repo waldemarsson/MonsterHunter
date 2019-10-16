@@ -214,7 +214,7 @@ class BoardTest {
             assertFalse(board.attackMonsterWithMonster(10, 2));
         }
 
-        // Disabled for now, waiting for logic in gameEngine.engage to return list with surviving mosters
+        // Disabled for now, waiting for logic in gameEngine.engage to return list with surviving monsters
         @Disabled
         @Test
         void attackMonsterVsMonsterAttackerDied() {
@@ -228,7 +228,7 @@ class BoardTest {
             assertEquals(0, monsterPiles[roundCounter.getTurn()].size());
         }
 
-        // Disabled for now, waiting for logic in gameEngine.engage to return list with surviving mosters
+        // Disabled for now, waiting for logic in gameEngine.engage to return list with surviving monsters
         @Disabled
         @Test
         void attackMonsterVsMonsterTargetDied() {
