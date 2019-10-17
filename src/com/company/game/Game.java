@@ -17,8 +17,8 @@ public class Game {
     public Game() {
         roundCounter = new RoundCounter();
         deckFactory = new DeckFactory();
-        Player player1 = new Player("Player1", deckFactory.buildDeck(0,0,0,0,0));
-        Player player2 = new Player("Player2", deckFactory.buildDeck(0,0,0,0,0));
+        Player player1 = new Player("Player1", deckFactory.buildDeck(30,10,10,5,5));
+        Player player2 = new Player("Player2", deckFactory.buildDeck(30,10,10,5,5));
         players = new Player[]{player1, player2};
         board = new Board(roundCounter, players);
         player1.setBoard(board);
