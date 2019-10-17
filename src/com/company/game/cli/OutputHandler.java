@@ -5,6 +5,7 @@ import com.company.game.RoundCounter;
 import com.company.game.cards.*;
 import com.company.game.players.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OutputHandler {
@@ -21,40 +22,29 @@ public class OutputHandler {
     }
 
     public void printError(String invalidCommand){
-        printer(List.of(invalidCommand, "is not a valid command or move", "try typing HELP for more information"));
+        printer(List.of(invalidCommand, "IS NOT A VALID COMMAND OR MOVE", "TRY TYPING \"HELP\" FOR MORE INFORMATION"));
     }
 
-    //    #################################################
-    //    Opponent: HP ?
-    //    Cards on board:
-    //    Card1
-    //    Card2
-    //    Card3
-    //    ################################################
-    //    You: HP ?
-    //    Cards on board:
-    //    Card1
-    //    Card2
-    //    Card3
-    //    ################################################
     public void printBoard() {
-        List<String> list = new java.util.ArrayList<>(getBoardForPrinting());
+        List<String> list = new ArrayList<>(getBoardForPrinting());
         list.addAll(getHandForPrinting());
         printer(list);
     }
 
     private List<String> getBoardForPrinting(){
-        return List.of();
+        List<String> outputBoard = new ArrayList<>(List.of(
+                "OPPONENT: ".concat(players[roundCounter.getOpponentIndex()].toString())
+        ));
+        outputBoard.addAll(board.getMonsterPile(roundCounter.getOpponentIndex()));
+        outputBoard.add(innerDivider());
+        outputBoard.add("YOU: ".concat(players[roundCounter.getTurn()].toString()));
+        outputBoard.addAll(board.getMonsterPile(roundCounter.getTurn()));
+        outputBoard.add(innerDivider());
+        return outputBoard;
     }
 
-    //    Cards left in deck: 12
-    //    Your hand:
-    //    Card1
-    //    Card2
-    //    Card3
-    //    osv..
     private List<String> getHandForPrinting() {
-        List<String> hand = new java.util.ArrayList<>(List.of(
+        List<String> hand = new ArrayList<>(List.of(
                 "CARDS LEFT IN DECK: ".concat(Integer.toString(players[roundCounter.getTurn()].getCardsLeftInDeck())),
                 players[roundCounter.getTurn()].getName().concat(" HAND: ")
         ));
@@ -64,12 +54,6 @@ public class OutputHandler {
         return hand;
     }
 
-    //    ####################################
-    //
-    //    INFO ABOUT WHAT HAPPEND
-    //    EX: ARCHER_5 took 5 damage
-    //
-    //    #####################################
     public void printRapport(List<String> rapport) {
         printer(rapport);
     }
