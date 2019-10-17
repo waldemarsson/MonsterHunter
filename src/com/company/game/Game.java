@@ -14,7 +14,7 @@ public class Game {
     private static GameCLI gameCLI = null;
 
 
-    public Game() {
+    public Game(boolean run) {
         roundCounter = new RoundCounter();
         deckFactory = new DeckFactory();
         Player player1 = new Player("Player1", deckFactory.buildDeck(30,10,10,5,5));
@@ -25,7 +25,8 @@ public class Game {
         player2.setBoard(board);
         gameCLI = new GameCLI(board, players, roundCounter);
 
-        this.run();
+        if(run)
+            this.run();
     }
 
 

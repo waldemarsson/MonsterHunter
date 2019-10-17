@@ -47,7 +47,7 @@ class BoardTest {
         Player player2 = new Player("Player2", deckFactory.buildDeck(20, 5, 15, 5, 5));
         players = new Player[]{player1, player2};
         board = new Board(roundCounter, players);
-        new Game();
+        new Game(false);
 
         try {
             Field field = board.getClass().getDeclaredField("monsterPiles");
