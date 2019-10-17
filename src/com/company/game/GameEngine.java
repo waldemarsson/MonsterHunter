@@ -188,6 +188,8 @@ public class GameEngine {
         }
         rapport.add(str);
         Game.getGameCLI().getOutputHandler().printRapport(rapport);
+        System.out.println(target);
+        System.out.println(attacker);
         return new MonsterCard[]{target, attacker};
     }
 

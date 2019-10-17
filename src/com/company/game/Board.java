@@ -109,11 +109,11 @@ public class Board {
     }
 
     private List<MonsterCard> getCurrentPlayerMonsterPile() {
-        return monsterPiles[roundCounter.getTurn()].stream().collect(Collectors.toList());
+        return monsterPiles[roundCounter.getTurn()];
     }
 
     private List<MonsterCard> getOpponentMonsterPile() {
-        return monsterPiles[roundCounter.getOpponentIndex()].stream().collect(Collectors.toList());
+        return monsterPiles[roundCounter.getOpponentIndex()];
     }
 
     public boolean useMagicOnMonster(MagicCard magicCard, int target) {
@@ -166,17 +166,15 @@ public class Board {
             switch (magicCard.getMagicType()) {
                 case HEAL_CARD:
                 case REMOVE_DEBUFF:
-                    targetCards = getCurrentPlayerMonsterPile();
-                    System.out.println(targetCards);
+                    targetCards = getCurrentPlayerMonsterPile().stream().collect(Collectors.toList());
                     getCurrentPlayerMonsterPile().clear();
-                    System.out.println(targetCards);
                     getCurrentPlayerMonsterPile().addAll(gameEngine.engage(magicCard, targetCards));
                     wasMagicUsed = true;
                     break;
                 case STUN:
                 case ATTACK_CARD:
                 case REMOVE_BUFF:
-                    targetCards = getOpponentMonsterPile();
+                    targetCards = getOpponentMonsterPile().stream().collect(Collectors.toList());
                     getOpponentMonsterPile().clear();
                     getOpponentMonsterPile().addAll(gameEngine.engage(magicCard, targetCards));
                     wasMagicUsed = true;
