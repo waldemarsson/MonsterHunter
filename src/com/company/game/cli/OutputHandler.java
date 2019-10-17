@@ -5,7 +5,6 @@ import com.company.game.RoundCounter;
 import com.company.game.cards.*;
 import com.company.game.players.Player;
 
-import javax.sound.midi.Soundbank;
 import java.util.List;
 
 public class OutputHandler {
@@ -63,10 +62,7 @@ public class OutputHandler {
     }
 
 
-    //    SHOW if magic or effect
-    //    NAME
-    //    ENUM
-    //    VALUE
+
     public void printCard(Card card) {
         switch (card.getClass().getSimpleName()){
             case "MonsterCard":
@@ -113,19 +109,26 @@ public class OutputHandler {
         ));
     }
 
-    private void showBuffCard(BuffCard card){}
+    private void showBuffCard(BuffCard card){
+        printer(List.of(
+                "This is a buff card that improves the stats of one of your monsters. ",
+                "Buff cards can be placed on your monsters once they have been placed on the board. ",
+                card.toString()
+        ));
+    }
 
-    private void showDeBuffCard(DebuffCard card){}
+    private void showDeBuffCard(DebuffCard card){
+        printer(List.of(
+                "This is a debuff card that decreases the stats of one of your opponents monsters. ",
+                "Buff cards can be placed on your opponents monsters once they have been placed on the board. ",
+                card.toString()
+        ));
+    }
 
-    private void showMagicCard(MagicCard card){}
+    private void showMagicCard(MagicCard card){
 
-    //    HELP:
-    //    USE: Use magic on player/card(s)
-    //    ATTACK: Attack with monster from board
-    //    PUT: Put a monster on the board or an effect on monster
-    //    SHOW: Show more info about a card
-    //    DONE: Done with your round
-    //    FORFEIT: Admit loss
+    }
+
     public void printHelp() {
 
         printer(List.of(
@@ -160,7 +163,6 @@ public class OutputHandler {
         ));
     }
 
-    //    Player[]:
     private void printActivePlayerCommandLine() {
         System.out.print(players[roundCounter.getTurn()].getName().concat(": "));
     }
