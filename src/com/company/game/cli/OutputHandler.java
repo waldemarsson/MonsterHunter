@@ -202,6 +202,15 @@ public class OutputHandler {
         System.out.print(players[roundCounter.getTurn()].getName().concat(": "));
     }
 
+    public void printWinner(){
+        String winner = players[0].isAlive() ? players[0].getName() : players[1].getName();
+        printer(List.of(
+                "GAME OVER",
+                winner,
+                "IS THE WINNER"
+        ));
+    }
+
     // Private printer handles all output
     private void printer(List<String> output){
         clearConsole();
