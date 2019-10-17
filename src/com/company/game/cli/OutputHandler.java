@@ -126,7 +126,41 @@ public class OutputHandler {
     }
 
     private void showMagicCard(MagicCard card){
-
+        String s = card.toString().replaceAll(":.*", "");
+        switch (card.getMagicType()){
+            case ATTACK_CARD:
+                s = s.concat(" attacks ")
+                        .concat(card.isTargeted() ? "one monster " : "multiple monsters ")
+                        .concat(" and deals " + card.getValue() + " damage. ");
+                break;
+            case HEAL_CARD:
+                s = s.concat(" heals ")
+                        .concat(card.isTargeted() ? "one monster " : "multiple monsters ")
+                        .concat(" and removes " + card.getValue() + " damage. ");
+                break;
+            case STUN:
+                s = s.concat(" stuns ")
+                        .concat(card.isTargeted() ? "one monster " : "multiple monsters ")
+                        .concat(" by removing " + card.getValue() + " stamina for one turn. ");
+                break;
+            case HEAL_PLAYER:
+                s = s.concat(" heals you by removing " + card.getValue() + " damage.");
+                break;
+            case ATTACK_PLAYER:
+                s = s.concat(" attacks your opponent by dealing " + card.getValue() + " damage. ");
+                break;
+            case REMOVE_BUFF:
+                s = s.concat(" removes buffs on opponents monsters for ")
+                        .concat(card.isTargeted() ? "one monster" : "multiple monsters");
+                break;
+            case REMOVE_DEBUFF:
+                s = s.concat(" removes debuffs on your monsters for ")
+                        .concat(card.isTargeted() ? "one monster" : "multiple monsters");
+                break;
+        }
+        printer(List.of(
+                s
+        ));
     }
 
     public void printHelp() {
