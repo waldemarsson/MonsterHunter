@@ -180,10 +180,10 @@ public class GameEngine {
                 monsterCard.addDamage(magicCard.getValue());
                 break;
             case REMOVE_BUFF:
-                monsterCard.setDebuffCard(new DebuffCard(0, 0, EffectType.NONE));
+                monsterCard.setBuffCard(new BuffCard(0 ,0, EffectType.NONE));
                 break;
             case REMOVE_DEBUFF:
-                monsterCard.setBuffCard(new BuffCard(0 ,0, EffectType.NONE));
+                monsterCard.setDebuffCard(new DebuffCard(0, 0, EffectType.NONE));
             case HEAL_CARD:
                 monsterCard.heal(magicCard.getValue());
                 break;
