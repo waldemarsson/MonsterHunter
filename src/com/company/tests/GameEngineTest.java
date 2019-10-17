@@ -1,6 +1,7 @@
 package com.company.tests;
 
 import com.company.game.Board;
+import com.company.game.Game;
 import com.company.game.GameEngine;
 import com.company.game.RoundCounter;
 import com.company.game.cards.BuffCard;
@@ -38,6 +39,7 @@ class GameEngineTest {
         Player player2 = new Player("Player2", deckFactory.buildDeck(20, 5, 15, 5, 5));
         players = new Player[]{player1, player2};
         gameEngine = new GameEngine(players, roundCounter);
+        new Game();
     }
 
     @Test
@@ -110,7 +112,7 @@ class GameEngineTest {
 
             @Test
             void engageMagicNonTargetedAttack() {
-                assertTrue(gameEngine.engage(new MagicCard(501, MagicType.ATTACK_CARD, false, 2)));
+                assertFalse(gameEngine.engage(new MagicCard(501, MagicType.ATTACK_CARD, false, 2)));
             }
         }
 

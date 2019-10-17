@@ -36,7 +36,12 @@ public class GameEngine {
      */
     public boolean engage(MagicCard magicCard) {
         List<MagicType> acceptedMagicTypes = List.of(MagicType.ATTACK_PLAYER, MagicType.HEAL_PLAYER);
-        if (magicCard == null || !acceptedMagicTypes.contains(magicCard.getMagicType())) return false;
+        if (magicCard == null
+                || !acceptedMagicTypes.contains(magicCard.getMagicType())
+                || (acceptedMagicTypes.contains(magicCard.getMagicType()) && !magicCard.isTargeted())
+        ) {
+            return false;
+        }
 
         switch (magicCard.getMagicType()) {
             case ATTACK_PLAYER:
@@ -180,7 +185,7 @@ public class GameEngine {
                 monsterCard.addDamage(magicCard.getValue());
                 break;
             case REMOVE_BUFF:
-                monsterCard.setBuffCard(new BuffCard(0 ,0, EffectType.NONE));
+                monsterCard.setBuffCard(new BuffCard(0, 0, EffectType.NONE));
                 break;
             case REMOVE_DEBUFF:
                 monsterCard.setDebuffCard(new DebuffCard(0, 0, EffectType.NONE));
