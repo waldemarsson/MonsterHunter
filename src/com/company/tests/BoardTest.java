@@ -1,6 +1,7 @@
 package com.company.tests;
 
 import com.company.game.Board;
+import com.company.game.Game;
 import com.company.game.GameEngine;
 import com.company.game.RoundCounter;
 import com.company.game.cards.*;
@@ -46,6 +47,7 @@ class BoardTest {
         Player player2 = new Player("Player2", deckFactory.buildDeck(20, 5, 15, 5, 5));
         players = new Player[]{player1, player2};
         board = new Board(roundCounter, players);
+        new Game();
 
         try {
             Field field = board.getClass().getDeclaredField("monsterPiles");
@@ -152,6 +154,8 @@ class BoardTest {
         @Test
         void attackMonsterCardExists() {
             board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
+            board.nextRound();
+            board.nextRound();
             assertTrue(board.attackPlayerWithMonster(1));
         }
 
@@ -198,11 +202,11 @@ class BoardTest {
             void setup() {
                 //Player 1 turn: places card
                 board.placeMonsterOnBoard(monsterCardFactory.buildCard(1));
-                roundCounter.nextTurn();
+                board.nextRound();
 
                 //Player 2 turn: places card
                 board.placeMonsterOnBoard(monsterCardFactory.buildCard(2));
-                roundCounter.nextTurn();
+                board.nextRound();
             }
 
             @Test
@@ -243,13 +247,16 @@ class BoardTest {
             }
         }
 
-        // Disabled for now, waiting for logic in gameEngine.engage to return list with surviving monsters
-        @Disabled
+
         @Test
         void attackMonsterVsMonsterAttackerDied() {
-            board.placeMonsterOnBoard(new MonsterCard(2, "Target", 1, 100, 100, 100, new BuffCard(0, 0, EffectType.NONE)));
-            roundCounter.nextTurn();
+            board.placeMonsterOnBoard(new MonsterCard(2, "Target", 1, 100, 100, 100, new BuffCard(99, 1000, EffectType.DEFENSE)));
+            board.nextRound();
             board.placeMonsterOnBoard(new MonsterCard(1, "Attacker", 1, 1, 1, 1, new BuffCard(0, 0, EffectType.NONE)));
+            board.nextRound();
+            board.nextRound();
+
+
             assertEquals(1, monsterPiles[roundCounter.getOpponentIndex()].size());
             assertEquals(1, monsterPiles[roundCounter.getTurn()].size());
             assertTrue(board.attackMonsterWithMonster(2, 1));
@@ -257,13 +264,14 @@ class BoardTest {
             assertEquals(0, monsterPiles[roundCounter.getTurn()].size());
         }
 
-        // Disabled for now, waiting for logic in gameEngine.engage to return list with surviving monsters
-        @Disabled
         @Test
         void attackMonsterVsMonsterTargetDied() {
             board.placeMonsterOnBoard(new MonsterCard(1, "Target", 1, 1, 1, 1, new BuffCard(0, 0, EffectType.NONE)));
             roundCounter.nextTurn();
-            board.placeMonsterOnBoard(new MonsterCard(2, "Attacker", 1, 100, 100, 100, new BuffCard(0, 0, EffectType.NONE)));
+            board.placeMonsterOnBoard(new MonsterCard(2, "Attacker", 1, 100, 100, 100, new BuffCard(110, 1110, EffectType.ATTACK)));
+            board.nextRound();
+            board.nextRound();
+
             assertEquals(1, monsterPiles[roundCounter.getOpponentIndex()].size());
             assertEquals(1, monsterPiles[roundCounter.getTurn()].size());
             assertTrue(board.attackMonsterWithMonster(1, 2));
