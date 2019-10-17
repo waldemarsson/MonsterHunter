@@ -78,17 +78,20 @@ public class GameEngine {
         if (magicCard == null || notAcceptedMagicTypes.contains(magicCard.getMagicType()) || targets.isEmpty() || magicCard.isTargeted())
             return targets;
 
+        List<String> rapport = new ArrayList<>();
+        rapport.add("USING " + magicCard.toString());
         List<MonsterCard> monsters = new ArrayList<>();
         for (MonsterCard monsterCard : targets) {
+
             MonsterCard card = magicOnMonster(magicCard, monsterCard);
             if (card != null && card.isAlive()) {
                 monsters.add(card);
+                rapport.add(card.toString() + (card.isAlive() ? " survived" : " died"));
             }
         }
         return monsters;
     }
-
-
+    
     /**
      * @return random int 1 - 6
      */
