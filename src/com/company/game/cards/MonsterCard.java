@@ -72,6 +72,15 @@ public class MonsterCard extends Card {
         damage += Math.max(0, damageTaken);
     }
 
+    public void addFatigue(int value) {
+        fatigue += Math.max(0, value);
+    }
+
+    public void heal(int value) {
+        value = Math.max(0, value);
+        damage = Math.max(0, damage - value);
+    }
+
     public void addOneToFatigue() {
         fatigue++;
     }

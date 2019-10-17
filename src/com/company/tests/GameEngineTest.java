@@ -59,7 +59,7 @@ class GameEngineTest {
     @Test
     void engageMagicCardNullAndNull() {
         List<MonsterCard> cards = gameEngine.engage((MagicCard) null, null);
-        assertTrue(cards.isEmpty());
+        assertNull(cards);
     }
 
 

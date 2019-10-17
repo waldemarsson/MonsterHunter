@@ -1,7 +1,10 @@
 package com.company.game;
 
+import com.company.game.cards.BuffCard;
+import com.company.game.cards.DebuffCard;
 import com.company.game.cards.MagicCard;
 import com.company.game.cards.MonsterCard;
+import com.company.game.enums.EffectType;
 import com.company.game.enums.MagicType;
 import com.company.game.players.Player;
 
@@ -73,7 +76,7 @@ public class GameEngine {
         List<MonsterCard> monsters = new ArrayList<>();
         for (MonsterCard monsterCard : targets) {
             MonsterCard card = magicOnMonster(magicCard, monsterCard);
-            if (card != null) {
+            if (card != null && card.isAlive()) {
                 monsters.add(card);
             }
         }
@@ -167,7 +170,27 @@ public class GameEngine {
     }
 
     private MonsterCard magicOnMonster(MagicCard magicCard, MonsterCard monsterCard) {
-        return null;
+        if (magicCard == null || monsterCard == null) return null;
+
+        switch (magicCard.getMagicType()) {
+            case STUN:
+                monsterCard.addFatigue(magicCard.getValue());
+                break;
+            case ATTACK_CARD:
+                monsterCard.addDamage(magicCard.getValue());
+                break;
+            case REMOVE_BUFF:
+                monsterCard.setDebuffCard(new DebuffCard(0, 0, EffectType.NONE));
+                break;
+            case REMOVE_DEBUFF:
+                monsterCard.setBuffCard(new BuffCard(0 ,0, EffectType.NONE));
+            case HEAL_CARD:
+                monsterCard.heal(magicCard.getValue());
+                break;
+            default:
+                return null;
+        }
+        return monsterCard;
     }
 
 
