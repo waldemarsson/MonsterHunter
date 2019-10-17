@@ -109,11 +109,11 @@ public class Board {
     }
 
     private List<MonsterCard> getCurrentPlayerMonsterPile() {
-        return monsterPiles[roundCounter.getTurn()];
+        return monsterPiles[roundCounter.getTurn()].stream().collect(Collectors.toList());
     }
 
     private List<MonsterCard> getOpponentMonsterPile() {
-        return monsterPiles[roundCounter.getOpponentIndex()];
+        return monsterPiles[roundCounter.getOpponentIndex()].stream().collect(Collectors.toList());
     }
 
     public boolean useMagicOnMonster(MagicCard magicCard, int target) {
@@ -128,8 +128,9 @@ public class Board {
             case REMOVE_DEBUFF:
                 targetCard = getCurrentPlayerMonsterPile().stream().filter(card -> card.getId() == target).findFirst();
                 if (targetCard.isPresent()) {
-                    getCurrentPlayerMonsterPile().remove(targetCard.get());
-                    List<MonsterCard> affectedCards = gameEngine.engage(magicCard, new ArrayList<>(Arrays.asList(targetCard.get())));
+                    MonsterCard card = targetCard.get();
+                    getCurrentPlayerMonsterPile().remove(card);
+                    List<MonsterCard> affectedCards = gameEngine.engage(magicCard, new ArrayList<>(Arrays.asList(card)));
                     getCurrentPlayerMonsterPile().addAll(affectedCards);
                     wasMagicUsed = true;
                 }
@@ -139,8 +140,9 @@ public class Board {
             case REMOVE_BUFF:
                 targetCard = getOpponentMonsterPile().stream().filter(card -> card.getId() == target).findFirst();
                 if (targetCard.isPresent()) {
-                    getOpponentMonsterPile().remove(targetCard.get());
-                    List<MonsterCard> affectedCards = gameEngine.engage(magicCard, new ArrayList<>(Arrays.asList(targetCard.get())));
+                    MonsterCard card = targetCard.get();
+                    getOpponentMonsterPile().remove(card);
+                    List<MonsterCard> affectedCards = gameEngine.engage(magicCard, new ArrayList<>(Arrays.asList(card)));
                     getOpponentMonsterPile().addAll(affectedCards);
                     wasMagicUsed = true;
                 }
@@ -165,7 +167,9 @@ public class Board {
                 case HEAL_CARD:
                 case REMOVE_DEBUFF:
                     targetCards = getCurrentPlayerMonsterPile();
+                    System.out.println(targetCards);
                     getCurrentPlayerMonsterPile().clear();
+                    System.out.println(targetCards);
                     getCurrentPlayerMonsterPile().addAll(gameEngine.engage(magicCard, targetCards));
                     wasMagicUsed = true;
                     break;
