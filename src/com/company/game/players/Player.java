@@ -79,13 +79,25 @@ public class Player {
         return hasCards;
     }
 
-    public boolean placeCardOnBoardFromHand(int id){
+    public boolean placeMonsterOnBoardFromHand(int id){
         Card card = hand.hasCard(id) ? hand.playCard(id) : null;
         boolean wasPlaced = false;
 
         if(card instanceof MonsterCard){
             wasPlaced = board.placeMonsterOnBoard((MonsterCard) card);
-        } else if (card instanceof MagicCard){
+        }
+
+        if(!wasPlaced && card != null) {
+            hand.putCard(card);
+        }
+        return wasPlaced;
+    }
+
+    public boolean useMagicOnBoardFromHand(int id){
+        Card card = hand.hasCard(id) ? hand.playCard(id) : null;
+        boolean wasPlaced = false;
+
+        if (card instanceof MagicCard){
             wasPlaced = board.useMagic((MagicCard) card);
         }
 
@@ -95,14 +107,27 @@ public class Player {
         return wasPlaced;
     }
 
-    public boolean placeCardOnBoardFromHand(int passiveCardId, int activeCardId){
+    public boolean placeEffectOnBoardFromHand(int passiveCardId, int activeCardId){
         Card card = hand.hasCard(activeCardId) ? hand.playCard(activeCardId) : null;
         boolean wasPlaced = false;
 
 
         if(card instanceof EffectCard){
             wasPlaced = board.placeEffectOnMonsterWithId((EffectCard) card, passiveCardId);
-        } else if (card instanceof MagicCard){
+        }
+
+        if(!wasPlaced && card != null) {
+            hand.putCard(card);
+        }
+        return wasPlaced;
+    }
+
+    public boolean useMagicOnBoardFromHand(int passiveCardId, int activeCardId){
+        Card card = hand.hasCard(activeCardId) ? hand.playCard(activeCardId) : null;
+        boolean wasPlaced = false;
+
+
+        if (card instanceof MagicCard){
             wasPlaced = board.useMagicOnMonster((MagicCard) card, passiveCardId);
         }
 
