@@ -60,8 +60,9 @@ public class OutputHandler {
 
 
 
-    public void printCard(Card card) {
-        switch (card.getClass().getSimpleName()){
+    public void printCard(int id) throws NullPointerException{
+        Card card = board.getShowCard(id);
+        switch (card.getClass().getSimpleName()) {
             case "MonsterCard":
                 showMonsterCard((MonsterCard) card);
                 break;
