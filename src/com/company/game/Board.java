@@ -1,11 +1,15 @@
 package com.company.game;
 
 import com.company.game.cards.*;
+import com.company.game.collections.Hand;
 import com.company.game.enums.MagicType;
 import com.company.game.players.Player;
 
+import javax.swing.text.html.Option;
+import java.lang.reflect.Field;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Board {
 
@@ -188,5 +192,18 @@ public class Board {
         getCurrentPlayerMonsterPile().stream().forEach(MonsterCard::resetFatigue);
         players[roundCounter.getTurn()].drawFromDeckToHand();
         roundCounter.nextTurn();
+    }
+
+    public Card getShowCard(int id){
+        Card card = null;
+        if(players[roundCounter.getTurn()].getHand().hasCard(id)){
+            card = players[roundCounter.getTurn()].getHand().playCard(id);
+            players[roundCounter.getTurn()].getHand().putCard(card);
+        } else {
+            Optional<MonsterCard> optionalCard = Stream.of(monsterPiles[0], monsterPiles[1]).flatMap(Collection::stream).filter(c -> c.getId() == id).findFirst();
+            if(optionalCard.isPresent())
+                card = optionalCard.get();
+        }
+        return card;
     }
 }
