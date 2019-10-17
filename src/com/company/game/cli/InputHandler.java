@@ -47,11 +47,11 @@ public class InputHandler {
                 break;
             case "ATTACK":
                 if(!attack(input)) Game.getGameCLI().getOutputHandler().printError(String.join(" ", input));
-                else Game.getGameCLI().getOutputHandler().printBoard();
+
                 break;
             case "USE":
                 if(!use(input)) Game.getGameCLI().getOutputHandler().printError(String.join(" ", input));
-                else Game.getGameCLI().getOutputHandler().printBoard();
+
                 break;
             case "PUT":
                 if(!put(input)) Game.getGameCLI().getOutputHandler().printError(String.join(" ", input));
