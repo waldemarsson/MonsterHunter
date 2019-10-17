@@ -67,23 +67,17 @@ class GameEngineTest {
     class Magic {
 
         @Test
-        void engageWithMagicCard() {
-
-        }
-
-        @Test
-        void engageWithMagicCardAttackOnSelf() {
-
-        }
-
-        @Test
-        void engageWithMagicCardHealOnOpponent() {
-
-        }
-
-        @Test
         void engageWithMagicCardWrongMagicType() {
-            // Wrong == MagicType != ATTACK_PLAYER || HEAL_PLAYER
+            MagicCard attack = new MagicCard(10,MagicType.ATTACK_CARD, true, 2);
+            assertFalse(gameEngine.engage(attack));
+            MagicCard buff = new MagicCard(10,MagicType.REMOVE_BUFF, true, 2);
+            assertFalse(gameEngine.engage(buff));
+            MagicCard debuff = new MagicCard(10,MagicType.REMOVE_DEBUFF, true, 2);
+            assertFalse(gameEngine.engage(debuff));
+            MagicCard heal = new MagicCard(10,MagicType.HEAL_CARD, true, 2);
+            assertFalse(gameEngine.engage(heal));
+            MagicCard stun = new MagicCard(10,MagicType.STUN, true, 2);
+            assertFalse(gameEngine.engage(stun));
         }
 
     }
@@ -189,6 +183,24 @@ class GameEngineTest {
             assertEquals(monsterCards.size(), gameEngine.engage(card, monsterCards).size());
             int damageTotalAfter = monsterCards.stream().map(MonsterCard::getDamage).mapToInt(Integer::intValue).sum();
             assertTrue(damageTotalAfter == damageTotalBefore);
+        }
+
+        @Test
+        void engageMagicNonTargetedAttack() {
+            MagicCard card = new MagicCard(100, MagicType.ATTACK_CARD, false, 2);
+            int hpTotalBefore = monsterCards.stream().map(MonsterCard::getCalculatedHealth).mapToInt(Integer::intValue).sum();
+            assertEquals(monsterCards.size(), gameEngine.engage(card, monsterCards).size());
+            int hpTotalAfter = monsterCards.stream().map(MonsterCard::getCalculatedHealth).mapToInt(Integer::intValue).sum();
+            assertTrue(hpTotalAfter < hpTotalBefore);
+        }
+
+        @Test
+        void engageMagicTargetedAttack() {
+            MagicCard card = new MagicCard(100, MagicType.ATTACK_CARD, true, 2);
+            int hpTotalBefore = monsterCards.stream().map(MonsterCard::getCalculatedHealth).mapToInt(Integer::intValue).sum();
+            assertEquals(monsterCards.size(), gameEngine.engage(card, monsterCards).size());
+            int hpTotalAfter = monsterCards.stream().map(MonsterCard::getCalculatedHealth).mapToInt(Integer::intValue).sum();
+            assertTrue(hpTotalAfter == hpTotalBefore);
         }
 
 
