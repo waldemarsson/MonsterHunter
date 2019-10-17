@@ -6,8 +6,8 @@ public enum MagicType {
     HEAL_PLAYER("SPA_TREATMENT", "HP", true),
     ATTACK_CARD("FIREBALL", "HP", false),
     ATTACK_PLAYER("ADULT_BULLYING", "HP", false),
-    REMOVE_BUFF("CRITIQUE", "BUFF", true),
-    REMOVE_DEBUFF("CLEANSE", "DEBUFF", false);
+    REMOVE_BUFF("CRITIQUE", "BUFF", false),
+    REMOVE_DEBUFF("CLEANSE", "DEBUFF", true);
 
     final String label;
     final String affectedField;
