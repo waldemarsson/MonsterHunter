@@ -89,9 +89,9 @@ public class InputHandler {
         boolean success = false;
         try{
             if(cmd.length == 4 && cmd[2].equals("ON") && cmd[1].matches("^\\d+$") && cmd[3].matches("^\\d+$")){
-                success = players[roundCounter.getTurn()].placeCardOnBoardFromHand(Integer.parseInt(cmd[1]), Integer.parseInt(cmd[3]));
+                success = players[roundCounter.getTurn()].useMagicOnBoardFromHand(Integer.parseInt(cmd[1]), Integer.parseInt(cmd[3]));
             } else if(cmd.length == 2 && cmd[1].matches("^\\d+$")) {
-                success = players[roundCounter.getTurn()].placeCardOnBoardFromHand(Integer.parseInt(cmd[1]));
+                success = players[roundCounter.getTurn()].useMagicOnBoardFromHand(Integer.parseInt(cmd[1]));
             }
         } catch (Exception e) {}
         return success;
@@ -101,9 +101,9 @@ public class InputHandler {
         boolean success = false;
         try{
             if(cmd.length == 4 && cmd[2].equals("ON") && cmd[1].matches("^\\d+$") && cmd[3].matches("^\\d+$")){
-                success = players[roundCounter.getTurn()].placeCardOnBoardFromHand(Integer.parseInt(cmd[1]), Integer.parseInt(cmd[3]));
+                success = players[roundCounter.getTurn()].placeEffectOnBoardFromHand(Integer.parseInt(cmd[1]), Integer.parseInt(cmd[3]));
             } else if(cmd.length == 2 && cmd[1].matches("^\\d+$")) {
-                success = players[roundCounter.getTurn()].placeCardOnBoardFromHand(Integer.parseInt(cmd[1]));
+                success = players[roundCounter.getTurn()].placeMonsterOnBoardFromHand(Integer.parseInt(cmd[1]));
             }
         } catch (Exception e) { }
         return success;

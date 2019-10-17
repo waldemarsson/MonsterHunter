@@ -152,7 +152,7 @@ class PlayerTest {
             List<Card> cards = (List<Card>) field.get(p1.getHand());
             int cardsOnHand = cards.size();
             assertEquals(0, board.getMonsterPile(roundCounter.getTurn()).size());
-            assertTrue(p1.placeCardOnBoardFromHand(cards.get(0).getId()));
+            assertTrue(p1.placeMonsterOnBoardFromHand(cards.get(0).getId()));
             assertNotEquals(cardsOnHand, cards.size());
             assertEquals(1, board.getMonsterPile(roundCounter.getTurn()).size());
         } catch (Exception e) {
@@ -178,7 +178,7 @@ class PlayerTest {
             do{hasCards = p1.drawFromDeckToHand();}while(hasCards);
             int cardsOnHand = cards.size();
             assertEquals(0, board.getMonsterPile(roundCounter.getTurn()).size());
-            assertFalse(p1.placeCardOnBoardFromHand(cards.get(0).getId()));
+            assertFalse(p1.placeMonsterOnBoardFromHand(cards.get(0).getId()));
             assertEquals(cardsOnHand, cards.size());
             assertEquals(0, board.getMonsterPile(roundCounter.getTurn()).size());
         } catch (Exception e) {
@@ -205,8 +205,8 @@ class PlayerTest {
             int monsterId = player1Cards.stream().filter(card -> card instanceof MonsterCard).findFirst().get().getId();
             int effectId = player1Cards.stream().filter(card -> card instanceof BuffCard).findFirst().get().getId();
             assertEquals(handSizeBeforeDraw, player1Cards.size());
-            assertTrue(p1.placeCardOnBoardFromHand(monsterId));
-            assertTrue(p1.placeCardOnBoardFromHand(monsterId, effectId));
+            assertTrue(p1.placeMonsterOnBoardFromHand(monsterId));
+            assertTrue(p1.placeEffectOnBoardFromHand(effectId, monsterId));
             assertEquals(handSizeBeforeDraw - 2, player1Cards.size());
         } catch (Exception e) {
             e.printStackTrace();
@@ -230,9 +230,9 @@ class PlayerTest {
             do{hasCards = p1.drawFromDeckToHand();}while(hasCards);
             int sizeOfHandBefore = player1Cards.size();
             int monsterId = player1Cards.stream().filter(card -> card instanceof MonsterCard).findFirst().get().getId();
-            assertTrue(p1.placeCardOnBoardFromHand(monsterId));
+            assertTrue(p1.placeMonsterOnBoardFromHand(monsterId));
             int monster2Id = player1Cards.stream().filter(card -> card instanceof MonsterCard).findFirst().get().getId();
-            assertFalse(p1.placeCardOnBoardFromHand(monster2Id, monsterId));
+            assertFalse(p1.placeEffectOnBoardFromHand(monster2Id, monsterId));
             assertNotEquals(monsterId, monster2Id);
             assertEquals(sizeOfHandBefore - 1, player1Cards.size());
         } catch (Exception e) {
