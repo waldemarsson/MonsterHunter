@@ -206,7 +206,7 @@ class PlayerTest {
             int effectId = player1Cards.stream().filter(card -> card instanceof BuffCard).findFirst().get().getId();
             assertEquals(handSizeBeforeDraw, player1Cards.size());
             assertTrue(p1.placeMonsterOnBoardFromHand(monsterId));
-            assertTrue(p1.placeEffectOnBoardFromHand(monsterId, effectId));
+            assertTrue(p1.placeEffectOnBoardFromHand(effectId, monsterId));
             assertEquals(handSizeBeforeDraw - 2, player1Cards.size());
         } catch (Exception e) {
             e.printStackTrace();
