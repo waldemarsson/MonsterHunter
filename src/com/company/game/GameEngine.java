@@ -131,7 +131,7 @@ public class GameEngine {
     private void attackPlayer(MagicCard magicCard) {
         Player player = players[roundCounter.getOpponentIndex()];
         player.addDamage(magicCard.getValue());
-        List<String> rapport = new ArrayList<>(List.of("ATTACK", player.getName() + " now has " + player.getHp() + " hp"));
+        List<String> rapport = new ArrayList<>(List.of("ATTACK", player.getName() + " now has " + (player.getHp() - player.getDamage()) + " hp"));
         if (!player.isAlive()) rapport.add(player.getName() + " died");
         Game.getGameCLI().getOutputHandler().printRapport(rapport);
     }
@@ -142,7 +142,7 @@ public class GameEngine {
      */
     private void healPlayer(MagicCard magicCard) {
         Player player = players[roundCounter.getTurn()];
-        Game.getGameCLI().getOutputHandler().printRapport(new ArrayList<>(List.of("HEAL", player.getName() + " now has " + player.getHp() + " hp")));
+        Game.getGameCLI().getOutputHandler().printRapport(new ArrayList<>(List.of("HEAL", player.getName() + " now has " + (player.getHp() - player.getDamage()) + " hp")));
         player.heal(magicCard.getValue());
     }
 
@@ -152,6 +152,7 @@ public class GameEngine {
      * @return Card[0] target, Card[1] attacker
      */
     private MonsterCard[] monsterOnMonster(MonsterCard target, MonsterCard attacker) {
+        attacker.addOneToFatigue();
         int targetRoll = throwDice();
         int defendStat = target.getCalculatedDefense() + targetRoll;
         int attackerRoll = throwDice();
@@ -205,6 +206,7 @@ public class GameEngine {
                 break;
             case REMOVE_DEBUFF:
                 monsterCard.setDebuffCard(new DebuffCard(0, 0, EffectType.NONE));
+                break;
             case HEAL_CARD:
                 monsterCard.heal(magicCard.getValue());
                 break;
