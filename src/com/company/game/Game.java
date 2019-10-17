@@ -24,11 +24,17 @@ public class Game {
         player1.setBoard(board);
         player2.setBoard(board);
         gameCLI = new GameCLI(board, players, roundCounter);
+
+        this.run();
     }
 
 
     private void run() {
-
+        gameCLI.getOutputHandler().printBoard();
+        while (players[0].isAlive() && players[1].isAlive()){
+            gameCLI.getInputHandler().takeInput();
+        }
+        gameCLI.getOutputHandler().printWinner();
     }
 
     public static GameCLI getGameCLI() {
