@@ -85,7 +85,32 @@ public class OutputHandler {
     }
 
     private void showMonsterCard(MonsterCard card){
-        
+        DebuffCard debuffCard = card.getDebuffCard();
+        BuffCard bonus = card.getBonus();
+        BuffCard buffCard = card.getBuffCard();
+        printer(List.of(
+                card.getName().concat("_").concat(Integer.toString(card.getId())),
+                "HEALTH: " +
+                        String.format("%d/%d", card.getCalculatedHealth(), card.getHp()),
+                "STAMINA: " +
+                        String.format("%d/%d", card.getCalculatedStamina(),
+                                (card.getStamina()+buffCard.getStaminaEffect()+bonus.getStaminaEffect()+debuffCard.getStaminaEffect())),
+                "ATTACK: " +
+                        Integer.toString(card.getCalculatedAttack())
+                                .concat(buffCard.getAttackEffect() > 0 ?  String.format("(+%d)", buffCard.getAttackEffect()) : "")
+                                .concat(debuffCard.getAttackEffect() < 0 ? String.format("(%d)", debuffCard.getAttackEffect()) : ""),
+                "DEFENSE: " +
+                        Integer.toString(card.getCalculatedDefense())
+                                .concat(buffCard.getDefenseEffect() > 0 ? String.format("(+%d)", buffCard.getDefenseEffect()) : "")
+                                .concat(debuffCard.getDefenseEffect() < 0 ? String.format("(%d)", debuffCard.getDefenseEffect()) : ""),
+                "",
+                "BONUS: " +
+                        bonus.toString().replaceAll("_\\d:", ""),
+                "BUFFCARD: " +
+                        buffCard.toString().replaceAll("_\\d:", ""),
+                "DEBUFFCARD: " +
+                        debuffCard.toString().replaceAll("_\\d:", "")
+        ));
     }
 
     private void showBuffCard(BuffCard card){}
