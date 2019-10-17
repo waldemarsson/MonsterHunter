@@ -38,7 +38,13 @@ public class OutputHandler {
     //    Card3
     //    ################################################
     public void printBoard() {
+        List<String> list = new java.util.ArrayList<>(getBoardForPrinting());
+        list.addAll(getHandForPrinting());
+        printer(list);
+    }
 
+    private List<String> getBoardForPrinting(){
+        return List.of();
     }
 
     //    Cards left in deck: 12
@@ -47,8 +53,15 @@ public class OutputHandler {
     //    Card2
     //    Card3
     //    osv..
-    public void printHand() {
+    private List<String> getHandForPrinting() {
+        List<String> hand = new java.util.ArrayList<>(List.of(
+                "CARDS LEFT IN DECK: ".concat(Integer.toString(players[roundCounter.getTurn()].getCardsLeftInDeck())),
+                players[roundCounter.getTurn()].getName().concat(" HAND: ")
+        ));
 
+        hand.addAll(players[roundCounter.getTurn()].getHand().getCardsOnHandAsString());
+
+        return hand;
     }
 
     //    ####################################
