@@ -112,6 +112,10 @@ public class Player {
         return wasPlaced;
     }
 
+    public int getCardsLeftInDeck() {
+        return deck.cardsLeft();
+    }
+
     @Override
     public String toString() {
         return String.format("%s %d/%d HP", getName(), (getHp()-getDamage()), getHp());
