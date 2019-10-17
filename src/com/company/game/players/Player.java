@@ -1,7 +1,6 @@
 package com.company.game.players;
 
 import com.company.game.Board;
-import com.company.game.Game;
 import com.company.game.cards.Card;
 import com.company.game.cards.EffectCard;
 import com.company.game.cards.MagicCard;
@@ -107,7 +106,7 @@ public class Player {
         return wasPlaced;
     }
 
-    public boolean placeEffectOnBoardFromHand(int passiveCardId, int activeCardId){
+    public boolean placeEffectOnBoardFromHand(int activeCardId, int passiveCardId){
         Card card = hand.hasCard(activeCardId) ? hand.playCard(activeCardId) : null;
         boolean wasPlaced = false;
 
@@ -122,7 +121,7 @@ public class Player {
         return wasPlaced;
     }
 
-    public boolean useMagicOnBoardFromHand(int passiveCardId, int activeCardId){
+    public boolean useMagicOnBoardFromHand(int activeCardId, int passiveCardId){
         Card card = hand.hasCard(activeCardId) ? hand.playCard(activeCardId) : null;
         boolean wasPlaced = false;
 
