@@ -306,6 +306,8 @@ class GameEngineTest {
 
         @RepeatedTest(100)
         void engageMonsterVsMonsterTargetWin() {
+            monsterBest.setBuffCard(new BuffCard(22, 100, EffectType.DEFENSE));
+            
             MonsterCard[] cards = gameEngine.engage(monsterBest, monsterWorst);
             assertNull(cards[1]);
             assertNotNull(cards[0]);
