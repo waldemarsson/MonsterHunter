@@ -16,7 +16,7 @@ public class DeckFactory {
     private final MonsterCardFactory monsterCardFactory;
 
     public DeckFactory() {
-        createdCards = 0;
+        createdCards = 1;
         effectCardFactory = new EffectCardFactory();
         magicCardFactory = new MagicCardFactory();
         monsterCardFactory = new MonsterCardFactory();
