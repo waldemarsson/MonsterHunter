@@ -121,7 +121,15 @@ public class GameEngine {
      */
     private void attackPlayer(MonsterCard monsterCard) {
         int damage = Math.max(0, (int) Math.ceil(monsterCard.getCalculatedAttack() / 2.0));
+        monsterCard.addOneToFatigue();
         players[roundCounter.getOpponentIndex()].addDamage(damage);
+        Game.getGameCLI().getOutputHandler().printRapport(List.of(
+                monsterCard.toString(),
+                "vs",
+                players[roundCounter.getOpponentIndex()].toString(),
+                "",
+                players[roundCounter.getOpponentIndex()].getName().concat(" TOOK " + damage + " DAMAGE")
+        ));
     }
 
     /**
@@ -168,25 +176,25 @@ public class GameEngine {
 
         if (attackStat - defendStat == 0) {
             rapport.add("Attacker did 0 damage");
-            return new MonsterCard[]{target, attacker};
-        }
-
-        boolean attackerWon = attackStat > defendStat;
-        int damage = Math.abs(attackStat - defendStat);
-        String str;
-
-        if (attackerWon) {
-            rapport.add("Attacker did " + damage + " damage");
-            target.addDamage(damage);
-            target = target.isAlive() ? target : null;
-            str = target == null ? "Target died" : "Target survived with " + target.getCalculatedHealth() + " hp";
         } else {
-            rapport.add("Attacker took " + damage + " damage");
-            attacker.addDamage(damage);
-            attacker = attacker.isAlive() ? attacker : null;
-            str = attacker == null ? "Attacker died" : "Attacker survived with " + attacker.getCalculatedHealth() + " hp";
+
+            boolean attackerWon = attackStat > defendStat;
+            int damage = Math.abs(attackStat - defendStat);
+            String str;
+
+            if (attackerWon) {
+                rapport.add("Attacker did " + damage + " damage");
+                target.addDamage(damage);
+                target = target.isAlive() ? target : null;
+                str = target == null ? "Target died" : "Target survived with " + target.getCalculatedHealth() + " hp";
+            } else {
+                rapport.add("Attacker took " + damage + " damage");
+                attacker.addDamage(damage);
+                attacker = attacker.isAlive() ? attacker : null;
+                str = attacker == null ? "Attacker died" : "Attacker survived with " + attacker.getCalculatedHealth() + " hp";
+            }
+            rapport.add(str);
         }
-        rapport.add(str);
         Game.getGameCLI().getOutputHandler().printRapport(rapport);
         return new MonsterCard[]{target, attacker};
     }
