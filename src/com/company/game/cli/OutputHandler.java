@@ -2,7 +2,7 @@ package com.company.game.cli;
 
 import com.company.game.Board;
 import com.company.game.RoundCounter;
-import com.company.game.cards.Card;
+import com.company.game.cards.*;
 import com.company.game.players.Player;
 
 import javax.sound.midi.Soundbank;
@@ -62,24 +62,37 @@ public class OutputHandler {
         printer(rapport);
     }
 
-    //    SHOW if monster
-    //    NAME
-    //    STAMINA
-    //    HP
-    //    ATTACK
-    //    DEFENSE
-    //    BONUS
-    //    BUFF
-    //    DEBUFF
 
     //    SHOW if magic or effect
     //    NAME
     //    ENUM
     //    VALUE
     public void printCard(Card card) {
-
+        switch (card.getClass().getSimpleName()){
+            case "MonsterCard":
+                showMonsterCard((MonsterCard) card);
+                break;
+            case "BuffCard":
+                showBuffCard((BuffCard) card);
+                break;
+            case "DebuffCard":
+                showDeBuffCard((DebuffCard) card);
+                break;
+            case "MagicCard":
+                showMagicCard((MagicCard) card);
+                break;
+        }
     }
 
+    private void showMonsterCard(MonsterCard card){
+        
+    }
+
+    private void showBuffCard(BuffCard card){}
+
+    private void showDeBuffCard(DebuffCard card){}
+
+    private void showMagicCard(MagicCard card){}
 
     //    HELP:
     //    USE: Use magic on player/card(s)
