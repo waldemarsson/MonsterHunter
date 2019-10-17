@@ -78,20 +78,35 @@ public class GameEngine {
         if (magicCard == null || notAcceptedMagicTypes.contains(magicCard.getMagicType()) || targets.isEmpty() || magicCard.isTargeted())
             return targets;
 
+
         List<String> rapport = new ArrayList<>();
-        rapport.add("USING " + magicCard.toString());
+        // STUN_BOMB_100 WAS USED ON OPPONENTS MONSTERS WITH 2 EFFECT
+        // OPPONENTS BOARD AFTER MAGIC EFFECT
+        rapport.add(magicCard.toString().replaceFirst(":.*", "")
+                + " WAS USED ON "
+                + (magicCard.getMagicType().isOnSelf() ? "YOUR" : "OPPONENT")
+                + " MONSTERS WITH "
+                + (magicCard.getMagicType().getAffectedField() == "BUFF" || magicCard.getMagicType().getAffectedField() == "DEBUFF" ? "" : magicCard.getValue()) + " "
+                + "EFFECT ON "
+                + magicCard.getMagicType().getAffectedField());
+
+        rapport.add((magicCard.getMagicType().isOnSelf() ? "YOUR" : "OPPONENT") + " BOARD AFTER MAGIC EFFECT");
         List<MonsterCard> monsters = new ArrayList<>();
         for (MonsterCard monsterCard : targets) {
 
             MonsterCard card = magicOnMonster(magicCard, monsterCard);
             if (card != null && card.isAlive()) {
                 monsters.add(card);
-                rapport.add(card.toString() + (card.isAlive() ? " survived" : " died"));
+                rapport.add(card.toString() + " (ALIVE)");
+            } else if (card != null && !card.isAlive()) {
+                rapport.add(card.toString() + " (DEAD)");
             }
+
         }
+        Game.getGameCLI().getOutputHandler().printRapport(rapport);
         return monsters;
     }
-    
+
     /**
      * @return random int 1 - 6
      */
@@ -127,7 +142,7 @@ public class GameEngine {
      */
     private void healPlayer(MagicCard magicCard) {
         Player player = players[roundCounter.getTurn()];
-        Game.getGameCLI().getOutputHandler().printRapport(new ArrayList<>(List.of("HEAL", player + " now has " + player.getHp() + " hp")));
+        Game.getGameCLI().getOutputHandler().printRapport(new ArrayList<>(List.of("HEAL", player.getName() + " now has " + player.getHp() + " hp")));
         player.heal(magicCard.getValue());
     }
 
@@ -143,12 +158,10 @@ public class GameEngine {
         int attackStat = attacker.getCalculatedAttack() + attackerRoll;
         List<String> rapport = new ArrayList<>(List.of("COMBAT",
                 attacker.toString(),
-                "Roll: ",
-                String.valueOf(attackerRoll),
+                "Roll: " + attackerRoll,
                 "VS",
                 target.toString(),
-                "Roll: ",
-                String.valueOf(targetRoll),
+                "Roll: " + targetRoll,
                 "",
                 "RAPPORT"));
 
@@ -173,7 +186,7 @@ public class GameEngine {
             str = attacker == null ? "Attacker died" : "Attacker survived with " + attacker.getCalculatedHealth() + " hp";
         }
         rapport.add(str);
-
+        Game.getGameCLI().getOutputHandler().printRapport(rapport);
         return new MonsterCard[]{target, attacker};
     }
 
