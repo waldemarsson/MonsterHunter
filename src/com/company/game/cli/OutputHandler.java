@@ -7,6 +7,7 @@ import com.company.game.players.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class OutputHandler {
 
@@ -35,10 +36,10 @@ public class OutputHandler {
         List<String> outputBoard = new ArrayList<>(List.of(
                 "OPPONENT: ".concat(players[roundCounter.getOpponentIndex()].toString())
         ));
-        outputBoard.addAll(board.getMonsterPile(roundCounter.getOpponentIndex()));
+        outputBoard.addAll(board.getMonsterPile(roundCounter.getOpponentIndex()).stream().map(s -> "\u001B[31m" + s + "\u001B[0m").collect(Collectors.toList()));
         outputBoard.add(innerDivider());
         outputBoard.add("YOU: ".concat(players[roundCounter.getTurn()].toString()));
-        outputBoard.addAll(board.getMonsterPile(roundCounter.getTurn()));
+        outputBoard.addAll(board.getMonsterPile(roundCounter.getTurn()).stream().map(s -> "\u001B[32m" + s + "\u001B[0m").collect(Collectors.toList()));
         outputBoard.add(innerDivider());
         return outputBoard;
     }
@@ -49,7 +50,7 @@ public class OutputHandler {
                 players[roundCounter.getTurn()].getName().concat(" HAND: ")
         ));
 
-        hand.addAll(players[roundCounter.getTurn()].getHand().getCardsOnHandAsString());
+        hand.addAll(players[roundCounter.getTurn()].getHand().getCardsOnHandAsString().stream().map(s -> "\u001B[35m" + s + "\u001B[0m").collect(Collectors.toList()));
 
         return hand;
     }

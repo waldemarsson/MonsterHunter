@@ -10,6 +10,6 @@ public class BuffCard extends EffectCard {
 
     @Override
     public String toString() {
-        return super.toString().concat("+").concat(Integer.toString(getValue()));
+        return super.toString().concat("VAL +" + getValue());
     }
 }

@@ -28,7 +28,11 @@ abstract public class EffectCard extends Card {
     @Override
     public String toString() {
         return effectType == EffectType.NONE ? effectType.toString() :
-                effectType.toString().concat("_").concat(Integer.toString(getId())).concat(": ");
+                String.format("%1$-25s", Integer.toString(getId()).concat("_").concat(effectType.toString()).concat(": "));
+    }
+
+    public EffectType getEffectType() {
+        return effectType;
     }
 
     public int getValue() {

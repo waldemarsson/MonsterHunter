@@ -13,6 +13,7 @@ public class InputHandler {
     private final Board board;
     private final RoundCounter roundCounter;
     private final Scanner inputScanner;
+    private String input[];
 
 
     public InputHandler(Board board, Player[] players, RoundCounter roundCounter) {
@@ -20,6 +21,7 @@ public class InputHandler {
         this.players = players;
         this.roundCounter = roundCounter;
         this.inputScanner = new Scanner(System.in);
+        this.input = new String[]{""};
     }
 
 
@@ -31,7 +33,8 @@ public class InputHandler {
         //switch input make thing
         // if board returns false, print "INVALID COMMAND "USEE CARD"
 
-        String[] input = inputScanner.nextLine().trim().toUpperCase().split(" ");
+        setInput(inputScanner.nextLine().trim().toUpperCase().split(" "));
+
 
         switch (input[0]){
             case "":
@@ -107,5 +110,10 @@ public class InputHandler {
             }
         } catch (Exception e) { }
         return success;
+    }
+
+    public void setInput(String[] input) {
+        if(!input[0].equals("REPEAT") && !input[0].equals("!!") && !input[0].equals("R"))
+            this.input = input;
     }
 }

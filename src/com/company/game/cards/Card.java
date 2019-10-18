@@ -20,7 +20,7 @@ abstract public class Card {
 
     @Override
     public String toString() {
-        return getName().concat("_" + getId() + ": ");
+        return String.format("%1$-25s", Integer.toString(getId()).concat("_").concat(getName() + ": "));
     }
 
 }

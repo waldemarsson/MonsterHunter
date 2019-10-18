@@ -5,18 +5,18 @@ import com.company.game.enums.EffectType;
 
 public class MonsterCard extends Card {
 
-    private final int stamina;
+    private int stamina;
     private int fatigue;
     private final int hp;
     private int damage;
-    private final int attack;
-    private final int defense;
+    private int attack;
+    private int defense;
     private BuffCard buffCard;
     private DebuffCard debuffCard;
     private final BuffCard bonus;
 
     public MonsterCard(int id, String name, int stamina, int hp, int attack, int defense, BuffCard bonus) {
-        super(id, bonus != null && bonus.getValue() > 0 ? "EPIC_" + name : name);
+        super(id, bonus != null && bonus.getEffectType() !=  EffectType.NONE ? "EPIC_" + name : name);
         this.stamina = (stamina <= 0 || stamina > 2) ? 1 : stamina;
         this.hp = (hp < 3 || hp > 8) ? 5 : hp;
         this.attack = (attack < 2 || attack > 7) ? 4 : attack;
@@ -26,6 +26,21 @@ public class MonsterCard extends Card {
         this.damage = 0;
         this.buffCard = new BuffCard(0, 0, EffectType.NONE);
         this.debuffCard = new DebuffCard(0, 0, EffectType.NONE);
+        if(bonus.getEffectType() != EffectType.NONE){
+            switch (bonus.getEffectType()) {
+                case ATTACK:
+                    this.attack = 7;
+                    break;
+                case DEFENSE:
+                    this.defense = 7;
+                    break;
+                case STAMINA:
+                    this.stamina = 2;
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     public int getCalculatedStamina() {
@@ -113,18 +128,22 @@ public class MonsterCard extends Card {
 
     @Override
     public String toString() {
-        StringBuilder str = new StringBuilder(super.toString());
-        str.append("HP " + getCalculatedHealth() + "/" + hp);
-        str.append(" STA " + getCalculatedStamina());
-        str.append(String.format("/%d", (stamina+bonus.getStaminaEffect()+debuffCard.getStaminaEffect()+buffCard.getStaminaEffect())));
-        if (buffCard.getStaminaEffect() > 0) str.append("(+" + buffCard.getStaminaEffect() + ")");
-        if (debuffCard.getStaminaEffect() < 0) str.append("(" + debuffCard.getStaminaEffect() + ")");
-        str.append(" ATT " + getCalculatedAttack());
-        if (buffCard.getAttackEffect() > 0) str.append("(+" + buffCard.getAttackEffect() + ")");
-        if (debuffCard.getAttackEffect() < 0) str.append("(" + debuffCard.getAttackEffect() + ")");
-        str.append(" DEF " + getCalculatedDefense());
-        if (buffCard.getDefenseEffect() > 0) str.append("(+" + buffCard.getDefenseEffect() + ")");
-        if (debuffCard.getDefenseEffect() < 0) str.append("(" + debuffCard.getDefenseEffect() + ")");
+        StringBuilder str = new StringBuilder(String.format("%1$-25s", super.toString()));
+        String stringHP = String.format("%1$-15s", "HP " + getCalculatedHealth() + "/" + hp);
+        str.append(stringHP);
+        String stringStamina = " STA " + getCalculatedStamina();
+        stringStamina = stringStamina.concat(String.format("/%d", (stamina+bonus.getStaminaEffect()+debuffCard.getStaminaEffect()+buffCard.getStaminaEffect())));
+        if (buffCard.getStaminaEffect() > 0) stringStamina = stringStamina.concat("(+" + buffCard.getStaminaEffect() + ")");
+        if (debuffCard.getStaminaEffect() < 0) stringStamina = stringStamina.concat("(" + debuffCard.getStaminaEffect() + ")");
+        str.append(String.format("%1$-15s", stringStamina));
+        String stringAttack = " ATT " + getCalculatedAttack();
+        if (buffCard.getAttackEffect() > 0) stringAttack = stringAttack.concat("(+" + buffCard.getAttackEffect() + ")");
+        if (debuffCard.getAttackEffect() < 0) stringAttack = stringAttack.concat("(" + debuffCard.getAttackEffect() + ")");
+        str.append(String.format("%1$-15s", stringAttack));
+        String stringDefense = " DEF " + getCalculatedDefense();
+        if (buffCard.getDefenseEffect() > 0) stringDefense = stringDefense.concat("(+" + buffCard.getDefenseEffect() + ")");
+        if (debuffCard.getDefenseEffect() < 0) stringDefense = stringDefense.concat("(" + debuffCard.getDefenseEffect() + ")");
+        str.append(String.format("%1$-15s", stringDefense));
 
         return str.toString();
     }

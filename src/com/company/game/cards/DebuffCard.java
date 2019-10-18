@@ -35,7 +35,7 @@ public class DebuffCard extends EffectCard {
 
     @Override
     public String toString() {
-        return super.toString().concat(Integer.toString(getValue()));
+        return super.toString().concat(getValue() != 0 ? "VAL " + getValue() : "");
     }
 
     @Override

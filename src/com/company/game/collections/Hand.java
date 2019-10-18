@@ -2,9 +2,8 @@ package com.company.game.collections;
 
 import com.company.game.cards.Card;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.net.Inet4Address;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Hand {
@@ -58,6 +57,6 @@ public class Hand {
     }
 
     public List<String> getCardsOnHandAsString(){
-        return cardsOnHand.stream().map(Card::toString).sorted().collect(Collectors.toList());
+        return cardsOnHand.stream().sorted(Comparator.comparingInt(Card::getId)).map(Card::toString).collect(Collectors.toList());
     }
 }

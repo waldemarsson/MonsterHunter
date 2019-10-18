@@ -28,7 +28,7 @@ public class Board {
 
     public List<String> getMonsterPile(int player) {
         if (player != 0 && player != 1) return null;
-        return monsterPiles[player].stream().map(card -> card.toString()).sorted().collect(Collectors.toList());
+        return monsterPiles[player].stream().sorted(Comparator.comparingInt(Card::getId)).map(MonsterCard::toString).collect(Collectors.toList());
     }
 
     public boolean placeMonsterOnBoard(MonsterCard monster) {
@@ -192,7 +192,7 @@ public class Board {
 
     public void nextRound() {
         getCurrentPlayerMonsterPile().stream().forEach(MonsterCard::resetFatigue);
-        players[roundCounter.getTurn()].drawFromDeckToHand();
+        for(int i = 0; i < 2; i++) players[roundCounter.getTurn()].drawFromDeckToHand();
         roundCounter.nextTurn();
     }
 
