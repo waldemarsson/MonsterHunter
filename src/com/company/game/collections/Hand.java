@@ -58,6 +58,6 @@ public class Hand {
     }
 
     public List<String> getCardsOnHandAsString(){
-        return cardsOnHand.stream().map(Card::toString).collect(Collectors.toList());
+        return cardsOnHand.stream().map(Card::toString).sorted().collect(Collectors.toList());
     }
 }

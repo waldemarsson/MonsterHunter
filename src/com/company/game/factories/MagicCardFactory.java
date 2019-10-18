@@ -31,7 +31,7 @@ public class MagicCardFactory {
     }
 
     private boolean isTargeted() {
-        return getRandomValue() == 3 ? true : false;
+        return getRandomValue() == 3 ? false : true;
     }
 
 

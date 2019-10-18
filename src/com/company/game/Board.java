@@ -28,7 +28,7 @@ public class Board {
 
     public List<String> getMonsterPile(int player) {
         if (player != 0 && player != 1) return null;
-        return monsterPiles[player].stream().map(card -> card.toString()).collect(Collectors.toList());
+        return monsterPiles[player].stream().map(card -> card.toString()).sorted().collect(Collectors.toList());
     }
 
     public boolean placeMonsterOnBoard(MonsterCard monster) {

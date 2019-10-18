@@ -129,17 +129,17 @@ public class OutputHandler {
             case ATTACK_CARD:
                 s = s.concat(" attacks ")
                         .concat(card.isTargeted() ? "one monster " : "multiple monsters ")
-                        .concat(" and deals " + card.getValue() + " damage. ");
+                        .concat("and deals " + card.getValue() + " damage. ");
                 break;
             case HEAL_CARD:
                 s = s.concat(" heals ")
                         .concat(card.isTargeted() ? "one monster " : "multiple monsters ")
-                        .concat(" and removes " + card.getValue() + " damage. ");
+                        .concat("and removes " + card.getValue() + " damage. ");
                 break;
             case STUN:
                 s = s.concat(" stuns ")
                         .concat(card.isTargeted() ? "one monster " : "multiple monsters ")
-                        .concat(" by removing " + card.getValue() + " stamina for one turn. ");
+                        .concat("by removing " + card.getValue() + " stamina for one turn. ");
                 break;
             case HEAL_PLAYER:
                 s = s.concat(" heals you by removing " + card.getValue() + " damage.");

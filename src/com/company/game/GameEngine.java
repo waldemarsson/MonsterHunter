@@ -75,7 +75,7 @@ public class GameEngine {
      */
     public List<MonsterCard> engage(MagicCard magicCard, List<MonsterCard> targets) {
         List<MagicType> notAcceptedMagicTypes = List.of(MagicType.ATTACK_PLAYER, MagicType.HEAL_PLAYER);
-        if (magicCard == null || notAcceptedMagicTypes.contains(magicCard.getMagicType()) || targets.isEmpty() || magicCard.isTargeted())
+        if (magicCard == null || notAcceptedMagicTypes.contains(magicCard.getMagicType()) || targets.isEmpty())
             return targets;
 
 
@@ -85,12 +85,12 @@ public class GameEngine {
         rapport.add(magicCard.toString().replaceFirst(":.*", "")
                 + " WAS USED ON "
                 + (magicCard.getMagicType().isOnSelf() ? "YOUR" : "OPPONENT")
-                + " MONSTERS WITH "
+                + (magicCard.isTargeted() ? " MONSTER " : " MONSTERS ") + "WITH "
                 + (magicCard.getMagicType().getAffectedField() == "BUFF" || magicCard.getMagicType().getAffectedField() == "DEBUFF" ? "" : magicCard.getValue()) + " "
                 + "EFFECT ON "
                 + magicCard.getMagicType().getAffectedField());
 
-        rapport.add((magicCard.getMagicType().isOnSelf() ? "YOUR" : "OPPONENT") + " BOARD AFTER MAGIC EFFECT");
+        rapport.add((magicCard.getMagicType().isOnSelf() ? "YOUR" : "OPPONENT") + (magicCard.isTargeted() ? " MONSTER " : " BOARD ") + "AFTER MAGIC EFFECT");
         List<MonsterCard> monsters = new ArrayList<>();
         for (MonsterCard monsterCard : targets) {
 
