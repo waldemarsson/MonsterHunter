@@ -166,11 +166,11 @@ public class GameEngine {
         int attackerRoll = throwDice();
         int attackStat = attacker.getCalculatedAttack() + attackerRoll;
         List<String> rapport = new ArrayList<>(List.of("COMBAT",
-                attacker.toString(),
-                "Roll: " + attackerRoll,
+                "\u001B[32m" + attacker.toString(),
+                "Roll: " + attackerRoll + " Total attack: " + (attacker.getCalculatedAttack() + attackerRoll) + "\u001B[0m",
                 "VS",
-                target.toString(),
-                "Roll: " + targetRoll,
+                "\u001B[31m" + target.toString(),
+                "Roll: " + targetRoll + " Total defense: " + (target.getCalculatedDefense() + targetRoll) + "\u001B[0m",
                 "",
                 "RAPPORT"));
 
