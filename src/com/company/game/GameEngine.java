@@ -75,7 +75,7 @@ public class GameEngine {
      */
     public List<MonsterCard> engage(MagicCard magicCard, List<MonsterCard> targets) {
         List<MagicType> notAcceptedMagicTypes = List.of(MagicType.ATTACK_PLAYER, MagicType.HEAL_PLAYER);
-        if (magicCard == null || notAcceptedMagicTypes.contains(magicCard.getMagicType()) || targets.isEmpty())
+        if (magicCard == null || notAcceptedMagicTypes.contains(magicCard.getMagicType()) || targets.isEmpty() || (magicCard.isTargeted() && targets.size() > 1))
             return targets;
 
 

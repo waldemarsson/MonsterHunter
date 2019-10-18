@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -122,7 +123,7 @@ class HandTest {
             Hand hand = new Hand();
             Field field = Deck.class.getDeclaredField("cards");
             field.setAccessible(true);
-            List<String> cards = deck.getCards().stream().map(Card::toString).collect(Collectors.toList());
+            List<String> cards = deck.getCards().stream().sorted(Comparator.comparingInt(Card::getId)).map(Card::toString).collect(Collectors.toList());
             while (deck.hasCards()){
                 hand.putCard(deck.drawCard());
             }

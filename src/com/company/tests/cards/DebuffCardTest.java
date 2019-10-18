@@ -30,6 +30,6 @@ class DebuffCardTest {
 
     @Test
     void testToString() {
-        assertEquals("STAMINA_2: -1", new DebuffCard(2, 1, EffectType.STAMINA).toString());
+        assertEquals("2_STAMINA:               VAL -1", new DebuffCard(2, 1, EffectType.STAMINA).toString());
     }
 }

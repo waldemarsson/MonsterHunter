@@ -56,7 +56,7 @@ class EffectCardFactoryTest {
         for(int i = 0; i < 10000; i++){
             EffectCard card = factory.buildEffectCard(i+1, ThreadLocalRandom.current().nextBoolean());
             types.add(card.toString().replaceAll("[^A-Z]", ""));
-            identifiers.add(card.toString().replaceAll("_[0-9]+", ""));
+            identifiers.add(card.toString().replaceAll("^[0-9]+| *", ""));
             uniques.add(card.toString());
         }
         assertEquals(3, types.size());

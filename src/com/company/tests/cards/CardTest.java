@@ -66,7 +66,7 @@ class CardTest {
 
     @Test
     void testToString() {
-        assertEquals("HELLO_1: ", new CardSuperTest(1, "hello").toString(),
+        assertEquals("1_HELLO:                 ", new CardSuperTest(1, "hello").toString(),
                 "Failed to get proper toString for card");
     }
 }

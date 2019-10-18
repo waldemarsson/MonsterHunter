@@ -182,7 +182,7 @@ class GameEngineTest {
             int damageTotalBefore = monsterCards.stream().map(MonsterCard::getDamage).mapToInt(Integer::intValue).sum();
             assertEquals(monsterCards.size(), gameEngine.engage(card, monsterCards).size());
             int damageTotalAfter = monsterCards.stream().map(MonsterCard::getDamage).mapToInt(Integer::intValue).sum();
-            assertTrue(damageTotalAfter == damageTotalBefore);
+            assertEquals(damageTotalAfter, damageTotalBefore);
         }
 
         @Test
